@@ -1,0 +1,10 @@
+D:\visual_studio_projects\DamnedWorkshop\bin\Debug\DamnedWorkshop.exe.config
+D:\visual_studio_projects\DamnedWorkshop\bin\Debug\DamnedWorkshop.exe
+D:\visual_studio_projects\DamnedWorkshop\bin\Debug\DamnedWorkshop.pdb
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.csprojAssemblyReference.cache
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.Properties.Resources.resources
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.csproj.GenerateResource.cache
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.csproj.CoreCompileInputs.cache
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.exe
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.pdb
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.Form1.resources
