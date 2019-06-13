@@ -181,7 +181,7 @@ namespace DamnedWorkshop
             string soundsDirectory = "DamnedData\\Resources\\Sounds";
             string objectsDirectory = "DamnedData\\Resources\\Objects";
             string editorImagesDirectory = "DamnedData\\GUI\\EditorImages";
-            string terrorimagesDirectory = "Damned\\GUI\\TerrorImages";
+            string terrorimagesDirectory = "DamnedData\\GUI\\TerrorImages";
 
             // Easiest way I can think of doing this at the moment. Too lazy to bother with a more efficient method.
 
