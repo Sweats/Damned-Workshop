@@ -30,7 +30,14 @@ namespace DamnedWorkshop
         private static string GITHUB_LINK = "TO BE DETERMINED";
         private static string DOWNLOAD_ORIGINAL_PATCH_LINK = "";
 
+        private static string TOOLTIP_ORIGINAL_PATCH_TEXT = "Downloads and installs the latest public test patch from the testing banch from " + DOWNLOAD_ORIGINAL_PATCH_LINK + " \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
+        private static string TOOLTIP_TEST_PATCH_STABLE_TEXT = "Downloads and installs the latest public test patch from the stable banch from " + DOWNLOAD_TEST_PATCH_STABLE_LINK + " \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
+        private static string TOOLTIP_TEST_PATCH_TESTING_TEXT = "Downloads and installs the latest public test patch from the testing banch from " + DOWNLOAD_TEST_PATCH_TESTING_LINK + ". \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
+        private static string TOOLTIP_SET_DAMNED_FOLDER_TEXT = "Opens up the file explorer where you can select a location where Damned is installed.";
+        private static string TOOLTIP_CHECK_BUTTON_TEXT = "Checks the listed directory to see if the location that you picked is a valid Damend directory.\n\nIf the result is red, it means it failed. If the result is green, it mean it was successful";
+
         private string directory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Damned";
+        
 
         public Form1()
         {
@@ -41,9 +48,14 @@ namespace DamnedWorkshop
         {
             // TODO: Figure out how to do settings so the user does not have to re do everything every time.
             this.damnedDirectoryStringLabel.Text = directory;
-            disablePatchButtonControls();
+            
+            enablePatchButtionControls();
+            toolTipPublicTestPatchTesting.SetToolTip(publicTestPatchTestingButton, TOOLTIP_TEST_PATCH_TESTING_TEXT);
+            toolTipLatestOfficialPatch.SetToolTip(defaultPatchButton, TOOLTIP_ORIGINAL_PATCH_TEXT);
+            toolTipPublicTestPatchStable.SetToolTip(publicTestPatchStableButton, TOOLTIP_TEST_PATCH_STABLE_TEXT);
+            toolTipSetDamnedFolder.SetToolTip(setDamnedFolderButton, TOOLTIP_SET_DAMNED_FOLDER_TEXT);
+            toolTipCheckButton.SetToolTip(checkPathButton, TOOLTIP_CHECK_BUTTON_TEXT);
             loggingTextBox.AppendText(String.Format("Welcome\n\nBefore using this tool, please check its github at {0}\n\nDamned directory has been set to \"{1}\". If you have installed Damned in a non traditonal location, you will have to change it. For more information on what the buttons do, hover your mouse over them.\n\n", GITHUB_LINK, directory));
-
         }
 
         private void PublicTestPatchStableButton_Click(object sender, EventArgs e)
@@ -64,35 +76,9 @@ namespace DamnedWorkshop
 
         }
 
-        private void PublicTestPatchStableButton_MouseHover(object sender, EventArgs e)
-        {
-            string text = String.Format("Downloads and installs the latest public test patch from the stable branch from {0}\n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.", DOWNLOAD_TEST_PATCH_STABLE_LINK);
-            toolTipPublicTestPatchTesting.Show(text, publicTestPatchStableButton);
-        }
-
-        private void PublicTestPatchTestingButton_MouseHover(object sender, EventArgs e)
-        {
-            string text = String.Format("Downloads and installs the latest public test patch from the testing banch from {0}\n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.", DOWNLOAD_TEST_PATCH_TESTING_LINK);
-            toolTipPublicTestPatchTesting.Show(text, publicTestPatchTestingButton);
-        }
-
-
         private void InstallPatch(int patch)
         {
             string link = "";
-
-            try
-            { 
-                Directory.SetCurrentDirectory(directory);
-
-            }
-
-            catch (DirectoryNotFoundException)
-            {
-                loggingTextBox.AppendText("The location that you have selected does not seem to exist. Please pick another.\n\n");
-                FlashWindow(this.Handle, false);
-                return;
-            }
 
             Directory.CreateDirectory("tmp");
             Directory.SetCurrentDirectory("tmp");

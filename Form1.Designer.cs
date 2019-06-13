@@ -41,11 +41,13 @@ namespace DamnedWorkshop
             this.toolTipLatestOfficialPatch = new System.Windows.Forms.ToolTip(this.components);
             this.damnedDirectoryLabel = new System.Windows.Forms.Label();
             this.damnedDirectoryStringLabel = new System.Windows.Forms.Label();
-            this.buttonCheckPath = new System.Windows.Forms.Button();
+            this.checkPathButton = new System.Windows.Forms.Button();
+            this.toolTipCheckButton = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // publicTestPatchStableButton
             // 
+            this.publicTestPatchStableButton.Enabled = false;
             this.publicTestPatchStableButton.Location = new System.Drawing.Point(12, 112);
             this.publicTestPatchStableButton.Name = "publicTestPatchStableButton";
             this.publicTestPatchStableButton.Size = new System.Drawing.Size(140, 23);
@@ -56,6 +58,7 @@ namespace DamnedWorkshop
             // 
             // publicTestPatchTestingButton
             // 
+            this.publicTestPatchTestingButton.Enabled = false;
             this.publicTestPatchTestingButton.Location = new System.Drawing.Point(12, 174);
             this.publicTestPatchTestingButton.Name = "publicTestPatchTestingButton";
             this.publicTestPatchTestingButton.Size = new System.Drawing.Size(140, 23);
@@ -66,6 +69,7 @@ namespace DamnedWorkshop
             // 
             // defaultPatchButton
             // 
+            this.defaultPatchButton.Enabled = false;
             this.defaultPatchButton.Location = new System.Drawing.Point(12, 234);
             this.defaultPatchButton.Name = "defaultPatchButton";
             this.defaultPatchButton.Size = new System.Drawing.Size(140, 23);
@@ -96,6 +100,22 @@ namespace DamnedWorkshop
             this.setDamnedFolderButton.UseVisualStyleBackColor = true;
             this.setDamnedFolderButton.Click += new System.EventHandler(this.SetDamnedFolderButton_Click);
             // 
+            // toolTipSetDamnedFolder
+            // 
+            this.toolTipSetDamnedFolder.ShowAlways = true;
+            // 
+            // toolTipPublicTestPatchStable
+            // 
+            this.toolTipPublicTestPatchStable.ShowAlways = true;
+            // 
+            // toolTipPublicTestPatchTesting
+            // 
+            this.toolTipPublicTestPatchTesting.ShowAlways = true;
+            // 
+            // toolTipLatestOfficialPatch
+            // 
+            this.toolTipLatestOfficialPatch.ShowAlways = true;
+            // 
             // damnedDirectoryLabel
             // 
             this.damnedDirectoryLabel.AutoSize = true;
@@ -114,23 +134,23 @@ namespace DamnedWorkshop
             this.damnedDirectoryStringLabel.TabIndex = 6;
             this.damnedDirectoryStringLabel.Text = "label1";
             // 
-            // buttonCheckPath
+            // checkPathButton
             // 
-            this.buttonCheckPath.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.buttonCheckPath.Location = new System.Drawing.Point(158, 50);
-            this.buttonCheckPath.Name = "buttonCheckPath";
-            this.buttonCheckPath.Size = new System.Drawing.Size(47, 23);
-            this.buttonCheckPath.TabIndex = 7;
-            this.buttonCheckPath.Text = "Check";
-            this.buttonCheckPath.UseVisualStyleBackColor = true;
-            this.buttonCheckPath.Click += new System.EventHandler(this.ButtonCheckPath_Click);
+            this.checkPathButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.checkPathButton.Location = new System.Drawing.Point(158, 50);
+            this.checkPathButton.Name = "checkPathButton";
+            this.checkPathButton.Size = new System.Drawing.Size(47, 23);
+            this.checkPathButton.TabIndex = 7;
+            this.checkPathButton.Text = "Check";
+            this.checkPathButton.UseVisualStyleBackColor = true;
+            this.checkPathButton.Click += new System.EventHandler(this.ButtonCheckPath_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 404);
-            this.Controls.Add(this.buttonCheckPath);
+            this.Controls.Add(this.checkPathButton);
             this.Controls.Add(this.damnedDirectoryStringLabel);
             this.Controls.Add(this.damnedDirectoryLabel);
             this.Controls.Add(this.setDamnedFolderButton);
@@ -162,7 +182,8 @@ namespace DamnedWorkshop
         private System.Windows.Forms.ToolTip toolTipLatestOfficialPatch;
         private System.Windows.Forms.Label damnedDirectoryLabel;
         private System.Windows.Forms.Label damnedDirectoryStringLabel;
-        private System.Windows.Forms.Button buttonCheckPath;
+        private System.Windows.Forms.Button checkPathButton;
+        private System.Windows.Forms.ToolTip toolTipCheckButton;
     }
 }
 
