@@ -217,6 +217,11 @@ public class DamnedFiles
 
     }
 
+    public void Extract(DamnedFiles dest)
+    {
+
+    }
+
 
     // First step is to clean all the new files that do not exist in the base game.
     // Second step is to loop through the original files and compute the hash and see if they are different. If so, then warn the user that they may need to download the old files
