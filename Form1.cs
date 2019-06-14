@@ -12,7 +12,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 
-
 namespace DamnedWorkshop
 {
     public partial class Form1 : Form
@@ -79,22 +78,35 @@ namespace DamnedWorkshop
         private void InstallPatch(int patch)
         {
             string link = "";
+            string tmpDirectory = Path.Combine(directory, "tmp");
 
-            Directory.CreateDirectory("tmp");
-            Directory.SetCurrentDirectory("tmp");
+            if (Directory.Exists(tmpDirectory))
+            {
+                DeleteTmpFiles(tmpDirectory);
+
+            }
+
+            Directory.CreateDirectory(tmpDirectory);
+            Directory.SetCurrentDirectory(tmpDirectory);
+
             string name = "Damned";
+
+            // DON"T FORGET TO MOVE THIS AFTER YOU ARE DONE TESTING.
+            //CleanUpNewerPatchFiles();
 
             using (var client = new WebClient())
             {
+                string zipName = "";
+
                 try
                 {
-                    string zipName = "";
-
                     if (patch == DOWNLOAD_ORIGINAL_PATCH)
                     {
                         zipName = "Damned";
                         link = "TODO: Add in the stable link in here";
                         loggingTextBox.AppendText(String.Format("Downloading the Damned public test patch from {0}. Please wait...\n\n", link));
+                        CleanUpNewerPatchFiles();
+                        Directory.SetCurrentDirectory(tmpDirectory);
                         client.DownloadFile(link, zipName);
                     }
 
@@ -118,20 +130,6 @@ namespace DamnedWorkshop
 
                     loggingTextBox.AppendText("Done downloading the patch. Please wait for it to install...\n\n");
 
-                    try
-                    {
-                        loggingTextBox.AppendText(String.Format("Extracting {0}...\n\n", zipName));
-                        ZipFile.ExtractToDirectory(zipName, ".");
-                        loggingTextBox.AppendText("Done\n\n");
-                       
-
-                    }
-
-                    catch(IOException)
-                    {
-                        loggingTextBox.AppendText("Failed to install the patch from the zip archive. Is the game running?\n\n");
-                    }
-                    
                 }
 
                 catch (WebException e)
@@ -142,79 +140,153 @@ namespace DamnedWorkshop
                     FlashWindow(this.Handle, false);
 
                 }
-                
+
+                ExtractModifiedDamnedFoldersToGameFolder(new DirectoryInfo(tmpDirectory), new DirectoryInfo(directory), zipName);
+            }
+
+            DeleteTmpFiles(tmpDirectory);
+        }
+
+        private void DeleteTmpFiles(string tmpDirectory)
+        {
+            DirectoryInfo[] directories = new DirectoryInfo(tmpDirectory).GetDirectories("*", SearchOption.AllDirectories);
+
+            for (int k = 0; k < directories.Length; k++)
+            {
+                FileInfo[] info = new DirectoryInfo(tmpDirectory).GetFiles("*", SearchOption.AllDirectories);
+
+                for (int i = 0; i < info.Length; i++)
+                {
+                    FileInfo file = info[i];
+                    loggingTextBox.AppendText("Deleting " + file.Name + "\n\n");
+                    file.Delete();
+                }
+            }
+
+            Directory.Delete(tmpDirectory, true);
+
+            loggingTextBox.AppendText("Deleted tmp directory in your Damned folder. Was it from a previous failed installation?\n\n");
+        }
+
+        private void ExtractModifiedDamnedFoldersToGameFolder(DirectoryInfo tmpDirectory, DirectoryInfo gameDirectory, string zipName)
+        {
+            try
+            { 
+                loggingTextBox.AppendText(String.Format("Extracting {0}...\n\n", zipName));
+                ZipFile.ExtractToDirectory(zipName, tmpDirectory.FullName);
+                loggingTextBox.AppendText("Done\n\n");
+            }
+
+            catch (IOException)
+            {
+                loggingTextBox.AppendText("Failed to install the patch from the zip archive. Is the game running?\n\n");
+                return;
             }
         }
 
-        private void CleanUpTmpFiles()
+        // Used when you go from the public test patch to the latest patch from 9heads which does not have the maps in the game. This is important because if the maps are not cleaned up then
+        // the ID's will get messed up and it will be a lot harder to pick a map that you actually want.
+        private void CleanUpNewerPatchFiles()
         {
-            loggingTextBox.AppendText("Cleaning up files left over from the public test patch...\n\n");
+            loggingTextBox.AppendText("Deleting the newer maps and scenes from the public test patch...\n\n");
 
-            string [] newMapsToDelete = new string[] { "Pog_Champ_Hotel", "Factory_WIP", "Hund_Hills_Community_Center" };
+            string[] newMapsToDelete = new string[] { "Pog_Champ_Hotel", "Factory_WIP", "Hund_Hills_Community_Center" };
+            string[] filters = new string[] { "*.stage", "*.scene" };
             string newTempPath = Path.Combine(directory, "DamnedData\\Resources\\Stages");
-            Directory.SetCurrentDirectory(newTempPath);
-            FileInfo[] filesToDelete = new DirectoryInfo(newTempPath).GetFiles();
 
-            for (int i = 0; i < newMapsToDelete.Length; i++)
+            for (int k = 0; k < filters.Length; k++)
             {
-                for (int j = 0; j < filesToDelete.Length; j++)
-                {
-                    string folder = newMapsToDelete[i];
-                    string folderToDelete = filesToDelete[j].Name;
+                string currentFilter = filters[k];
+                FileInfo[] filesToDelete = new DirectoryInfo(newTempPath).GetFiles(currentFilter, SearchOption.TopDirectoryOnly);
 
-                    if (folder == folderToDelete)
+                for (int i = 0; i < newMapsToDelete.Length; i++)
+                {
+                    for (int j = 0; j < filesToDelete.Length; j++)
                     {
-                        filesToDelete[j].Delete();
-                        loggingTextBox.AppendText(String.Format("Deleted \"{0}\"...", newMapsToDelete[i]));
-                        break;
+                        string file = newMapsToDelete[i];
+                        string fileToDelete = filesToDelete[j].Name;
+
+                        if (fileToDelete.Contains(file))
+                        {
+                            filesToDelete[j].Delete();
+                            loggingTextBox.AppendText(String.Format("Deleted \"{0}{1}\"...", newMapsToDelete[i], filters[k]));
+                            break;
+
+                        }
 
                     }
-
                 }
             }
         }
 
-        private bool CheckIfValidDamnedRootDirectory()
+
+        private string GetFilePathOfADamnedFolder(string folderName)
         {
-            string rootPath = directory;
-            string mapsDirectory = "DamnedData\\Resources\\Stages";
-            string soundsDirectory = "DamnedData\\Resources\\Sounds";
-            string objectsDirectory = "DamnedData\\Resources\\Objects";
-            string editorImagesDirectory = "DamnedData\\GUI\\EditorImages";
-            string terrorimagesDirectory = "DamnedData\\GUI\\TerrorImages";
 
-            // Easiest way I can think of doing this at the moment. Too lazy to bother with a more efficient method.
+            DirectoryInfo[] possiblePaths = new DirectoryInfo(directory).GetDirectories("*", SearchOption.AllDirectories);
+            string result = directory;
 
-            string[] pathsToCheck = new string[] {Path.Combine(rootPath, mapsDirectory), Path.Combine(rootPath, soundsDirectory), Path.Combine(rootPath, objectsDirectory),
-                                                    Path.Combine(rootPath, editorImagesDirectory), Path.Combine(rootPath, terrorimagesDirectory) };
-
-
-            loggingTextBox.AppendText("Scanning directories to see if this is the folder where Damned is installed...\n\n");
-
-            for (int i = 0; i < pathsToCheck.Length; i++)
+            for (int i = 0; i < possiblePaths.Length; i++)
             {
-                loggingTextBox.AppendText(String.Format("Checking to see if {0} exists...\n\n", pathsToCheck[i]));
+                string directoryFullPathName = possiblePaths[i].FullName;
 
-                if (!Directory.Exists(pathsToCheck[i]))
+                if (directoryFullPathName.EndsWith(folderName))
                 {
-                    loggingTextBox.AppendText("\nFAILED. Did you select the right folder?\n\n");
-                    return false;
-                }
-
-                else
-                {
-                    loggingTextBox.AppendText("GOOD. Continuing...\n\n");
+                    result = directoryFullPathName;
+                    break;
                 }
             }
 
-            return true;
+            return result;
         }
 
-        private void ToolTip1_Popup(object sender, PopupEventArgs e)
+        private string[] GetDamnedStages()
         {
+            string mapDirectory = Path.Combine(directory, GetFilePathOfADamnedFolder("Stages"));
+            string[] filters = new string[] { "*.stage", "*.scene" };
+            List<string> resultList = new List<string>();
+            
+            for (int i = 0; i < filters.Length; i++)
+            {
+                FileInfo[] files = new DirectoryInfo(mapDirectory).GetFiles(filters[i], SearchOption.TopDirectoryOnly);
 
+                for (int k = 0; k < files.Length; k++)
+                {
+                    resultList.Add(files[i].FullName);
+                }
+            }
+
+            return resultList.ToArray();
         }
 
+        private string[] GetSounds()
+        {
+            string soundDirectory = Path.Combine(directory, GetFilePathOfADamnedFolder("Sounds"));
+            List<string> resultList = new List<string>();
+            FileInfo[] sounds = new DirectoryInfo(soundDirectory).GetFiles(".ogg", SearchOption.TopDirectoryOnly);
+
+            for (int i = 0; i < sounds.Length; i++)
+            {
+                resultList.Add(sounds[i].FullName);
+            }
+
+            return resultList.ToArray();
+        }
+
+
+        private string[] GetObjects()
+        {
+            string objectDirectory = Path.Combine(directory, GetFilePathOfADamnedFolder("Objects"));
+            List<string> resultList = new List<string>();
+            FileInfo[] objects = new DirectoryInfo(objectDirectory).GetFiles(".obj", SearchOption.TopDirectoryOnly);
+
+            for (int i = 0; i < objects.Length; i++)
+            {
+                resultList.Add(objects[i].FullName);
+            }
+
+            return resultList.ToArray();
+        }
 
         private void SetDamnedFolderButton_Click(object sender, EventArgs e)
         {
@@ -265,6 +337,17 @@ namespace DamnedWorkshop
                 damnedDirectoryStringLabel.ForeColor = Color.Red;
                 loggingTextBox.AppendText(String.Format("Directory \"{0}\" is not a vaild directory. Either you picked the wrong directory or you have missing game files.\n\n", directory));
             }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            DamnedFiles damnedFiles = new DamnedFiles(directory);
+            
+            if (damnedFiles.Check())
+            {
+                MessageBox.Show("Yeet");
+            }
+
         }
     }
 }
