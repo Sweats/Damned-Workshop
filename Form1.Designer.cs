@@ -280,6 +280,7 @@ namespace DamnedWorkshop
             this.buttonOpenDamnedFolder.TabIndex = 23;
             this.buttonOpenDamnedFolder.Text = "Open";
             this.buttonOpenDamnedFolder.UseVisualStyleBackColor = true;
+            this.buttonOpenDamnedFolder.Visible = false;
             this.buttonOpenDamnedFolder.Click += new System.EventHandler(this.ButtonOpenDamnedFolder_Click);
             // 
             // Form1
