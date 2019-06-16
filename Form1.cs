@@ -42,6 +42,7 @@ namespace DamnedWorkshop
         private string publicTestPatchStableSavedDirectory = "";
 
         private bool validBackUpFolder = false;
+        private bool validDamnedDirectory = false;
 
         private DamnedFiles damnedFiles;
 
@@ -376,6 +377,7 @@ namespace DamnedWorkshop
                 damnedDirectoryStringLabel.ForeColor = Color.Green;
                 loggingTextBox.AppendText("Successfully checked your directory. This seems to be the correct Damned folder.\n\n");
                 buttonOpenDamnedFolder.Enabled = true;
+                validDamnedDirectory = true;
             }
 
             else
@@ -385,6 +387,7 @@ namespace DamnedWorkshop
                 damnedDirectoryStringLabel.ForeColor = Color.Red;
                 loggingTextBox.AppendText(String.Format("Directory \"{0}\" is not a vaild directory. Either you picked the wrong directory or you have missing game files.\n\n", directory));
                 buttonOpenDamnedFolder.Enabled = false;
+                validDamnedDirectory = false;
             }
 
             damnedFiles = gameFiles;
@@ -538,6 +541,11 @@ namespace DamnedWorkshop
         private void ButtonRestore_Click(object sender, EventArgs e)
         {
             Application.UseWaitCursor = true;
+
+            if (!validDamnedDirectory || !validBackUpFolder)
+            {
+                MessageBox.Show("You have one or more invalid directories. Please select another");
+            }
 
             if (!DamnedCopyFiles(backupDirectory, directory))
             {
