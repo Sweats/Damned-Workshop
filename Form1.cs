@@ -19,24 +19,28 @@ namespace DamnedWorkshop
         [DllImport("user32.dll")]
         static extern bool FlashWindow(IntPtr hwnd, bool bInvert);
 
-        private static int DOWNLOAD_TEST_PATCH_STABLE = 0;
-        private static int DOWNLOAD_TEST_PATCH_TESTING = 1;
-        private static int DOWNLOAD_ORIGINAL_PATCH = 2;
 
 
         private static string DOWNLOAD_TEST_PATCH_STABLE_LINK =  "https://github.com/Sweats/Damned/archive/master.zip";
         private static string DOWNLOAD_TEST_PATCH_TESTING_LINK = "https://github.com/Sweats/Damned/archive/testing.zip";
         private static string GITHUB_LINK = "TO BE DETERMINED";
-        private static string DOWNLOAD_ORIGINAL_PATCH_LINK = "";
 
-        private static string TOOLTIP_ORIGINAL_PATCH_TEXT = "Downloads and installs the latest public test patch from the testing banch from " + DOWNLOAD_ORIGINAL_PATCH_LINK + " \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
+        private static int PATCH_TESTING = 0;
+        private static int PATCH_STABLE = 1;
+
+
         private static string TOOLTIP_TEST_PATCH_STABLE_TEXT = "Downloads and installs the latest public test patch from the stable banch from " + DOWNLOAD_TEST_PATCH_STABLE_LINK + " \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
         private static string TOOLTIP_TEST_PATCH_TESTING_TEXT = "Downloads and installs the latest public test patch from the testing banch from " + DOWNLOAD_TEST_PATCH_TESTING_LINK + ". \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
         private static string TOOLTIP_SET_DAMNED_FOLDER_TEXT = "Opens up the file explorer where you can select a location where Damned is installed.";
         private static string TOOLTIP_CHECK_BUTTON_TEXT = "Checks the listed directory to see if the location that you picked is a valid Damend directory.\n\nIf the result is red, it means it failed. If the result is green, it mean it was successful";
 
         private string directory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Damned";
-        
+        private string tempDirectory = "";
+        private string backupDirectory = "";
+        private string publicTestPatchTestingSavedDirectory = "";
+        private string publicTestPatchStableSavedDirectory = "";
+
+        private DamnedFiles damnedFiles;
 
         public Form1()
         {
@@ -47,245 +51,266 @@ namespace DamnedWorkshop
         {
             // TODO: Figure out how to do settings so the user does not have to re do everything every time.
             this.damnedDirectoryStringLabel.Text = directory;
+            this.damnedBackupFolderStringLabel.Text = backupDirectory;
+            this.publicTestPatchTestingPathLabel.Text = this.publicTestPatchTestingSavedDirectory;
+            this.publicTestPatchStablePathLabel.Text = this.publicTestPatchStableSavedDirectory;
             
-            enablePatchButtionControls();
             toolTipPublicTestPatchTesting.SetToolTip(publicTestPatchTestingButton, TOOLTIP_TEST_PATCH_TESTING_TEXT);
-            toolTipLatestOfficialPatch.SetToolTip(defaultPatchButton, TOOLTIP_ORIGINAL_PATCH_TEXT);
             toolTipPublicTestPatchStable.SetToolTip(publicTestPatchStableButton, TOOLTIP_TEST_PATCH_STABLE_TEXT);
             toolTipSetDamnedFolder.SetToolTip(setDamnedFolderButton, TOOLTIP_SET_DAMNED_FOLDER_TEXT);
             toolTipCheckButton.SetToolTip(checkPathButton, TOOLTIP_CHECK_BUTTON_TEXT);
             loggingTextBox.AppendText(String.Format("Welcome\n\nBefore using this tool, please check its github at {0}\n\nDamned directory has been set to \"{1}\". If you have installed Damned in a non traditonal location, you will have to change it. For more information on what the buttons do, hover your mouse over them.\n\n", GITHUB_LINK, directory));
+
         }
+
+        private void LoadKeepButtons()
+        {
+        }
+
+
+        private void HandleControls()
+        {
+
+        }
+
 
         private void PublicTestPatchStableButton_Click(object sender, EventArgs e)
         {
-            InstallPatch(DOWNLOAD_TEST_PATCH_STABLE);
+            if (publicTestPatchStablePathLabel.Text.Length == 0 && keepPublicTestPatchStableCheckbox.Checked)
+            {
+                MessageBox.Show("You did not select a folder to save a copy of the zip file from GitHub. Either uncheck the box if you don't want to save it or select a folder", "No folder selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            InstallPatch(PATCH_STABLE);
 
         }
-
         private void PublicTestPatchTestingButtion_Click(object sender, EventArgs e)
         {
-            InstallPatch(DOWNLOAD_TEST_PATCH_TESTING);
+            if (publicTestPatchTestingPathLabel.Text.Length == 0 && keepPublicTestPatchTestingCheckbox.Checked)
+            {
+                MessageBox.Show("You did not select a folder to save a copy of the zip file from GitHub. Either uncheck the box if you don't want to save it or select a folder", "No folder selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
 
+            }
+
+            InstallPatch(PATCH_TESTING);
         }
 
-        private void DefaultPatchButton_Click(object sender, EventArgs e)
-        {
-            InstallPatch(DOWNLOAD_ORIGINAL_PATCH);
-
-        }
 
         private void InstallPatch(int patch)
         {
-            string link = "";
-            string tmpDirectory = Path.Combine(directory, "tmp");
+            Cursor.Current = Cursors.WaitCursor;
+            Application.UseWaitCursor = true;
 
-            if (Directory.Exists(tmpDirectory))
+            if (patch == PATCH_STABLE)
             {
-                DeleteTmpFiles(tmpDirectory);
-
-            }
-
-            Directory.CreateDirectory(tmpDirectory);
-            Directory.SetCurrentDirectory(tmpDirectory);
-
-            string name = "Damned";
-
-            // DON"T FORGET TO MOVE THIS AFTER YOU ARE DONE TESTING.
-            //CleanUpNewerPatchFiles();
-
-            using (var client = new WebClient())
-            {
-                string zipName = "";
-
-                try
+                if (keepPublicTestPatchStableCheckbox.Checked)
                 {
-                    if (patch == DOWNLOAD_ORIGINAL_PATCH)
-                    {
-                        zipName = "Damned";
-                        link = "TODO: Add in the stable link in here";
-                        loggingTextBox.AppendText(String.Format("Downloading the Damned public test patch from {0}. Please wait...\n\n", link));
-                        CleanUpNewerPatchFiles();
-                        Directory.SetCurrentDirectory(tmpDirectory);
-                        client.DownloadFile(link, zipName);
-                    }
-
-                    else if (patch == DOWNLOAD_TEST_PATCH_STABLE)
-                    {
-                        zipName = "Damned_Public_Test_Patch_Stable.zip";
-                        link = DOWNLOAD_TEST_PATCH_STABLE_LINK;
-                        loggingTextBox.AppendText(String.Format("Downloading the Damned public test patch from {0}. Please wait...\n\n", link));
-                        client.DownloadFile(link, zipName);
-                        name = "Damned-master";
-                    }
-
-                    else if (patch == DOWNLOAD_TEST_PATCH_TESTING)
-                    {
-                        zipName = "Damned_Public_Test_Patch_Testing.zip";
-                        link = DOWNLOAD_TEST_PATCH_TESTING_LINK;
-                        loggingTextBox.AppendText(String.Format("Downloading the Damned public test patch from {0}. Please wait...\n\n", link));
-                        client.DownloadFile(link, zipName);
-                        name = "Damned-testing";
-                    }
-
-                    loggingTextBox.AppendText("Done downloading the patch. Please wait for it to install...\n\n");
+                    InstallPatchLocally(patch);
 
                 }
 
-                catch (WebException e)
+                else
                 {
-                    string errorMessage = String.Format("Faled to download the patch. Try downloading from this link manually:\n\n{0}\n\nError Code:\n\n{1}", link, e.ToString());
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    loggingTextBox.AppendText(errorMessage);
-                    FlashWindow(this.Handle, false);
+                    InstallPatchFromGithub(patch);
 
                 }
 
-                ExtractModifiedDamnedFoldersToGameFolder(new DirectoryInfo(tmpDirectory), new DirectoryInfo(directory), zipName);
             }
 
-            DeleteTmpFiles(tmpDirectory);
+            else if (patch == PATCH_TESTING)
+            {
+                if (keepPublicTestPatchTestingCheckbox.Checked)
+                {
+                    InstallPatchLocally(patch);
+                }
+
+                else
+                {
+                    InstallPatchFromGithub(patch);
+                }
+
+            }
+
+            Application.UseWaitCursor = false;
+
         }
 
-        private void DeleteTmpFiles(string tmpDirectory)
+        private void InstallPatchLocally(int patch)
         {
-            DirectoryInfo[] directories = new DirectoryInfo(tmpDirectory).GetDirectories("*", SearchOption.AllDirectories);
+            loggingTextBox.AppendText("Begin installation from local\n\n-----------------------------------------------------------------------------------------------------------\n\n");
 
-            for (int k = 0; k < directories.Length; k++)
+            if (patch == PATCH_TESTING)
             {
-                FileInfo[] info = new DirectoryInfo(tmpDirectory).GetFiles("*", SearchOption.AllDirectories);
+                string directoryName = "Damned-testing";
+                string damnedTempDirectory = Path.Combine(publicTestPatchTestingSavedDirectory, directoryName);
 
-                for (int i = 0; i < info.Length; i++)
+                if (!Directory.Exists(damnedTempDirectory))
                 {
-                    FileInfo file = info[i];
-                    loggingTextBox.AppendText("Deleting " + file.Name + "\n\n");
-                    file.Delete();
+                    loggingTextBox.AppendText(String.Format("No existing local branch found in \"{0}\". Installing from GitHub. This will only have to happen one time.\n\n", publicTestPatchTestingSavedDirectory));
+                    InstallPatchFromGithub(patch);
+                    return;
+                }
+
+                loggingTextBox.AppendText(String.Format("Copying from \"{0}\" to \"{1}\"...\n\n", damnedTempDirectory, directory));
+
+                if (!DamnedCopyFiles(damnedTempDirectory, directory))
+                {
+                    MessageBox.Show(String.Format("Failed to extract files and folders from {0}\n\n To:\n\n \"{1}\". Did you select the right local path for the testing branch?", publicTestPatchTestingSavedDirectory, directory), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
                 }
             }
 
-            Directory.Delete(tmpDirectory, true);
 
-            loggingTextBox.AppendText("Deleted tmp directory in your Damned folder. Was it from a previous failed installation?\n\n");
+            else if (patch == PATCH_STABLE)
+            {
+                string directoryName = "Damned-master";
+                string damnedTempDirectory = Path.Combine(publicTestPatchStableSavedDirectory, directoryName);
+
+                if (!Directory.Exists(damnedTempDirectory))
+                {
+                    loggingTextBox.AppendText(String.Format("No existing local branch found in \"{0}\". Installing from GitHub. This will only have to happen one time.\n\n", publicTestPatchStableSavedDirectory));
+                    InstallPatchFromGithub(patch);
+                    return;
+                }
+
+                loggingTextBox.AppendText(String.Format("Copying from \"{0}\" to \"{1}\"...\n\n", damnedTempDirectory, directory));
+
+                if (!DamnedCopyFiles(damnedTempDirectory, directory))
+                {
+                    MessageBox.Show(String.Format("Failed to extract files and folders from {0}\n\n To:\n\n \"{1}\". Did you select the right local path for the stable branch?", publicTestPatchStableSavedDirectory, directory), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+            }
+
+            MessageBox.Show("Successfully installed the patch from the local directory!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void ExtractModifiedDamnedFoldersToGameFolder(DirectoryInfo tmpDirectory, DirectoryInfo gameDirectory, string zipName)
+        // Makess things look a little cleaner
+        private bool DamnedCopyFiles(string source, string dest)
         {
+            bool success = true;
+
             try
-            { 
-                loggingTextBox.AppendText(String.Format("Extracting {0}...\n\n", zipName));
-                ZipFile.ExtractToDirectory(zipName, tmpDirectory.FullName);
-                loggingTextBox.AppendText("Done\n\n");
+            {
+                Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(source, dest, true);
             }
 
             catch (IOException)
             {
-                loggingTextBox.AppendText("Failed to install the patch from the zip archive. Is the game running?\n\n");
+
+                success = false;
+            }
+
+
+            return success;
+        }
+
+        private void InstallPatchFromGithub(int patch)
+        {
+            loggingTextBox.AppendText("Begin installing public test patch\n\n--------------------------------------------------------------------------------------------\n\n");
+            tempDirectory = Path.Combine(directory, "tmp");
+            string damnedTempDirectory = tempDirectory;
+
+            if (Directory.Exists(tempDirectory))
+            {
+                loggingTextBox.AppendText("Deleted old temporary directory.\n\n");
+                Directory.Delete(tempDirectory, true);
+            }
+
+            string extractedFolderName = "";
+
+            Directory.CreateDirectory(tempDirectory);
+            loggingTextBox.AppendText("Created a new temporary directory\n\n");
+            Directory.SetCurrentDirectory(tempDirectory);
+            loggingTextBox.AppendText("Moved into new temporary directory\n\n");
+
+            if (patch == PATCH_STABLE)
+            {
+                loggingTextBox.AppendText(String.Format("Downloading the stable branch from \"{0}\" into  \"{1}\". Please wait...\n\n", DOWNLOAD_TEST_PATCH_STABLE_LINK, tempDirectory));
+                DownloadPatch(DOWNLOAD_TEST_PATCH_STABLE_LINK);
+                extractedFolderName = "Damned-master";
+                damnedTempDirectory = Path.Combine(tempDirectory, extractedFolderName);
+            }
+
+            else if (patch == PATCH_TESTING)
+            {
+
+                loggingTextBox.AppendText(String.Format("Downloading the testing branch from \"{0}\" into  \"{1}\". Please wait...\n\n", DOWNLOAD_TEST_PATCH_TESTING_LINK, tempDirectory));
+                DownloadPatch(DOWNLOAD_TEST_PATCH_TESTING_LINK);
+                extractedFolderName = "Damned-testing";
+                damnedTempDirectory = Path.Combine(tempDirectory, extractedFolderName);
+
+            }
+
+            try
+            {
+                ZipFile.ExtractToDirectory("DamnedPatch.zip", tempDirectory);
+
+            }
+
+            catch (IOException)
+            {
+                Directory.Delete(tempDirectory, true);
+                MessageBox.Show("Failed to extract the zip file. Cleaned up what was created", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                loggingTextBox.AppendText(String.Format("Deleted \"{0}\"", tempDirectory));
                 return;
+
             }
+
+            Directory.SetCurrentDirectory(directory);
+            loggingTextBox.AppendText(String.Format("Copying from \"{0}\" to \"{1}\"...\n\n", damnedTempDirectory, directory));
+
+            if (!DamnedCopyFiles(damnedTempDirectory, directory))
+            {
+                MessageBox.Show(String.Format("Failed to extract files and folders from {0}\n\n To:\n\n \"{1}\"", damnedTempDirectory, directory), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Directory.Delete(tempDirectory, true);
+                loggingTextBox.AppendText(String.Format("Deleted \"{0}\"\n\n", tempDirectory));
+                return;
+
+            }
+
+            loggingTextBox.AppendText(String.Format("Successfully installed the public test patch!\n\nDeleted \"{0}\"\n\n", tempDirectory));
+
+            if (keepPublicTestPatchStableCheckbox.Checked && extractedFolderName == "Damned-master")
+            {
+                DamnedCopyFiles(tempDirectory, publicTestPatchStableSavedDirectory);
+                loggingTextBox.AppendText(String.Format("Saved a local copy of the downloaded file to \"{0}\"...\n\n", publicTestPatchStableSavedDirectory));
+            }
+
+            else if (keepPublicTestPatchTestingCheckbox.Checked && extractedFolderName == "Damned-testing")
+            {
+                DamnedCopyFiles(tempDirectory, publicTestPatchTestingSavedDirectory);
+                loggingTextBox.AppendText(String.Format("Saved a local copy of the downloaded file to \"{0}\"...\n\n", publicTestPatchStableSavedDirectory));
+            }
+
+            Directory.Delete(tempDirectory, true);
+            MessageBox.Show("Successfully installed the patch from GitHub!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
-        // Used when you go from the public test patch to the latest patch from 9heads which does not have the maps in the game. This is important because if the maps are not cleaned up then
-        // the ID's will get messed up and it will be a lot harder to pick a map that you actually want.
-        private void CleanUpNewerPatchFiles()
+        private void DownloadPatch(string link)
         {
-            loggingTextBox.AppendText("Deleting the newer maps and scenes from the public test patch...\n\n");
-
-            string[] newMapsToDelete = new string[] { "Pog_Champ_Hotel", "Factory_WIP", "Hund_Hills_Community_Center" };
-            string[] filters = new string[] { "*.stage", "*.scene" };
-            string newTempPath = Path.Combine(directory, "DamnedData\\Resources\\Stages");
-
-            for (int k = 0; k < filters.Length; k++)
+            try
             {
-                string currentFilter = filters[k];
-                FileInfo[] filesToDelete = new DirectoryInfo(newTempPath).GetFiles(currentFilter, SearchOption.TopDirectoryOnly);
-
-                for (int i = 0; i < newMapsToDelete.Length; i++)
+                using (WebClient webClient = new WebClient())
                 {
-                    for (int j = 0; j < filesToDelete.Length; j++)
-                    {
-                        string file = newMapsToDelete[i];
-                        string fileToDelete = filesToDelete[j].Name;
-
-                        if (fileToDelete.Contains(file))
-                        {
-                            filesToDelete[j].Delete();
-                            loggingTextBox.AppendText(String.Format("Deleted \"{0}{1}\"...", newMapsToDelete[i], filters[k]));
-                            break;
-
-                        }
-
-                    }
+                    string zipName = "DamnedPatch.zip";
+                    webClient.DownloadFile(link, zipName);
                 }
+
             }
-        }
 
-
-        private string GetFilePathOfADamnedFolder(string folderName)
-        {
-
-            DirectoryInfo[] possiblePaths = new DirectoryInfo(directory).GetDirectories("*", SearchOption.AllDirectories);
-            string result = directory;
-
-            for (int i = 0; i < possiblePaths.Length; i++)
+            catch (WebException e)
             {
-                string directoryFullPathName = possiblePaths[i].FullName;
-
-                if (directoryFullPathName.EndsWith(folderName))
-                {
-                    result = directoryFullPathName;
-                    break;
-                }
+                string errorMessage = String.Format("Failed to download the patch. Do you have a valid internet connection? If so, then try downloading from this link manually:\n\n{0}\n\nError Code:\n\n{1}", link, e.ToString());
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                loggingTextBox.AppendText(errorMessage);
+                FlashWindow(this.Handle, false);
             }
-
-            return result;
-        }
-
-        private string[] GetDamnedStages()
-        {
-            string mapDirectory = Path.Combine(directory, GetFilePathOfADamnedFolder("Stages"));
-            string[] filters = new string[] { "*.stage", "*.scene" };
-            List<string> resultList = new List<string>();
-            
-            for (int i = 0; i < filters.Length; i++)
-            {
-                FileInfo[] files = new DirectoryInfo(mapDirectory).GetFiles(filters[i], SearchOption.TopDirectoryOnly);
-
-                for (int k = 0; k < files.Length; k++)
-                {
-                    resultList.Add(files[i].FullName);
-                }
-            }
-
-            return resultList.ToArray();
-        }
-
-        private string[] GetSounds()
-        {
-            string soundDirectory = Path.Combine(directory, GetFilePathOfADamnedFolder("Sounds"));
-            List<string> resultList = new List<string>();
-            FileInfo[] sounds = new DirectoryInfo(soundDirectory).GetFiles(".ogg", SearchOption.TopDirectoryOnly);
-
-            for (int i = 0; i < sounds.Length; i++)
-            {
-                resultList.Add(sounds[i].FullName);
-            }
-
-            return resultList.ToArray();
-        }
-
-
-        private string[] GetObjects()
-        {
-            string objectDirectory = Path.Combine(directory, GetFilePathOfADamnedFolder("Objects"));
-            List<string> resultList = new List<string>();
-            FileInfo[] objects = new DirectoryInfo(objectDirectory).GetFiles(".obj", SearchOption.TopDirectoryOnly);
-
-            for (int i = 0; i < objects.Length; i++)
-            {
-                resultList.Add(objects[i].FullName);
-            }
-
-            return resultList.ToArray();
         }
 
         private void SetDamnedFolderButton_Click(object sender, EventArgs e)
@@ -301,30 +326,38 @@ namespace DamnedWorkshop
             string text = String.Format("Selected \"{0}\" as the folder to install the patches\n\n", directory);
             damnedDirectoryStringLabel.ForeColor = Color.Black;
             loggingTextBox.AppendText(text);
+            DisablePatchButtonControls();
             damnedDirectoryStringLabel.Text = directory;
         }
 
 
-        private void enablePatchButtionControls()
+        private void EnablePatchButtionControls()
         {
-            defaultPatchButton.Enabled = true;
             publicTestPatchStableButton.Enabled = true;
             publicTestPatchTestingButton.Enabled = true;
+            keepPublicTestPatchTestingCheckbox.Enabled = true;
+            keepPublicTestPatchStableCheckbox.Enabled = true;
+
+          
 
         }
 
-        private void disablePatchButtonControls()
+        private void DisablePatchButtonControls()
         {
-            defaultPatchButton.Enabled = false;
             publicTestPatchTestingButton.Enabled = false;
             publicTestPatchStableButton.Enabled = false;
+            keepPublicTestPatchStableCheckbox.Enabled = false;
+            keepPublicTestPatchTestingCheckbox.Enabled = false;
         }
 
         private void ButtonCheckPath_Click(object sender, EventArgs e)
         {
-            if (CheckIfValidDamnedRootDirectory())
+            DamnedFiles damnedFiles = new DamnedFiles(directory);
+
+            if (damnedFiles.Check())
             {
-                enablePatchButtionControls();
+
+                EnablePatchButtionControls();
                 damnedDirectoryStringLabel.Text = directory;
                 damnedDirectoryStringLabel.ForeColor = Color.Green;
                 loggingTextBox.AppendText("Successfully checked your directory. This seems to be the correct Damned folder.\n\n");
@@ -332,22 +365,140 @@ namespace DamnedWorkshop
 
             else
             {
-                disablePatchButtonControls();
+                DisablePatchButtonControls();
                 damnedDirectoryStringLabel.Text = directory;
                 damnedDirectoryStringLabel.ForeColor = Color.Red;
                 loggingTextBox.AppendText(String.Format("Directory \"{0}\" is not a vaild directory. Either you picked the wrong directory or you have missing game files.\n\n", directory));
             }
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        
+
+        private void ButtonSelectBackupFolder_Click(object sender, EventArgs e)
         {
-            DamnedFiles damnedFiles = new DamnedFiles(directory);
-            
-            if (damnedFiles.Check())
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Yeet");
+                this.damnedBackupFolderStringLabel.Text = dialog.SelectedPath;
+                this.backupDirectory = dialog.SelectedPath;
+                buttonBackUp.Enabled = true;
             }
 
+        }
+
+        private void KeepPublicTestPatchStableCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (keepPublicTestPatchStableCheckbox.Checked)
+            {
+                buttonSetPublicTestPatchStableLocation.Enabled = true;
+
+            }
+
+            else
+            {
+                buttonSetPublicTestPatchStableLocation.Enabled = false;
+
+            }
+
+        }
+
+        private void KeepPublicTestPatchTestingCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (keepPublicTestPatchTestingCheckbox.Checked)
+            {
+                buttonSetPublicTestPatchTestingLocation.Enabled = true;
+
+            }
+
+            else
+            {
+                buttonSetPublicTestPatchTestingLocation.Enabled = false;
+            }
+
+
+        }
+
+
+        private void HandleControlsAfterLoadingSettings()
+        {
+
+        }
+
+        private void ButtonSetPublicTestPatchStableLocation_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog browser = new FolderBrowserDialog();
+
+            if (browser.ShowDialog() == DialogResult.OK)
+            {
+                this.publicTestPatchStableSavedDirectory = browser.SelectedPath;
+                this.publicTestPatchStablePathLabel.Text = browser.SelectedPath;
+
+                if (publicTestPatchStableSavedDirectory == publicTestPatchTestingSavedDirectory)
+                {
+                    MessageBox.Show("This directory is already being for the testing branch. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    publicTestPatchStableSavedDirectory = "";
+                    publicTestPatchStablePathLabel.Text = "";
+                }
+
+                else if (publicTestPatchStableSavedDirectory == directory)
+                {
+                    MessageBox.Show("This directory is used for the game folder. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    publicTestPatchStableSavedDirectory = "";
+                    publicTestPatchStablePathLabel.Text = "";
+
+                }
+            }
+
+        }
+
+        private void ButtonSetPublicTestPatchTestingLocation_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog browser = new FolderBrowserDialog();
+
+            if (browser.ShowDialog() == DialogResult.OK)
+            {
+                this.publicTestPatchTestingSavedDirectory = browser.SelectedPath;
+                this.publicTestPatchTestingPathLabel.Text = browser.SelectedPath;
+
+                if (publicTestPatchTestingSavedDirectory == publicTestPatchStableSavedDirectory)
+                {
+
+                    MessageBox.Show("This directory is already being for the stable branch. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    publicTestPatchTestingSavedDirectory = "";
+                    publicTestPatchTestingPathLabel.Text = "";
+                }
+
+
+                else if (publicTestPatchTestingSavedDirectory == directory)
+                {
+                    MessageBox.Show("This directory is used for the game folder. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    publicTestPatchTestingSavedDirectory = "";
+                    publicTestPatchTestingPathLabel.Text = "";
+                }
+            }
+
+        }
+
+        private void ButtonBackUp_Click(object sender, EventArgs e)
+        {
+            Application.UseWaitCursor = true;
+            string text = String.Format("Backing up \"{0}\" to \"{1}\"\n\n", directory, backupDirectory);
+            loggingTextBox.AppendText(text);
+
+            if (!DamnedCopyFiles(directory, backupDirectory))
+            {
+                MessageBox.Show("Failed to backup Damned Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+
+            Application.UseWaitCursor = false;
+            DamnedFiles damnedFiles = new DamnedFiles(backupDirectory);
+
+            if (damnedFiles.Check())
+            {
+                damnedBackupFolderStringLabel.ForeColor = Color.Green;
+            }
         }
     }
 }

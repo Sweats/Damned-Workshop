@@ -1,16 +1,20 @@
 ﻿using System;
 using System.IO;
-
-
+using System.IO.Compression;
+using System.Collections.Generic;
+using System.Diagnostics;
 // A wrapper class that makes dealing with the Damned filesystem easy. This will become very useful.
+
 
 public class DamnedFiles
 {
 
-
     private string directory;
+    public int filesChanged = 0;
 
-    public string[] stagesList
+
+
+    public string[] stageList
     {
         get;
         private set;
@@ -19,7 +23,7 @@ public class DamnedFiles
 
 
 
-    public string[] stagesListPath
+    public string[] stageListPath
     {
         get;
         private set;
@@ -62,6 +66,12 @@ public class DamnedFiles
         private set;
     }
 
+    public string[] damnedDirectoriesRelativePath
+    {
+        get;
+        private set;
+    }
+
 
 
     public string[] objectsList
@@ -81,7 +91,6 @@ public class DamnedFiles
 
         this.directory = rootDirectory;
         SetDirectories();
-        // TODO: Do a if check in here for valid folders before setting the rest of the stuff?
         SetMaps();
         SetObjects();
         SetSounds();
@@ -92,21 +101,40 @@ public class DamnedFiles
     private void SetMaps()
     {
         string folder = GetDamnedDamnedDirectoryAbsolutePath("Stages");
-        FileInfo[] stages = new DirectoryInfo(directory).GetFiles("*.stage", SearchOption.TopDirectoryOnly);
-        stagesList = new string[stages.Length];
-        stagesListPath = new string[stages.Length];
+
+        if (!Directory.Exists(folder))
+        {
+            return;
+        }
+
+        FileInfo[] stages = new DirectoryInfo(folder).GetFiles("*.stage", SearchOption.TopDirectoryOnly);
+        stageList = new string[stages.Length];
+        stageListPath = new string[stages.Length];
 
         for (int i = 0; i < stages.Length; i++)
         {
-            stagesList[i] = stages[i].Name;
-            stagesListPath[i] = stages[i].FullName;
+            stageList[i] = stages[i].Name;
+            stageListPath[i] = stages[i].FullName;
         }
+    }
+
+    // Compares the base game to the test patch files and returns an array of string that shows which files are new.
+    public string[] GetDiffFiles(DamnedFiles patch)
+    {
+        return null;
+
     }
 
     private void SetScenes()
     {
         string folder = GetDamnedDamnedDirectoryAbsolutePath("Stages");
-        FileInfo[] stages = new DirectoryInfo(directory).GetFiles("*.scene", SearchOption.TopDirectoryOnly);
+
+        if (!Directory.Exists(folder))
+        {
+            return;
+        }
+
+        FileInfo[] stages = new DirectoryInfo(folder).GetFiles("*.scene", SearchOption.TopDirectoryOnly);
         scenesList = new string[stages.Length];
         scenesListPath = new string[stages.Length];
 
@@ -120,7 +148,14 @@ public class DamnedFiles
 
     private void SetObjects(bool fullPath = false)
     {
+
         string folder = GetDamnedDamnedDirectoryAbsolutePath("Objects");
+
+        if (!Directory.Exists(folder))
+        {
+            return;
+        }
+
         FileInfo[] objects = new DirectoryInfo(folder).GetFiles("*.obj", SearchOption.TopDirectoryOnly);
         objectsList = new string[objects.Length];
         objectsListPath = new string[objects.Length];
@@ -133,10 +168,15 @@ public class DamnedFiles
 
     }
 
-
     private void SetSounds()
     {
         string folder = GetDamnedDamnedDirectoryAbsolutePath("Sounds");
+
+        if (!Directory.Exists(folder))
+        {
+            return;
+        }
+
         FileInfo[] sounds = new DirectoryInfo(folder).GetFiles("*.ogg", SearchOption.AllDirectories);
         soundList = new string[sounds.Length];
         soundListPath = new string[sounds.Length];
@@ -153,11 +193,13 @@ public class DamnedFiles
         DirectoryInfo[] directories = new DirectoryInfo(directory).GetDirectories("*", SearchOption.AllDirectories);
         damnedDirectoriesPath = new string[directories.Length];
         damnedDirectories = new string[directories.Length];
+        damnedDirectoriesRelativePath = new string[directories.Length];
 
         for (int i = 0; i < directories.Length; i++)
         {
             damnedDirectories[i] = directories[i].Name;
             damnedDirectoriesPath[i] = directories[i].FullName;
+            //damnedDirectoriesRelativePath[i] = directories[i].
         }
 
     }
@@ -167,12 +209,13 @@ public class DamnedFiles
     {
         string path = folder;
 
-        for (int i = 0; i < damnedDirectoriesPath.Length; i++)
+        for (int i = 0; i < damnedDirectories.Length; i++)
         {
-            path = damnedDirectoriesPath[i];
+            string folderName = damnedDirectories[i];
 
-            if (folder == path)
+            if (folderName == folder)
             {
+                path = damnedDirectoriesPath[i];
                 break;
             }
         }
@@ -180,9 +223,6 @@ public class DamnedFiles
         return path;
     }
 
-
-
-    // Only use for the game directory itself and not the temp directory.
     public bool Check()
     {
         string[] foldersToLookFor = new string[] { "DamnedData", "GUI", "Resources", "EditorImages", "TerrorImages", "Objects", "Sounds", "Stages", "Redist", "Docs", "Ambience", "Traps" };
@@ -194,9 +234,9 @@ public class DamnedFiles
         {
             string currentFolderLookingFor = foldersToLookFor[i];
 
-            for (int k = 0; k < damnedDirectories.Length; i++)
+            for (int k = 0; k < damnedDirectories.Length; k++)
             {
-                string currentFolderFound = damnedDirectories[i];
+                string currentFolderFound = damnedDirectories[k];
 
                 if (currentFolderLookingFor == currentFolderFound)
                 {
@@ -216,124 +256,5 @@ public class DamnedFiles
         return success;
 
     }
-
-    public void Extract(DamnedFiles dest)
-    {
-
-    }
-
-
-    // First step is to clean all the new files that do not exist in the base game.
-    // Second step is to loop through the original files and compute the hash and see if they are different. If so, then warn the user that they may need to download the old files
-    // from the stable repository from GitHub.
-    public static void CleanPublicTestPatchFiles(DamnedFiles original, DamnedFiles modified)
-    {
-
-        CleanPublicTestPatchStages(original, modified);
-        CleanPublicTestPatchScenes(original, modified);
-        CleanPublicTestPatchSounds(original, modified);
-        CleanPublicTestPatchObjects(original, modified);
-        ScanForModifiedFiles(original, modified);
-
-
-    }
-
-    private static void CleanPublicTestPatchStages(DamnedFiles original, DamnedFiles modified)
-    {
-        string[] originalStagesList = original.stagesList;
-        string[] modifiedStagesList = modified.stagesList;
-
-        for (int i = 0; i < originalStagesList.Length; i++)
-        {
-            string originalStage = originalStagesList[i];
-
-            for (int k = 0; k < modifiedStagesList.Length; k++)
-            {
-                string newStage = modifiedStagesList[k];
-
-                if (originalStage == newStage)
-                {
-                    File.Delete(original.stagesListPath[i]);
-                    break;
-                }
-            }
-        }
-
-    }
-
-    private static void CleanPublicTestPatchScenes(DamnedFiles original, DamnedFiles modified)
-    {
-        string[] originalScenesList = original.scenesList;
-        string[] modifiedScenesList = modified.scenesList;
-
-        for (int i = 0; i < originalScenesList.Length; i++)
-        {
-            string originalScene = originalScenesList[i];
-
-            for (int k = 0; k < modifiedScenesList.Length; k++)
-            {
-                string newScene = modifiedScenesList[k];
-
-                if (originalScene == newScene)
-                {
-                    File.Delete(original.scenesListPath[i]);
-                    break;
-                }
-            }
-        }
-    }
-
-
-    private static void CleanPublicTestPatchSounds(DamnedFiles original, DamnedFiles modified)
-    {
-        string[] originalSoundList = original.soundList;
-        string[] modifiedSoundList = modified.soundList;
-
-        for (int i = 0; i < originalSoundList.Length; i++)
-        {
-            string originalSound = originalSoundList[i];
-
-            for (int k = 0; k < modifiedSoundList.Length; k++)
-            {
-                string newSound = modifiedSoundList[i];
-
-                if (originalSound == newSound)
-                {
-                    File.Delete(original.soundListPath[i]);
-                    break;
-                }
-            }
-        }
-    }
-
-
-    private static void CleanPublicTestPatchObjects(DamnedFiles original, DamnedFiles modified)
-    {
-        string[] originalObjectsList = original.objectsList;
-        string[] modifiedObjectsList = modified.objectsList;
-
-        for (int i = 0; i < originalObjectsList.Length; i++)
-        {
-            string originalObject = originalObjectsList[i];
-
-            for (int k = 0; k < modifiedObjectsList.Length; k++)
-            {
-                string newObject = modifiedObjectsList[k];
-
-                if (originalObject == newObject)
-                {
-                    File.Delete(original.objectsListPath[i]);
-                    break;
-                }
-            }
-        }
-    }
-
-
-    private static void ScanForModifiedFiles(DamnedFiles original, DamnedFiles modifiedFiles)
-    {
-
-    }
 }
-
-
+    
