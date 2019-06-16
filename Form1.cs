@@ -506,7 +506,19 @@ namespace DamnedWorkshop
 
         private void ButtonBackUp_Click(object sender, EventArgs e)
         {
-            DamnedFiles damnedFiles = new DamnedFiles(backupDirectory);
+            Application.UseWaitCursor = true;
+            string text = String.Format("Backing up \"{0}\" to \"{1}\"\n\n", directory, backupDirectory);
+            loggingTextBox.AppendText(text);
+
+            if (!DamnedCopyFiles(directory, backupDirectory))
+            {
+                MessageBox.Show("Failed to backup Damned Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+
+            Application.UseWaitCursor = false;
+
+            DamnedFiles damnedFiles = new DamnedFiles(backupDirectory); ;
 
             if (damnedFiles.Check())
             {
@@ -523,17 +535,6 @@ namespace DamnedWorkshop
                 return;
             }
 
-            Application.UseWaitCursor = true;
-            string text = String.Format("Backing up \"{0}\" to \"{1}\"\n\n", directory, backupDirectory);
-            loggingTextBox.AppendText(text);
-
-            if (!DamnedCopyFiles(directory, backupDirectory))
-            {
-                MessageBox.Show("Failed to backup Damned Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
-
-            Application.UseWaitCursor = false;
 
         }
 
@@ -544,7 +545,8 @@ namespace DamnedWorkshop
 
             if (!validDamnedDirectory || !validBackUpFolder)
             {
-                MessageBox.Show("You have one or more invalid directories. Please select another");
+                MessageBox.Show("You have one or more invalid directories. Please select another", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             if (!DamnedCopyFiles(backupDirectory, directory))

@@ -251,7 +251,6 @@ public class DamnedFiles
         }
 
         return success;
-
     }
 
     private bool CheckForDamnedExecutable()
