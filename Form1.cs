@@ -40,6 +40,8 @@ namespace DamnedWorkshop
         private string publicTestPatchTestingSavedDirectory = "";
         private string publicTestPatchStableSavedDirectory = "";
 
+        private bool validBackUpFolder = false;
+
         private DamnedFiles damnedFiles;
 
         public Form1()
@@ -100,6 +102,16 @@ namespace DamnedWorkshop
 
         private void InstallPatch(int patch)
         {
+            if (!validBackUpFolder)
+            {
+               DialogResult result = MessageBox.Show("PLEASE READ:\n\nIt looks like you did not create a backup or the backup that you currently have is not valid. This backup is used to restore the game to the original state as if you were to re-install the game on Steam\n\nIf you continue, you understand that you will need to re-install the game from Steam to get back to the original state.\n\nDo you wish to continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             Cursor.Current = Cursors.WaitCursor;
             Application.UseWaitCursor = true;
 
@@ -352,9 +364,9 @@ namespace DamnedWorkshop
 
         private void ButtonCheckPath_Click(object sender, EventArgs e)
         {
-            DamnedFiles damnedFiles = new DamnedFiles(directory);
+            DamnedFiles gameFiles = new DamnedFiles(directory);
 
-            if (damnedFiles.Check())
+            if (gameFiles.Check())
             {
 
                 EnablePatchButtionControls();
@@ -370,6 +382,9 @@ namespace DamnedWorkshop
                 damnedDirectoryStringLabel.ForeColor = Color.Red;
                 loggingTextBox.AppendText(String.Format("Directory \"{0}\" is not a vaild directory. Either you picked the wrong directory or you have missing game files.\n\n", directory));
             }
+
+            damnedFiles = gameFiles;
+
         }
 
         
@@ -383,8 +398,8 @@ namespace DamnedWorkshop
                 this.damnedBackupFolderStringLabel.Text = dialog.SelectedPath;
                 this.backupDirectory = dialog.SelectedPath;
                 buttonBackUp.Enabled = true;
+                buttonOnlyCheck.Enabled = true;
             }
-
         }
 
         private void KeepPublicTestPatchStableCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -497,7 +512,49 @@ namespace DamnedWorkshop
 
             if (damnedFiles.Check())
             {
+                loggingTextBox.AppendText("Looks like you have a good backup folder!\n\n");
                 damnedBackupFolderStringLabel.ForeColor = Color.Green;
+                validBackUpFolder = true;
+                buttonRestore.Enabled = true;
+            }
+
+            else
+            {
+                damnedBackupFolderStringLabel.ForeColor = Color.Red;
+            }
+        }
+
+
+        private void ButtonRestore_Click(object sender, EventArgs e)
+        {
+            Application.UseWaitCursor = true;
+
+            if (!DamnedCopyFiles(backupDirectory, directory))
+            {
+                MessageBox.Show("Failed to restore Damned to its original backup. Did the directories get changed by something else?\n\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            DamnedFiles backupFiles = new DamnedFiles(backupDirectory);
+            DamnedFiles.CleanUpNewFiles(backupFiles, damnedFiles);
+            Application.UseWaitCursor = false;
+            MessageBox.Show("Restored the game back to its unpatched state!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ButtonOnlyCheck_Click(object sender, EventArgs e)
+        {
+            DamnedFiles damnedFiles = new DamnedFiles(backupDirectory);
+
+            if (damnedFiles.Check())
+            {
+                loggingTextBox.AppendText("Looks like you have a good backup folder!\n\n");
+                damnedBackupFolderStringLabel.ForeColor = Color.Green;
+                validBackUpFolder = true;
+                buttonRestore.Enabled = true;
+            }
+
+            else
+            {
+                damnedBackupFolderStringLabel.ForeColor = Color.Red;
             }
         }
     }

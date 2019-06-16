@@ -3,7 +3,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 // A wrapper class that makes dealing with the Damned filesystem easy. This will become very useful.
+// Not everything is used as of now but when we need them, we have them! :)
 
 
 public class DamnedFiles
@@ -117,14 +119,6 @@ public class DamnedFiles
             stageListPath[i] = stages[i].FullName;
         }
     }
-
-    // Compares the base game to the test patch files and returns an array of string that shows which files are new.
-    public string[] GetDiffFiles(DamnedFiles patch)
-    {
-        return null;
-
-    }
-
     private void SetScenes()
     {
         string folder = GetDamnedDamnedDirectoryAbsolutePath("Stages");
@@ -146,7 +140,7 @@ public class DamnedFiles
     }
 
 
-    private void SetObjects(bool fullPath = false)
+    private void SetObjects()
     {
 
         string folder = GetDamnedDamnedDirectoryAbsolutePath("Objects");
@@ -225,7 +219,7 @@ public class DamnedFiles
 
     public bool Check()
     {
-        string[] foldersToLookFor = new string[] { "DamnedData", "GUI", "Resources", "EditorImages", "TerrorImages", "Objects", "Sounds", "Stages", "Redist", "Docs", "Ambience", "Traps" };
+        string[] foldersToLookFor = new string[] { "DamnedData", "GUI", "Resources", "EditorImages", "TerrorImages", "Sounds", "Stages", "Redist", "Docs", "Ambience", "Traps" };
         int count = 0;
         int goal = foldersToLookFor.Length;
         bool success = false;
@@ -252,9 +246,92 @@ public class DamnedFiles
             }
         }
 
-
         return success;
 
     }
-}
+
+
+    public static void CleanUpNewFiles(DamnedFiles oldFiles, DamnedFiles newFiles)
+    {
+        CleanUpAddedDirectories(oldFiles, newFiles);
+        CleanUpAddedFiles(oldFiles, newFiles);
+    }
+
+    private static void CleanUpAddedDirectories(DamnedFiles oldFiles, DamnedFiles newFiles)
+    {
+        DirectoryInfo[] oldInfo = new DirectoryInfo(oldFiles.directory).GetDirectories("*", SearchOption.AllDirectories);
+        DirectoryInfo[] newInfo = new DirectoryInfo(newFiles.directory).GetDirectories("*", SearchOption.AllDirectories);
+        List<string> foldersToDelete = new List<string>();
+        bool foundMatchingDirectory;
+
+
+        for (int i = 0; i < newInfo.Length; i++)
+        {
+            foundMatchingDirectory = false;
+
+            string newCurrentDirectoryName = newInfo[i].Name;
+
+            for (int k = 0; k < oldInfo.Length; k++)
+            {
+                string oldCurrentDirectoryName = oldInfo[k].Name;
+
+                if (newCurrentDirectoryName == oldCurrentDirectoryName)
+                {
+                    foundMatchingDirectory = true;
+                    break;
+                }
+            }
+
+            if (!foundMatchingDirectory)
+            {
+                foldersToDelete.Add(newInfo[i].FullName);
+            }
+        }
+
+        for (int i = 0; i < foldersToDelete.Count; i++)
+        {
+            Directory.Delete(foldersToDelete[i], true);
+
+        }
+    }
     
+
+    private static void CleanUpAddedFiles(DamnedFiles oldFiles, DamnedFiles newFiles)
+    {
+        FileInfo[] oldInfo = new DirectoryInfo(oldFiles.directory).GetFiles("*", SearchOption.AllDirectories);
+        FileInfo[] newInfo = new DirectoryInfo(newFiles.directory).GetFiles("*", SearchOption.AllDirectories);
+        bool foundMatchingFile;
+        List<string> filesToDelete = new List<string>();
+
+        for (int i = 0; i < newInfo.Length; i++)
+        {
+            foundMatchingFile = false;
+            string newCurrentFileName = newInfo[i].Name;
+
+            for (int k = 0; k < oldInfo.Length; k++)
+            {
+                string oldCurrentFileName = oldInfo[k].Name;
+
+                if (newCurrentFileName == oldCurrentFileName)
+                {
+                    foundMatchingFile = true;
+                    break;
+                }
+            }
+
+            if (!foundMatchingFile)
+            {
+                filesToDelete.Add(newInfo[i].FullName);
+            }
+        }
+
+        for (int i = 0; i < filesToDelete.Count; i++)
+        {
+            File.Delete(filesToDelete[i]);
+
+        }
+    }
+    
+}
+
+

@@ -52,6 +52,8 @@ namespace DamnedWorkshop
             this.publicTestPatchStablePathLabel = new System.Windows.Forms.Label();
             this.publicTestPatchTestingPathLabel = new System.Windows.Forms.Label();
             this.buttonBackUp = new System.Windows.Forms.Button();
+            this.buttonRestore = new System.Windows.Forms.Button();
+            this.buttonOnlyCheck = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // publicTestPatchStableButton
@@ -238,7 +240,7 @@ namespace DamnedWorkshop
             // buttonBackUp
             // 
             this.buttonBackUp.Enabled = false;
-            this.buttonBackUp.Location = new System.Drawing.Point(182, 92);
+            this.buttonBackUp.Location = new System.Drawing.Point(267, 92);
             this.buttonBackUp.Name = "buttonBackUp";
             this.buttonBackUp.Size = new System.Drawing.Size(121, 23);
             this.buttonBackUp.TabIndex = 20;
@@ -246,11 +248,36 @@ namespace DamnedWorkshop
             this.buttonBackUp.UseVisualStyleBackColor = true;
             this.buttonBackUp.Click += new System.EventHandler(this.ButtonBackUp_Click);
             // 
+            // buttonRestore
+            // 
+            this.buttonRestore.Enabled = false;
+            this.buttonRestore.Location = new System.Drawing.Point(15, 209);
+            this.buttonRestore.Name = "buttonRestore";
+            this.buttonRestore.Size = new System.Drawing.Size(160, 23);
+            this.buttonRestore.TabIndex = 21;
+            this.buttonRestore.Text = "Restore";
+            this.buttonRestore.UseVisualStyleBackColor = true;
+            this.buttonRestore.Click += new System.EventHandler(this.ButtonRestore_Click);
+            // 
+            // buttonOnlyCheck
+            // 
+            this.buttonOnlyCheck.Enabled = false;
+            this.buttonOnlyCheck.Location = new System.Drawing.Point(181, 92);
+            this.buttonOnlyCheck.Name = "buttonOnlyCheck";
+            this.buttonOnlyCheck.Size = new System.Drawing.Size(80, 23);
+            this.buttonOnlyCheck.TabIndex = 22;
+            this.buttonOnlyCheck.Text = "Only Check...";
+            this.buttonOnlyCheck.UseVisualStyleBackColor = true;
+            this.buttonOnlyCheck.Click += new System.EventHandler(this.ButtonOnlyCheck_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(533, 404);
+            this.Controls.Add(this.buttonOnlyCheck);
+            this.Controls.Add(this.buttonRestore);
             this.Controls.Add(this.buttonBackUp);
             this.Controls.Add(this.publicTestPatchTestingPathLabel);
             this.Controls.Add(this.publicTestPatchStablePathLabel);
@@ -303,6 +330,8 @@ namespace DamnedWorkshop
         private System.Windows.Forms.Label publicTestPatchStablePathLabel;
         private System.Windows.Forms.Label publicTestPatchTestingPathLabel;
         private System.Windows.Forms.Button buttonBackUp;
+        private System.Windows.Forms.Button buttonRestore;
+        private System.Windows.Forms.Button buttonOnlyCheck;
     }
 }
 
