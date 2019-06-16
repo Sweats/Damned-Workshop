@@ -11,6 +11,7 @@ using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace DamnedWorkshop
 {
@@ -340,6 +341,7 @@ namespace DamnedWorkshop
             loggingTextBox.AppendText(text);
             DisablePatchButtonControls();
             damnedDirectoryStringLabel.Text = directory;
+            buttonRestore.Enabled = false;
         }
 
 
@@ -373,6 +375,7 @@ namespace DamnedWorkshop
                 damnedDirectoryStringLabel.Text = directory;
                 damnedDirectoryStringLabel.ForeColor = Color.Green;
                 loggingTextBox.AppendText("Successfully checked your directory. This seems to be the correct Damned folder.\n\n");
+                buttonOpenDamnedFolder.Enabled = true;
             }
 
             else
@@ -381,6 +384,7 @@ namespace DamnedWorkshop
                 damnedDirectoryStringLabel.Text = directory;
                 damnedDirectoryStringLabel.ForeColor = Color.Red;
                 loggingTextBox.AppendText(String.Format("Directory \"{0}\" is not a vaild directory. Either you picked the wrong directory or you have missing game files.\n\n", directory));
+                buttonOpenDamnedFolder.Enabled = false;
             }
 
             damnedFiles = gameFiles;
@@ -397,8 +401,10 @@ namespace DamnedWorkshop
             {
                 this.damnedBackupFolderStringLabel.Text = dialog.SelectedPath;
                 this.backupDirectory = dialog.SelectedPath;
+                damnedBackupFolderStringLabel.ForeColor = Color.Black;
                 buttonBackUp.Enabled = true;
                 buttonOnlyCheck.Enabled = true;
+                buttonRestore.Enabled = false;
             }
         }
 
@@ -497,17 +503,6 @@ namespace DamnedWorkshop
 
         private void ButtonBackUp_Click(object sender, EventArgs e)
         {
-            Application.UseWaitCursor = true;
-            string text = String.Format("Backing up \"{0}\" to \"{1}\"\n\n", directory, backupDirectory);
-            loggingTextBox.AppendText(text);
-
-            if (!DamnedCopyFiles(directory, backupDirectory))
-            {
-                MessageBox.Show("Failed to backup Damned Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
-
-            Application.UseWaitCursor = false;
             DamnedFiles damnedFiles = new DamnedFiles(backupDirectory);
 
             if (damnedFiles.Check())
@@ -521,7 +516,22 @@ namespace DamnedWorkshop
             else
             {
                 damnedBackupFolderStringLabel.ForeColor = Color.Red;
+                MessageBox.Show("The folder you have selecetd is not a valid back up folder. Please select another.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            Application.UseWaitCursor = true;
+            string text = String.Format("Backing up \"{0}\" to \"{1}\"\n\n", directory, backupDirectory);
+            loggingTextBox.AppendText(text);
+
+            if (!DamnedCopyFiles(directory, backupDirectory))
+            {
+                MessageBox.Show("Failed to backup Damned Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+
+            Application.UseWaitCursor = false;
+
         }
 
 
@@ -555,6 +565,24 @@ namespace DamnedWorkshop
             else
             {
                 damnedBackupFolderStringLabel.ForeColor = Color.Red;
+                buttonRestore.Enabled = false;
+            }
+        }
+
+        private void ButtonOpenDamnedFolder_Click(object sender, EventArgs e)
+        {
+            using (Process process = new Process())
+            {
+                try
+                {
+
+                    Process.Start("explorer.exe", String.Format("explorer.exe", "{0}", directory));
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show("Failed to load the file explorer.");
+                }
             }
         }
     }

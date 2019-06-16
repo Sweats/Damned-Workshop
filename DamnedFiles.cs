@@ -2,7 +2,6 @@
 using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 // A wrapper class that makes dealing with the Damned filesystem easy. This will become very useful.
 // Not everything is used as of now but when we need them, we have them! :)
@@ -219,6 +218,11 @@ public class DamnedFiles
 
     public bool Check()
     {
+        if (!CheckForDamnedExecutable())
+        {
+            return false;
+        }
+
         string[] foldersToLookFor = new string[] { "DamnedData", "GUI", "Resources", "EditorImages", "TerrorImages", "Sounds", "Stages", "Redist", "Docs", "Ambience", "Traps" };
         int count = 0;
         int goal = foldersToLookFor.Length;
@@ -248,6 +252,23 @@ public class DamnedFiles
 
         return success;
 
+    }
+
+    private bool CheckForDamnedExecutable()
+    {
+        FileInfo[] files = new DirectoryInfo(directory).GetFiles("*.exe", SearchOption.TopDirectoryOnly);
+        bool found = false;
+
+        for (int i = 0; i < files.Length; i++)
+        {
+            if (files[i].Name == "Damned.exe")
+            {
+                found = true;
+                break;
+            }
+        }
+
+        return found;
     }
 
 

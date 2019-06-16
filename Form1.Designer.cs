@@ -54,6 +54,7 @@ namespace DamnedWorkshop
             this.buttonBackUp = new System.Windows.Forms.Button();
             this.buttonRestore = new System.Windows.Forms.Button();
             this.buttonOnlyCheck = new System.Windows.Forms.Button();
+            this.buttonOpenDamnedFolder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // publicTestPatchStableButton
@@ -270,12 +271,25 @@ namespace DamnedWorkshop
             this.buttonOnlyCheck.UseVisualStyleBackColor = true;
             this.buttonOnlyCheck.Click += new System.EventHandler(this.ButtonOnlyCheck_Click);
             // 
+            // buttonOpenDamnedFolder
+            // 
+            this.buttonOpenDamnedFolder.Enabled = false;
+            this.buttonOpenDamnedFolder.Location = new System.Drawing.Point(236, 29);
+            this.buttonOpenDamnedFolder.Name = "buttonOpenDamnedFolder";
+            this.buttonOpenDamnedFolder.Size = new System.Drawing.Size(45, 23);
+            this.buttonOpenDamnedFolder.TabIndex = 23;
+            this.buttonOpenDamnedFolder.Text = "Open";
+            this.buttonOpenDamnedFolder.UseVisualStyleBackColor = true;
+            this.buttonOpenDamnedFolder.Click += new System.EventHandler(this.ButtonOpenDamnedFolder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(533, 404);
+            this.Controls.Add(this.buttonOpenDamnedFolder);
             this.Controls.Add(this.buttonOnlyCheck);
             this.Controls.Add(this.buttonRestore);
             this.Controls.Add(this.buttonBackUp);
@@ -332,6 +346,7 @@ namespace DamnedWorkshop
         private System.Windows.Forms.Button buttonBackUp;
         private System.Windows.Forms.Button buttonRestore;
         private System.Windows.Forms.Button buttonOnlyCheck;
+        private System.Windows.Forms.Button buttonOpenDamnedFolder;
     }
 }
 
