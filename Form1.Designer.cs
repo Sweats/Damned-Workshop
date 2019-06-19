@@ -29,6 +29,7 @@ namespace DamnedWorkshop
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.publicTestPatchStableButton = new System.Windows.Forms.Button();
             this.publicTestPatchTestingButton = new System.Windows.Forms.Button();
             this.loggingTextBox = new System.Windows.Forms.RichTextBox();
@@ -55,6 +56,14 @@ namespace DamnedWorkshop
             this.buttonRestore = new System.Windows.Forms.Button();
             this.buttonOnlyCheck = new System.Windows.Forms.Button();
             this.buttonOpenDamnedFolder = new System.Windows.Forms.Button();
+            this.toolTipOnlyCheckButton = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipBackupAndCheck = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSelectBackupFolder = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipKeepPublicTestPatchStableCheckbox = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipPublicTestPatchTestingCheckbox = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipRestoreButton = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSetPublicTestPatchStableLocationButton = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSetPublicTestPatchTestingLocationButton = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // publicTestPatchStableButton
@@ -153,6 +162,7 @@ namespace DamnedWorkshop
             this.buttonSelectBackupFolder.Size = new System.Drawing.Size(163, 23);
             this.buttonSelectBackupFolder.TabIndex = 11;
             this.buttonSelectBackupFolder.Text = "Select Backup Folder...";
+            this.toolTipSelectBackupFolder.SetToolTip(this.buttonSelectBackupFolder, resources.GetString("buttonSelectBackupFolder.ToolTip"));
             this.buttonSelectBackupFolder.UseVisualStyleBackColor = true;
             this.buttonSelectBackupFolder.Click += new System.EventHandler(this.ButtonSelectBackupFolder_Click);
             // 
@@ -183,6 +193,7 @@ namespace DamnedWorkshop
             this.keepPublicTestPatchStableCheckbox.Size = new System.Drawing.Size(57, 17);
             this.keepPublicTestPatchStableCheckbox.TabIndex = 14;
             this.keepPublicTestPatchStableCheckbox.Text = "Keep?";
+            this.toolTipKeepPublicTestPatchStableCheckbox.SetToolTip(this.keepPublicTestPatchStableCheckbox, resources.GetString("keepPublicTestPatchStableCheckbox.ToolTip"));
             this.keepPublicTestPatchStableCheckbox.UseVisualStyleBackColor = true;
             this.keepPublicTestPatchStableCheckbox.CheckedChanged += new System.EventHandler(this.KeepPublicTestPatchStableCheckbox_CheckedChanged);
             // 
@@ -195,6 +206,7 @@ namespace DamnedWorkshop
             this.keepPublicTestPatchTestingCheckbox.Size = new System.Drawing.Size(57, 17);
             this.keepPublicTestPatchTestingCheckbox.TabIndex = 15;
             this.keepPublicTestPatchTestingCheckbox.Text = "Keep?";
+            this.toolTipPublicTestPatchTestingCheckbox.SetToolTip(this.keepPublicTestPatchTestingCheckbox, resources.GetString("keepPublicTestPatchTestingCheckbox.ToolTip"));
             this.keepPublicTestPatchTestingCheckbox.UseVisualStyleBackColor = true;
             this.keepPublicTestPatchTestingCheckbox.CheckedChanged += new System.EventHandler(this.KeepPublicTestPatchTestingCheckbox_CheckedChanged);
             // 
@@ -206,6 +218,8 @@ namespace DamnedWorkshop
             this.buttonSetPublicTestPatchStableLocation.Size = new System.Drawing.Size(86, 19);
             this.buttonSetPublicTestPatchStableLocation.TabIndex = 16;
             this.buttonSetPublicTestPatchStableLocation.Text = "Set location...";
+            this.toolTipSetPublicTestPatchStableLocationButton.SetToolTip(this.buttonSetPublicTestPatchStableLocation, "Opens up the file explorer for you to select a location where the public test pat" +
+        "ch stable will be saved to.");
             this.buttonSetPublicTestPatchStableLocation.UseVisualStyleBackColor = true;
             this.buttonSetPublicTestPatchStableLocation.Click += new System.EventHandler(this.ButtonSetPublicTestPatchStableLocation_Click);
             // 
@@ -217,6 +231,8 @@ namespace DamnedWorkshop
             this.buttonSetPublicTestPatchTestingLocation.Size = new System.Drawing.Size(86, 23);
             this.buttonSetPublicTestPatchTestingLocation.TabIndex = 17;
             this.buttonSetPublicTestPatchTestingLocation.Text = "Set Location...";
+            this.toolTipSetPublicTestPatchTestingLocationButton.SetToolTip(this.buttonSetPublicTestPatchTestingLocation, "Opens up the file explorer for you to select a location where the public test pat" +
+        "ch testing will be saved to.");
             this.buttonSetPublicTestPatchTestingLocation.UseVisualStyleBackColor = true;
             this.buttonSetPublicTestPatchTestingLocation.Click += new System.EventHandler(this.ButtonSetPublicTestPatchTestingLocation_Click);
             // 
@@ -246,6 +262,7 @@ namespace DamnedWorkshop
             this.buttonBackUp.Size = new System.Drawing.Size(121, 23);
             this.buttonBackUp.TabIndex = 20;
             this.buttonBackUp.Text = "Backup and Check...";
+            this.toolTipBackupAndCheck.SetToolTip(this.buttonBackUp, resources.GetString("buttonBackUp.ToolTip"));
             this.buttonBackUp.UseVisualStyleBackColor = true;
             this.buttonBackUp.Click += new System.EventHandler(this.ButtonBackUp_Click);
             // 
@@ -257,6 +274,7 @@ namespace DamnedWorkshop
             this.buttonRestore.Size = new System.Drawing.Size(160, 23);
             this.buttonRestore.TabIndex = 21;
             this.buttonRestore.Text = "Restore";
+            this.toolTipRestoreButton.SetToolTip(this.buttonRestore, resources.GetString("buttonRestore.ToolTip"));
             this.buttonRestore.UseVisualStyleBackColor = true;
             this.buttonRestore.Click += new System.EventHandler(this.ButtonRestore_Click);
             // 
@@ -268,6 +286,7 @@ namespace DamnedWorkshop
             this.buttonOnlyCheck.Size = new System.Drawing.Size(80, 23);
             this.buttonOnlyCheck.TabIndex = 22;
             this.buttonOnlyCheck.Text = "Only Check...";
+            this.toolTipOnlyCheckButton.SetToolTip(this.buttonOnlyCheck, resources.GetString("buttonOnlyCheck.ToolTip"));
             this.buttonOnlyCheck.UseVisualStyleBackColor = true;
             this.buttonOnlyCheck.Click += new System.EventHandler(this.ButtonOnlyCheck_Click);
             // 
@@ -287,7 +306,7 @@ namespace DamnedWorkshop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
+            this.AutoScroll = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(533, 404);
             this.Controls.Add(this.buttonOpenDamnedFolder);
@@ -311,7 +330,6 @@ namespace DamnedWorkshop
             this.Controls.Add(this.publicTestPatchTestingButton);
             this.Controls.Add(this.publicTestPatchStableButton);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Damned Workshop";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -348,6 +366,14 @@ namespace DamnedWorkshop
         private System.Windows.Forms.Button buttonRestore;
         private System.Windows.Forms.Button buttonOnlyCheck;
         private System.Windows.Forms.Button buttonOpenDamnedFolder;
+        private System.Windows.Forms.ToolTip toolTipOnlyCheckButton;
+        private System.Windows.Forms.ToolTip toolTipBackupAndCheck;
+        private System.Windows.Forms.ToolTip toolTipSelectBackupFolder;
+        private System.Windows.Forms.ToolTip toolTipKeepPublicTestPatchStableCheckbox;
+        private System.Windows.Forms.ToolTip toolTipPublicTestPatchTestingCheckbox;
+        private System.Windows.Forms.ToolTip toolTipSetPublicTestPatchStableLocationButton;
+        private System.Windows.Forms.ToolTip toolTipSetPublicTestPatchTestingLocationButton;
+        private System.Windows.Forms.ToolTip toolTipRestoreButton;
     }
 }
 

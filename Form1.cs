@@ -24,7 +24,7 @@ namespace DamnedWorkshop
 
         private static string DOWNLOAD_TEST_PATCH_STABLE_LINK =  "https://github.com/Sweats/Damned/archive/master.zip";
         private static string DOWNLOAD_TEST_PATCH_TESTING_LINK = "https://github.com/Sweats/Damned/archive/testing.zip";
-        private static string GITHUB_LINK = "TO BE DETERMINED";
+        private static string GITHUB_LINK = "https://github.com/Sweats/Damned-Workshop";
 
         private static int PATCH_TESTING = 0;
         private static int PATCH_STABLE = 1;
@@ -114,7 +114,6 @@ namespace DamnedWorkshop
                 }
             }
 
-            Cursor.Current = Cursors.WaitCursor;
             Application.UseWaitCursor = true;
 
             if (patch == PATCH_STABLE)
@@ -513,6 +512,7 @@ namespace DamnedWorkshop
             if (!DamnedCopyFiles(directory, backupDirectory))
             {
                 MessageBox.Show("Failed to backup Damned Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
 
             }
 
