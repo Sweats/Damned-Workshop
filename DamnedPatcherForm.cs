@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace DamnedWorkshop
 {
-    public partial class Form1 : Form
+    public partial class DamnedPatcherForm : Form
     {
         [DllImport("user32.dll")]
         static extern bool FlashWindow(IntPtr hwnd, bool bInvert);
@@ -29,51 +29,38 @@ namespace DamnedWorkshop
         private static int PATCH_TESTING = 0;
         private static int PATCH_STABLE = 1;
 
+        private string directory;
+
 
         private static string TOOLTIP_TEST_PATCH_STABLE_TEXT = "Downloads and installs the latest public test patch from the stable banch from " + DOWNLOAD_TEST_PATCH_STABLE_LINK + " \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
         private static string TOOLTIP_TEST_PATCH_TESTING_TEXT = "Downloads and installs the latest public test patch from the testing banch from " + DOWNLOAD_TEST_PATCH_TESTING_LINK + ". \n\nFiles will be downloaded into a temporary directory then extracted to where you set the directory to. After that, the temporary directory will be removed.";
-        private static string TOOLTIP_SET_DAMNED_FOLDER_TEXT = "Opens up the file explorer where you can select a location where Damned is installed.";
-        private static string TOOLTIP_CHECK_BUTTON_TEXT = "Checks the listed directory to see if the location that you picked is a valid Damend directory.\n\nIf the result is red, it means it failed. If the result is green, it mean it was successful";
 
-        private string directory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Damned";
         private string tempDirectory = "";
         private string backupDirectory = "";
         private string publicTestPatchTestingSavedDirectory = "";
         private string publicTestPatchStableSavedDirectory = "";
 
         private bool validBackUpFolder = false;
-        private bool validDamnedDirectory = false;
 
         private DamnedFiles damnedFiles;
 
-        public Form1()
+        public DamnedPatcherForm(DamnedFiles damnedFiles)
         {
             InitializeComponent();
+            this.damnedFiles = damnedFiles;
+            directory = damnedFiles.directory;
+            damnedDirectoryStringLabel.Text = damnedFiles.directory;
+           
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: Figure out how to do settings so the user does not have to re do everything every time.
-            this.damnedDirectoryStringLabel.Text = directory;
-            this.damnedBackupFolderStringLabel.Text = backupDirectory;
-            this.publicTestPatchTestingPathLabel.Text = this.publicTestPatchTestingSavedDirectory;
-            this.publicTestPatchStablePathLabel.Text = this.publicTestPatchStableSavedDirectory;
-            
+            LoadSettings();
             toolTipPublicTestPatchTesting.SetToolTip(publicTestPatchTestingButton, TOOLTIP_TEST_PATCH_TESTING_TEXT);
             toolTipPublicTestPatchStable.SetToolTip(publicTestPatchStableButton, TOOLTIP_TEST_PATCH_STABLE_TEXT);
-            toolTipSetDamnedFolder.SetToolTip(setDamnedFolderButton, TOOLTIP_SET_DAMNED_FOLDER_TEXT);
-            toolTipCheckButton.SetToolTip(checkPathButton, TOOLTIP_CHECK_BUTTON_TEXT);
             loggingTextBox.AppendText(String.Format("Welcome\n\nBefore using this tool, please check its github at {0}\n\nDamned directory has been set to \"{1}\". If you have installed Damned in a non traditonal location, you will have to change it. For more information on what the buttons do, hover your mouse over them.\n\n", GITHUB_LINK, directory));
 
-        }
 
-        private void LoadKeepButtons()
-        {
-        }
-
-
-        private void HandleControls()
-        {
 
         }
 
@@ -106,7 +93,7 @@ namespace DamnedWorkshop
         {
             if (!validBackUpFolder)
             {
-               DialogResult result = MessageBox.Show("PLEASE READ:\n\nIt looks like you did not create a backup or the backup that you currently have is not valid. This backup is used to restore the game to the original state as if you were to re-install the game on Steam\n\nIf you continue, you understand that you will need to re-install the game from Steam to get back to the original state.\n\nDo you wish to continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("PLEASE READ:\n\nIt looks like you did not create a backup or the backup that you currently have is not valid. This backup is used to restore the game to the original state as if you were to re-install the game on Steam\n\nIf you continue, you understand that you will need to re-install the game from Steam to get back to the original state.\n\nDo you wish to continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.No)
                 {
@@ -364,37 +351,6 @@ namespace DamnedWorkshop
             keepPublicTestPatchTestingCheckbox.Enabled = false;
         }
 
-        private void ButtonCheckPath_Click(object sender, EventArgs e)
-        {
-            DamnedFiles gameFiles = new DamnedFiles(directory);
-
-            if (gameFiles.Check())
-            {
-
-                EnablePatchButtionControls();
-                damnedDirectoryStringLabel.Text = directory;
-                damnedDirectoryStringLabel.ForeColor = Color.Green;
-                loggingTextBox.AppendText("Successfully checked your directory. This seems to be the correct Damned folder.\n\n");
-                buttonOpenDamnedFolder.Enabled = true;
-                validDamnedDirectory = true;
-            }
-
-            else
-            {
-                DisablePatchButtonControls();
-                damnedDirectoryStringLabel.Text = directory;
-                damnedDirectoryStringLabel.ForeColor = Color.Red;
-                loggingTextBox.AppendText(String.Format("Directory \"{0}\" is not a vaild directory. Either you picked the wrong directory or you have missing game files.\n\n", directory));
-                buttonOpenDamnedFolder.Enabled = false;
-                validDamnedDirectory = false;
-            }
-
-            damnedFiles = gameFiles;
-
-        }
-
-        
-
         private void ButtonSelectBackupFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -407,7 +363,11 @@ namespace DamnedWorkshop
                 buttonBackUp.Enabled = true;
                 buttonOnlyCheck.Enabled = true;
                 buttonRestore.Enabled = false;
+                Properties.Settings.Default.damnedBackupFolderPath = dialog.SelectedPath;
+                Properties.Settings.Default.Save();
             }
+
+
         }
 
         private void KeepPublicTestPatchStableCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -471,6 +431,9 @@ namespace DamnedWorkshop
                     publicTestPatchStablePathLabel.Text = "";
 
                 }
+
+                Properties.Settings.Default.damnedPublicTestPatchStablePath = publicTestPatchStableSavedDirectory;
+                Properties.Settings.Default.Save();
             }
 
         }
@@ -500,6 +463,10 @@ namespace DamnedWorkshop
                     publicTestPatchTestingPathLabel.Text = "";
                 }
             }
+
+
+            Properties.Settings.Default["damnedPublicTestTestingStablePath"] = publicTestPatchTestingSavedDirectory;
+            Properties.Settings.Default.Save();
 
         }
 
@@ -543,7 +510,7 @@ namespace DamnedWorkshop
         {
             Application.UseWaitCursor = true;
 
-            if (!validDamnedDirectory || !validBackUpFolder)
+            if (!validBackUpFolder)
             {
                 MessageBox.Show("You have one or more invalid directories. Please select another", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -579,20 +546,49 @@ namespace DamnedWorkshop
             }
         }
 
-        private void ButtonOpenDamnedFolder_Click(object sender, EventArgs e)
+
+        private void LoadSettings()
         {
-            using (Process process = new Process())
+            string setting = String.Empty;
+
+            setting =  Properties.Settings.Default.damnedBackupFolderPath;
+
+            if (setting != String.Empty)
             {
-                try
-                {
+                damnedBackupFolderStringLabel.Text = Properties.Settings.Default.damnedBackupFolderPath;
+                buttonOnlyCheck.Enabled = true;
+                buttonBackUp.Enabled = true;
+                backupDirectory = setting;
 
-                    Process.Start("explorer.exe", String.Format("explorer.exe", "{0}", directory));
+                if (damnedFiles.Check())
+                {
+                    damnedBackupFolderStringLabel.ForeColor = Color.Green;
+                    buttonRestore.Enabled = true;
+                    validBackUpFolder = true;
                 }
 
-                catch (Exception)
-                {
-                    MessageBox.Show("Failed to load the file explorer.");
-                }
+               
+            }
+
+            setting = Properties.Settings.Default.damnedPublicTestPatchStablePath;
+
+            if (setting != String.Empty)
+            {
+                publicTestPatchStableSavedDirectory = setting;
+                keepPublicTestPatchStableCheckbox.Checked = true;
+                buttonSetPublicTestPatchStableLocation.Enabled = true;
+                publicTestPatchStablePathLabel.Text = setting;
+
+            }
+
+            setting = Properties.Settings.Default.damnedPublicTestPatchTestingPath;
+
+            if (setting != String.Empty)
+            {
+                publicTestPatchStableSavedDirectory = setting;
+                keepPublicTestPatchTestingCheckbox.Checked = true;
+                buttonSetPublicTestPatchTestingLocation.Enabled = true;
+                publicTestPatchTestingPathLabel.Text = setting;
             }
         }
     }

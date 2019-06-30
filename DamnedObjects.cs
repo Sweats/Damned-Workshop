@@ -26,14 +26,12 @@ public class DamnedObjects
 
     private void SetObjects()
     {
-        string folder = FindObjectDirectory();
-
-        if (!Directory.Exists(folder))
+        if (!Directory.Exists(objectsDirectory))
         {
             return;
         }
 
-        FileInfo[] objectsList = new DirectoryInfo(folder).GetFiles("*.obj", SearchOption.TopDirectoryOnly);
+        FileInfo[] objectsList = new DirectoryInfo(objectsDirectory).GetFiles("*.obj", SearchOption.TopDirectoryOnly);
         objects = new string[objectsList.Length];
 
         for (int i = 0; i < objects.Length; i++)

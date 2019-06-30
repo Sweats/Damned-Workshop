@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Collections.Generic;
 
 public class DamnedMaps
 {
 
     private string directory;
-    public string mapAndScenesDirectory
+    public string stagesAndScenesDirectory
     {
         get;
         private set;
@@ -24,53 +24,130 @@ public class DamnedMaps
         private set;
     }
 
+
     public DamnedMaps(string rootDirectory)
     {
         this.directory = rootDirectory;
-        mapAndScenesDirectory = FindStagesAndScenesDirectory();
-        SetMaps();
+        SetStagesAndScenesDirectory();
+        SetStages();
         SetScenes();
-
     }
 
 
-    private void SetMaps()
+    private void SetStages()
     {
-        if (!Directory.Exists(mapAndScenesDirectory))
+        if (!Directory.Exists(stagesAndScenesDirectory))
         {
             return;
         }
 
-        FileInfo[] stagesList = new DirectoryInfo(mapAndScenesDirectory).GetFiles("*.stage", SearchOption.TopDirectoryOnly);
-        stages = new string[stagesList.Length];
+        FileInfo[] stagesList = new DirectoryInfo(stagesAndScenesDirectory).GetFiles("*.stage", SearchOption.TopDirectoryOnly);
+        List<string> stages = new List<string>();
 
-        for (int i = 0; i < stages.Length; i++)
+        for (int i = 0; i < stagesList.Length; i++)
         {
-            stages[i] = stagesList[i].Name;
+            if (stagesList[i].Name == "menu_background.stage")
+            {
+                continue;
+            }
+
+            stages.Add(stagesList[i].FullName);
         }
-    }    
+
+        this.stages = stages.ToArray();
+    }
+
+    public void RefreshStages()
+    {
+        SetStages();
+    }
 
     private void SetScenes()
     {
-        if (!Directory.Exists(mapAndScenesDirectory))
+        if (!Directory.Exists(stagesAndScenesDirectory))
         {
             return;
         }
 
-        FileInfo[] scenesList = new DirectoryInfo(mapAndScenesDirectory).GetFiles("*.scene", SearchOption.TopDirectoryOnly);
-        scenes = new string[scenesList.Length];
+        FileInfo[] scenesList = new DirectoryInfo(stagesAndScenesDirectory).GetFiles("*.scene", SearchOption.TopDirectoryOnly);
+        List<string> scenes = new List<string>();
+
+        for (int i = 0; i < scenesList.Length; i++)
+        {
+            if (scenesList[i].Name == "menu_background.scene")
+            {
+                continue;
+            }
+
+            scenes.Add(scenesList[i].FullName);
+        }
+
+        this.scenes = scenes.ToArray();
+    }
+
+    public void RemoveStage(string stageName)
+    {
+        string stageToFind = Path.GetFileName(stageName);
 
         for (int i = 0; i < stages.Length; i++)
         {
-            scenes[i] = scenesList[i].Name;
+            string stageToRemove = Path.GetFileName(stages[i]);
+
+            if (stageToRemove == stageToFind)
+            {
+                File.Delete(stages[i]);
+                break;
+            }
         }
     }
 
 
-    private string FindStagesAndScenesDirectory()
+    public void RemoveScene(string sceneName)
     {
-        string returnMapDirectoryPath = "";
+        string sceneToFind = Path.GetFileName(sceneName);
 
+        for (int i = 0; i < scenes.Length; i++)
+        {
+            string sceneToRemove = Path.GetFileName(scenes[i]);
+
+            if (sceneToRemove == sceneToFind)
+            {
+                File.Delete(scenes[i]);
+                break;
+            }
+        }
+
+    }
+
+    public bool StageExists(string stageName)
+    {
+        bool found = false;
+
+        for (int i = 0; i < stages.Length; i++)
+        {
+            string stageToFind = Path.GetFileName(stages[i]);
+
+            if (stageName == stageToFind)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        return found;
+    }
+
+
+    public void AddStages(string[] stages)
+    {
+        for (int i = 0; i < stages.Length; i++)
+        {
+            File.Copy(stages[i], Path.Combine(stagesAndScenesDirectory, Path.GetFileName(stages[i])));
+        }
+    }
+
+    private void SetStagesAndScenesDirectory()
+    {
         DirectoryInfo[] info = new DirectoryInfo(directory).GetDirectories("*", SearchOption.AllDirectories);
 
         for (int i = 0; i < info.Length; i++)
@@ -79,13 +156,10 @@ public class DamnedMaps
 
             if (stagesAndScenesDirectory == "Stages")
             {
-                returnMapDirectoryPath = info[i].FullName;
+                this.stagesAndScenesDirectory = info[i].FullName;
                 break;
             }
 
         }
-
-        return returnMapDirectoryPath;
     }
-
 }

@@ -10,8 +10,11 @@ using System.Collections.Generic;
 public class DamnedFiles
 {
 
-    private string directory;
-    public int filesChanged = 0;
+    public string directory
+    {
+        get;
+        private set;
+    }
 
     public DamnedMaps damnedMaps
     {
@@ -30,6 +33,13 @@ public class DamnedFiles
         get;
         private set;
     }
+
+    public DamnedImages damnedImages
+    {
+        get;
+        private set;
+    }
+    
 
     public string[] damnedDirectories
     {
@@ -51,6 +61,7 @@ public class DamnedFiles
         damnedMaps = new DamnedMaps(rootDirectory);
         damnedObjects = new DamnedObjects(rootDirectory);
         damnedSounds = new DamnedSounds(rootDirectory);
+        damnedImages = new DamnedImages(rootDirectory, damnedMaps);
     }
 
      private void SetDirectories()

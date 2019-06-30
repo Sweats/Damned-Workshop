@@ -27,8 +27,6 @@ public class DamnedSounds
 
     private void SetSounds()
     {
-        string soundsDirectory = FindSoundsDirectory();
-
         if (!Directory.Exists(soundsDirectory))
         {
             return;

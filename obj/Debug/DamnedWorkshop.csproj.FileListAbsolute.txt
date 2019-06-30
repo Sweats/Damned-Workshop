@@ -7,4 +7,6 @@ D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.csproj.Generat
 D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.csproj.CoreCompileInputs.cache
 D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.exe
 D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.pdb
-D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.Form1.resources
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.DamnedPatcherForm.resources
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.DamnedMainForm.resources
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.DamnedMappingForm.resources
