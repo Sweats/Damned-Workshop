@@ -155,9 +155,9 @@ namespace DamnedWorkshop
             this.damnedBackupFolderStringLabel.AutoSize = true;
             this.damnedBackupFolderStringLabel.Location = new System.Drawing.Point(128, 36);
             this.damnedBackupFolderStringLabel.Name = "damnedBackupFolderStringLabel";
-            this.damnedBackupFolderStringLabel.Size = new System.Drawing.Size(35, 13);
+            this.damnedBackupFolderStringLabel.Size = new System.Drawing.Size(135, 13);
             this.damnedBackupFolderStringLabel.TabIndex = 13;
-            this.damnedBackupFolderStringLabel.Text = "label1";
+            this.damnedBackupFolderStringLabel.Text = "No backup folder selected.";
             // 
             // keepPublicTestPatchStableCheckbox
             // 
