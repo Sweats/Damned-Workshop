@@ -5,7 +5,7 @@
 This tool currently does the following:
 
 * Makes installing the public test patch very easy. No more dragging and dropping files by hand. 
-* *Makes adding/removig stages from the game very easy. No more dragging and dropping multiple files and sorting all of them by hand and making mistakes in the process (it really is a pain). See next section for more details.
+* Makes adding/removig stages from the game very easy. No more dragging and dropping multiple files and sorting all of them by hand and making mistakes in the process (it really is a pain). See next section for more details.
 * Allows you to participate in the public test patch easily and restore your game back to the retail patch because the tool is smart enough to remove added files from the public test patch.
 * ...And more will be added over time. 
 
