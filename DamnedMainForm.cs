@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DamnedWorkshop
 {
@@ -51,9 +52,8 @@ namespace DamnedWorkshop
             }
 
             labelDamnedDirectoryPath.Text = directory;
-            labelDamnedDirectoryPath.ForeColor = Color.Black;
+            labelDamnedDirectoryPath.ForeColor = Color.White;
             DisableControls();
-            Properties.Settings.Default.damnedGamePath = directory;
         }
 
 
@@ -72,12 +72,32 @@ namespace DamnedWorkshop
 
         private void ButtonCheckPath_Click(object sender, EventArgs e)
         {
-            damnedFiles = new DamnedFiles(directory);
+            if (directory == String.Empty)
+            {
+                MessageBox.Show("You did not select a directory", "No directory selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                damnedFiles = new DamnedFiles(directory);
+
+            }
+
+            catch (IOException)
+            {
+                MessageBox.Show("This directory does not exist. Either the default location for Damned does not exist on your system, or the directory that you selected was moved or deleted by something else. Please select a new directory where Damned is installed.", "Directory Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                labelDamnedDirectoryPath.Text = "Your Damned directory path will appear here.";
+                directory = String.Empty;
+                return;
+            }
 
             if (damnedFiles.Check())
             {
                 labelDamnedDirectoryPath.ForeColor = Color.FromArgb(255, 168, 38);
                 EnableControls();
+                Properties.Settings.Default.damnedGamePath = directory;
+                Properties.Settings.Default.Save();
             }
 
             else
@@ -90,19 +110,44 @@ namespace DamnedWorkshop
         private void LoadSettings()
         {
             string setting = Properties.Settings.Default.damnedGamePath;
+            labelDamnedDirectoryPath.Text = directory;
 
             if (setting != String.Empty)
             {
                 labelDamnedDirectoryPath.Text = setting;
                 directory = setting;
-                damnedFiles = new DamnedFiles(directory);
 
+                try
+                {
+                    damnedFiles = new DamnedFiles(directory);
+
+                }
+
+                catch (IOException)
+                {
+                    string message = String.Format("The directory \"{0}\" seems to no longer exist. Your settings have been reset.", setting);
+                    MessageBox.Show(message, "Directory No Longer Exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    labelDamnedDirectoryPath.Text = "Your Damned directory path will appear here.";
+                    directory = String.Empty;
+                    ResetSettings();
+                    return;
+                }
+   
                 if (damnedFiles.Check())
                 {
                     labelDamnedDirectoryPath.ForeColor = Color.FromArgb(255, 168, 38);
                     EnableControls();
                 }
             }
+        }
+
+        private void ResetSettings()
+        {
+            Properties.Settings.Default.damnedGamePath = String.Empty;
+            Properties.Settings.Default.damnedBackupFolderPath = String.Empty;
+            Properties.Settings.Default.damnedPublicTestPatchStablePath = String.Empty;
+            Properties.Settings.Default.damnedPublicTestPatchTestingPath = String.Empty;
+            Properties.Settings.Default.Save();
         }
 
         private void SetButtons()

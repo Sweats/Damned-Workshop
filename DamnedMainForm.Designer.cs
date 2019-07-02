@@ -124,9 +124,9 @@
             this.labelDamnedDirectoryPath.ForeColor = System.Drawing.Color.White;
             this.labelDamnedDirectoryPath.Location = new System.Drawing.Point(173, 15);
             this.labelDamnedDirectoryPath.Name = "labelDamnedDirectoryPath";
-            this.labelDamnedDirectoryPath.Size = new System.Drawing.Size(51, 21);
+            this.labelDamnedDirectoryPath.Size = new System.Drawing.Size(357, 21);
             this.labelDamnedDirectoryPath.TabIndex = 5;
-            this.labelDamnedDirectoryPath.Text = "label2";
+            this.labelDamnedDirectoryPath.Text = "Your Damned directory path will appear here.";
             // 
             // buttonCheckPath
             // 

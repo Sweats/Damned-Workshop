@@ -399,13 +399,6 @@ namespace DamnedWorkshop
 
 
         }
-
-
-        private void HandleControlsAfterLoadingSettings()
-        {
-
-        }
-
         private void ButtonSetPublicTestPatchStableLocation_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();

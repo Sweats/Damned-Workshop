@@ -113,7 +113,22 @@ public class DamnedImages
 
     private void SetTerrorImagesDirectory()
     {
-        terrorImagesDirectory = Path.Combine(guiDirectory, "TerrorImages");
+        string directoryToFind = "TerrorImages";
+        DirectoryInfo[] info = new DirectoryInfo(directory).GetDirectories(directoryToFind, SearchOption.AllDirectories);
+
+        for (int i = 0; i < info.Length; i++)
+        {
+            string folderName = info[i].Name;
+
+            if (folderName == directoryToFind)
+            {
+                terrorImagesDirectory = info[i].FullName;
+                break;
+
+            }
+            
+        }
+        
     }
 
     private void SetImages()

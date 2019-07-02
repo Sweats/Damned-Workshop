@@ -25,7 +25,7 @@ namespace DamnedWorkshop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\Steam\\steamapps\\common\\Damned")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string damnedGamePath {
             get {
                 return ((string)(this["damnedGamePath"]));
