@@ -64,6 +64,11 @@
             // 
             // buttonAddMapIntoDamned
             // 
+            this.buttonAddMapIntoDamned.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.buttonAddMapIntoDamned.FlatAppearance.BorderSize = 0;
+            this.buttonAddMapIntoDamned.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddMapIntoDamned.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAddMapIntoDamned.ForeColor = System.Drawing.Color.White;
             this.buttonAddMapIntoDamned.Location = new System.Drawing.Point(12, 12);
             this.buttonAddMapIntoDamned.Name = "buttonAddMapIntoDamned";
             this.buttonAddMapIntoDamned.Size = new System.Drawing.Size(159, 23);
@@ -71,12 +76,17 @@
             this.buttonAddMapIntoDamned.Text = "Select Stage to Add..";
             this.toolTipAddMapIntoDamnedButton.SetToolTip(this.buttonAddMapIntoDamned, "Opens up the file explorer for you to select a stage fille.\r\n\r\nThe stage file wil" +
         "l be put onto the list on the right in green to be added into the game.");
-            this.buttonAddMapIntoDamned.UseVisualStyleBackColor = true;
+            this.buttonAddMapIntoDamned.UseVisualStyleBackColor = false;
             this.buttonAddMapIntoDamned.Click += new System.EventHandler(this.ButtonAddMapIntoDamned_Click);
             // 
             // buttonSelectMapLoadingScreen
             // 
+            this.buttonSelectMapLoadingScreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.buttonSelectMapLoadingScreen.Enabled = false;
+            this.buttonSelectMapLoadingScreen.FlatAppearance.BorderSize = 0;
+            this.buttonSelectMapLoadingScreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectMapLoadingScreen.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectMapLoadingScreen.ForeColor = System.Drawing.Color.White;
             this.buttonSelectMapLoadingScreen.Location = new System.Drawing.Point(12, 459);
             this.buttonSelectMapLoadingScreen.Name = "buttonSelectMapLoadingScreen";
             this.buttonSelectMapLoadingScreen.Size = new System.Drawing.Size(160, 23);
@@ -84,12 +94,17 @@
             this.buttonSelectMapLoadingScreen.Text = "Select Loading Screen...";
             this.toolTipSelectLoadingScreen.SetToolTip(this.buttonSelectMapLoadingScreen, "Opens up the file explorer for you to select a .png file\r\n\r\nThe dimensions of the" +
         " image must be 1920x1080 for the game to read it properly.");
-            this.buttonSelectMapLoadingScreen.UseVisualStyleBackColor = true;
+            this.buttonSelectMapLoadingScreen.UseVisualStyleBackColor = false;
             this.buttonSelectMapLoadingScreen.Click += new System.EventHandler(this.ButtonSelectMapLoadingScreen_Click);
             // 
             // buttonSelectLobbyButtonPicture
             // 
+            this.buttonSelectLobbyButtonPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.buttonSelectLobbyButtonPicture.Enabled = false;
+            this.buttonSelectLobbyButtonPicture.FlatAppearance.BorderSize = 0;
+            this.buttonSelectLobbyButtonPicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectLobbyButtonPicture.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectLobbyButtonPicture.ForeColor = System.Drawing.Color.White;
             this.buttonSelectLobbyButtonPicture.Location = new System.Drawing.Point(12, 160);
             this.buttonSelectLobbyButtonPicture.Name = "buttonSelectLobbyButtonPicture";
             this.buttonSelectLobbyButtonPicture.Size = new System.Drawing.Size(159, 28);
@@ -97,68 +112,112 @@
             this.buttonSelectLobbyButtonPicture.Text = "Select Lobby Button Picture...";
             this.toolTipSelectLobbyButtonPicture.SetToolTip(this.buttonSelectLobbyButtonPicture, "Opens up the file explorer for you to select a .png file\r\n\r\nThe dimensions of the" +
         " image must be 300x100 for the game to read it properly.\r\n");
-            this.buttonSelectLobbyButtonPicture.UseVisualStyleBackColor = true;
+            this.buttonSelectLobbyButtonPicture.UseVisualStyleBackColor = false;
             this.buttonSelectLobbyButtonPicture.Click += new System.EventHandler(this.ButtonSelectLobbyButtonPicture_Click);
             // 
             // buttonModifyStages
             // 
+            this.buttonModifyStages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.buttonModifyStages.Enabled = false;
+            this.buttonModifyStages.FlatAppearance.BorderSize = 0;
+            this.buttonModifyStages.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonModifyStages.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonModifyStages.ForeColor = System.Drawing.Color.White;
             this.buttonModifyStages.Location = new System.Drawing.Point(12, 545);
             this.buttonModifyStages.Name = "buttonModifyStages";
             this.buttonModifyStages.Size = new System.Drawing.Size(160, 23);
             this.buttonModifyStages.TabIndex = 3;
             this.buttonModifyStages.Text = "Modify Stages";
             this.toolTipAddMapFinalButton.SetToolTip(this.buttonModifyStages, "Opens up the file explorer for you to select a .stage file.");
-            this.buttonModifyStages.UseVisualStyleBackColor = true;
+            this.buttonModifyStages.UseVisualStyleBackColor = false;
             this.buttonModifyStages.Click += new System.EventHandler(this.ButtonModifyStages_Click);
             // 
             // labelMapToAdd
             // 
             this.labelMapToAdd.AutoSize = true;
-            this.labelMapToAdd.Location = new System.Drawing.Point(178, 17);
+            this.labelMapToAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelMapToAdd.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMapToAdd.ForeColor = System.Drawing.Color.White;
+            this.labelMapToAdd.Location = new System.Drawing.Point(168, 12);
             this.labelMapToAdd.Name = "labelMapToAdd";
-            this.labelMapToAdd.Size = new System.Drawing.Size(111, 13);
+            this.labelMapToAdd.Size = new System.Drawing.Size(123, 14);
             this.labelMapToAdd.TabIndex = 5;
             this.labelMapToAdd.Text = "Choose a map to add:";
             // 
+            // toolTipAddMapIntoDamnedButton
+            // 
+            this.toolTipAddMapIntoDamnedButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            // 
+            // toolTipSelectLoadingScreen
+            // 
+            this.toolTipSelectLoadingScreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            // 
+            // toolTipSelectLobbyButtonPicture
+            // 
+            this.toolTipSelectLobbyButtonPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            // 
+            // toolTipAddMapFinalButton
+            // 
+            this.toolTipAddMapFinalButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            // 
             // damnedStagesTextBox
             // 
-            this.damnedStagesTextBox.Location = new System.Drawing.Point(940, 55);
+            this.damnedStagesTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.damnedStagesTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.damnedStagesTextBox.Font = new System.Drawing.Font("Romance Fatal Serif Std", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.damnedStagesTextBox.ForeColor = System.Drawing.Color.White;
+            this.damnedStagesTextBox.Location = new System.Drawing.Point(940, 53);
             this.damnedStagesTextBox.Name = "damnedStagesTextBox";
             this.damnedStagesTextBox.ReadOnly = true;
-            this.damnedStagesTextBox.Size = new System.Drawing.Size(205, 293);
+            this.damnedStagesTextBox.Size = new System.Drawing.Size(255, 586);
             this.damnedStagesTextBox.TabIndex = 6;
             this.damnedStagesTextBox.Text = "";
             // 
             // labelLobbyButtonPicture
             // 
             this.labelLobbyButtonPicture.AutoSize = true;
-            this.labelLobbyButtonPicture.Location = new System.Drawing.Point(178, 168);
+            this.labelLobbyButtonPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelLobbyButtonPicture.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLobbyButtonPicture.ForeColor = System.Drawing.Color.White;
+            this.labelLobbyButtonPicture.Location = new System.Drawing.Point(168, 163);
             this.labelLobbyButtonPicture.Name = "labelLobbyButtonPicture";
-            this.labelLobbyButtonPicture.Size = new System.Drawing.Size(151, 13);
+            this.labelLobbyButtonPicture.Size = new System.Drawing.Size(166, 14);
             this.labelLobbyButtonPicture.TabIndex = 7;
             this.labelLobbyButtonPicture.Text = "Choose a lobby button picture:";
             // 
             // labelLoadingScreenImage
             // 
             this.labelLoadingScreenImage.AutoSize = true;
+            this.labelLoadingScreenImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelLoadingScreenImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelLoadingScreenImage.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLoadingScreenImage.ForeColor = System.Drawing.Color.White;
             this.labelLoadingScreenImage.Location = new System.Drawing.Point(178, 464);
             this.labelLoadingScreenImage.Name = "labelLoadingScreenImage";
-            this.labelLoadingScreenImage.Size = new System.Drawing.Size(162, 13);
+            this.labelLoadingScreenImage.Size = new System.Drawing.Size(179, 14);
             this.labelLoadingScreenImage.TabIndex = 9;
             this.labelLoadingScreenImage.Text = "Choose a loading screen picture:";
             // 
             // labelListOfMaps
             // 
             this.labelListOfMaps.AutoSize = true;
-            this.labelListOfMaps.Location = new System.Drawing.Point(937, 16);
+            this.labelListOfMaps.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelListOfMaps.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelListOfMaps.Font = new System.Drawing.Font("Romance Fatal Serif Std", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelListOfMaps.ForeColor = System.Drawing.Color.White;
+            this.labelListOfMaps.Location = new System.Drawing.Point(937, 17);
             this.labelListOfMaps.Name = "labelListOfMaps";
-            this.labelListOfMaps.Size = new System.Drawing.Size(218, 13);
+            this.labelListOfMaps.Size = new System.Drawing.Size(153, 18);
             this.labelListOfMaps.TabIndex = 10;
-            this.labelListOfMaps.Text = "List of maps that you curerntly have installed:";
+            this.labelListOfMaps.Text = "List of installed stages:\r\n";
             // 
             // buttonRemoveMap
             // 
+            this.buttonRemoveMap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.buttonRemoveMap.FlatAppearance.BorderSize = 0;
+            this.buttonRemoveMap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRemoveMap.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRemoveMap.ForeColor = System.Drawing.Color.White;
             this.buttonRemoveMap.Location = new System.Drawing.Point(12, 95);
             this.buttonRemoveMap.Name = "buttonRemoveMap";
             this.buttonRemoveMap.Size = new System.Drawing.Size(159, 23);
@@ -166,52 +225,75 @@
             this.buttonRemoveMap.Text = "Select Stage to Remove...";
             this.toolTipRemoveMapFromDamnedButton.SetToolTip(this.buttonRemoveMap, "Opens up the file explorer for you to select a stage file.\r\n\r\nThe stage file will" +
         " be marked on the list at the right in red to be removed from the game.");
-            this.buttonRemoveMap.UseVisualStyleBackColor = true;
+            this.buttonRemoveMap.UseVisualStyleBackColor = false;
             this.buttonRemoveMap.Click += new System.EventHandler(this.ButtonRemoveMap_Click);
             // 
             // labelMapToRemove
             // 
             this.labelMapToRemove.AutoSize = true;
-            this.labelMapToRemove.Location = new System.Drawing.Point(178, 100);
+            this.labelMapToRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelMapToRemove.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMapToRemove.ForeColor = System.Drawing.Color.White;
+            this.labelMapToRemove.Location = new System.Drawing.Point(168, 95);
             this.labelMapToRemove.Name = "labelMapToRemove";
-            this.labelMapToRemove.Size = new System.Drawing.Size(128, 13);
+            this.labelMapToRemove.Size = new System.Drawing.Size(143, 14);
             this.labelMapToRemove.TabIndex = 13;
             this.labelMapToRemove.Text = "Choose a map to remove:";
             // 
+            // toolTipRemoveMapFromDamnedButton
+            // 
+            this.toolTipRemoveMapFromDamnedButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            // 
             // buttonResetPendingChanges
             // 
+            this.buttonResetPendingChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.buttonResetPendingChanges.FlatAppearance.BorderSize = 0;
+            this.buttonResetPendingChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonResetPendingChanges.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonResetPendingChanges.ForeColor = System.Drawing.Color.White;
             this.buttonResetPendingChanges.Location = new System.Drawing.Point(12, 583);
             this.buttonResetPendingChanges.Name = "buttonResetPendingChanges";
             this.buttonResetPendingChanges.Size = new System.Drawing.Size(160, 23);
             this.buttonResetPendingChanges.TabIndex = 14;
             this.buttonResetPendingChanges.Text = "Reset Pending Changes";
-            this.buttonResetPendingChanges.UseVisualStyleBackColor = true;
+            this.buttonResetPendingChanges.UseVisualStyleBackColor = false;
             this.buttonResetPendingChanges.Click += new System.EventHandler(this.ButtonResetPendingChanges_Click);
             // 
             // buttonAddStageToList
             // 
+            this.buttonAddStageToList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.buttonAddStageToList.Enabled = false;
+            this.buttonAddStageToList.FlatAppearance.BorderSize = 0;
+            this.buttonAddStageToList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddStageToList.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAddStageToList.ForeColor = System.Drawing.Color.White;
             this.buttonAddStageToList.Location = new System.Drawing.Point(12, 499);
             this.buttonAddStageToList.Name = "buttonAddStageToList";
             this.buttonAddStageToList.Size = new System.Drawing.Size(160, 23);
             this.buttonAddStageToList.TabIndex = 15;
             this.buttonAddStageToList.Text = "Add New Stage To List";
-            this.buttonAddStageToList.UseVisualStyleBackColor = true;
+            this.buttonAddStageToList.UseVisualStyleBackColor = false;
             this.buttonAddStageToList.Click += new System.EventHandler(this.ButtonAddStageToList_Click);
             // 
             // buttonSelectHighlightedLobbyButtons
             // 
+            this.buttonSelectHighlightedLobbyButtons.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.buttonSelectHighlightedLobbyButtons.Enabled = false;
+            this.buttonSelectHighlightedLobbyButtons.FlatAppearance.BorderSize = 0;
+            this.buttonSelectHighlightedLobbyButtons.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectHighlightedLobbyButtons.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectHighlightedLobbyButtons.ForeColor = System.Drawing.Color.White;
             this.buttonSelectHighlightedLobbyButtons.Location = new System.Drawing.Point(12, 309);
             this.buttonSelectHighlightedLobbyButtons.Name = "buttonSelectHighlightedLobbyButtons";
             this.buttonSelectHighlightedLobbyButtons.Size = new System.Drawing.Size(160, 23);
             this.buttonSelectHighlightedLobbyButtons.TabIndex = 17;
             this.buttonSelectHighlightedLobbyButtons.Text = "Select Highlighted Buttons";
-            this.buttonSelectHighlightedLobbyButtons.UseVisualStyleBackColor = true;
+            this.buttonSelectHighlightedLobbyButtons.UseVisualStyleBackColor = false;
             this.buttonSelectHighlightedLobbyButtons.Click += new System.EventHandler(this.ButtonSelectHighlightedLobbyButtons_Click);
             // 
             // pictureLobbyButtonHighlightedExample
             // 
+            this.pictureLobbyButtonHighlightedExample.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.pictureLobbyButtonHighlightedExample.Image = global::DamnedWorkshop.Properties.Resources.example_lobbyButtonImage;
             this.pictureLobbyButtonHighlightedExample.InitialImage = global::DamnedWorkshop.Properties.Resources.example_lobbyButtonImage;
             this.pictureLobbyButtonHighlightedExample.Location = new System.Drawing.Point(12, 338);
@@ -223,6 +305,7 @@
             // 
             // pictureDamnedButtonLobbyPicture
             // 
+            this.pictureDamnedButtonLobbyPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.pictureDamnedButtonLobbyPicture.Image = global::DamnedWorkshop.Properties.Resources.lobbyButtonImageExample;
             this.pictureDamnedButtonLobbyPicture.InitialImage = global::DamnedWorkshop.Properties.Resources.lobbyButtonImageExample;
             this.pictureDamnedButtonLobbyPicture.Location = new System.Drawing.Point(12, 194);
@@ -236,49 +319,76 @@
             // labelSelectedHighlightedButton
             // 
             this.labelSelectedHighlightedButton.AutoSize = true;
-            this.labelSelectedHighlightedButton.Location = new System.Drawing.Point(178, 314);
+            this.labelSelectedHighlightedButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelSelectedHighlightedButton.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSelectedHighlightedButton.ForeColor = System.Drawing.Color.White;
+            this.labelSelectedHighlightedButton.Location = new System.Drawing.Point(168, 313);
             this.labelSelectedHighlightedButton.Name = "labelSelectedHighlightedButton";
-            this.labelSelectedHighlightedButton.Size = new System.Drawing.Size(286, 13);
+            this.labelSelectedHighlightedButton.Size = new System.Drawing.Size(311, 14);
             this.labelSelectedHighlightedButton.TabIndex = 19;
             this.labelSelectedHighlightedButton.Text = "Choose an enabled, highlighted, and disabled lobby button:";
             // 
             // buttonSelectSceneFile
             // 
+            this.buttonSelectSceneFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.buttonSelectSceneFile.Enabled = false;
+            this.buttonSelectSceneFile.FlatAppearance.BorderSize = 0;
+            this.buttonSelectSceneFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectSceneFile.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectSceneFile.ForeColor = System.Drawing.Color.White;
             this.buttonSelectSceneFile.Location = new System.Drawing.Point(12, 53);
             this.buttonSelectSceneFile.Name = "buttonSelectSceneFile";
             this.buttonSelectSceneFile.Size = new System.Drawing.Size(159, 23);
             this.buttonSelectSceneFile.TabIndex = 20;
             this.buttonSelectSceneFile.Text = "Select Scene File";
-            this.buttonSelectSceneFile.UseVisualStyleBackColor = true;
+            this.buttonSelectSceneFile.UseVisualStyleBackColor = false;
             this.buttonSelectSceneFile.Click += new System.EventHandler(this.ButtonSelectSceneFile_Click);
             // 
             // labelScene
             // 
             this.labelScene.AutoSize = true;
-            this.labelScene.Location = new System.Drawing.Point(178, 58);
+            this.labelScene.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelScene.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelScene.ForeColor = System.Drawing.Color.White;
+            this.labelScene.Location = new System.Drawing.Point(168, 53);
             this.labelScene.Name = "labelScene";
-            this.labelScene.Size = new System.Drawing.Size(224, 13);
+            this.labelScene.Size = new System.Drawing.Size(246, 14);
             this.labelScene.TabIndex = 21;
             this.labelScene.Text = "Choose a scene file that goes with your stage:\r\n";
             // 
+            // toolTipLobbyPicture
+            // 
+            this.toolTipLobbyPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            // 
+            // toolTipExamplePicture
+            // 
+            this.toolTipExamplePicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            // 
             // buttonSelectSceneToRemove
             // 
+            this.buttonSelectSceneToRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.buttonSelectSceneToRemove.Enabled = false;
+            this.buttonSelectSceneToRemove.FlatAppearance.BorderSize = 0;
+            this.buttonSelectSceneToRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectSceneToRemove.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectSceneToRemove.ForeColor = System.Drawing.Color.White;
             this.buttonSelectSceneToRemove.Location = new System.Drawing.Point(12, 131);
             this.buttonSelectSceneToRemove.Name = "buttonSelectSceneToRemove";
             this.buttonSelectSceneToRemove.Size = new System.Drawing.Size(160, 23);
             this.buttonSelectSceneToRemove.TabIndex = 22;
             this.buttonSelectSceneToRemove.Text = "Select Scene To Remove";
-            this.buttonSelectSceneToRemove.UseVisualStyleBackColor = true;
+            this.buttonSelectSceneToRemove.UseVisualStyleBackColor = false;
             this.buttonSelectSceneToRemove.Click += new System.EventHandler(this.ButtonSelectSceneToRemove_Click);
             // 
             // labelSelectSceneFileToRemove
             // 
             this.labelSelectSceneFileToRemove.AutoSize = true;
-            this.labelSelectSceneFileToRemove.Location = new System.Drawing.Point(178, 136);
+            this.labelSelectSceneFileToRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.labelSelectSceneFileToRemove.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSelectSceneFileToRemove.ForeColor = System.Drawing.Color.White;
+            this.labelSelectSceneFileToRemove.Location = new System.Drawing.Point(168, 131);
             this.labelSelectSceneFileToRemove.Name = "labelSelectSceneFileToRemove";
-            this.labelSelectSceneFileToRemove.Size = new System.Drawing.Size(222, 13);
+            this.labelSelectSceneFileToRemove.Size = new System.Drawing.Size(246, 14);
             this.labelSelectSceneFileToRemove.TabIndex = 23;
             this.labelSelectSceneFileToRemove.Text = "Choose a scene file to remove with the stage:\r\n";
             // 
@@ -286,6 +396,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.ClientSize = new System.Drawing.Size(1196, 651);
             this.Controls.Add(this.labelSelectSceneFileToRemove);
             this.Controls.Add(this.buttonSelectSceneToRemove);
@@ -310,6 +421,7 @@
             this.Controls.Add(this.buttonAddMapIntoDamned);
             this.Name = "DamnedMappingForm";
             this.Text = "Damned Workshop (Mapping Tools)";
+            this.Load += new System.EventHandler(this.DamnedMappingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureLobbyButtonHighlightedExample)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDamnedButtonLobbyPicture)).EndInit();
             this.ResumeLayout(false);

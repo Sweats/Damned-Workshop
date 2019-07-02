@@ -80,7 +80,7 @@ namespace DamnedWorkshop
             damnedNewStage.loadingImagePath = loadingImage;
             buttonModifyStages.Enabled = true;
             labelLoadingScreenImage.Text = Path.GetFileName(damnedNewStage.loadingImagePath);
-            labelLoadingScreenImage.ForeColor = Color.Green;
+            labelLoadingScreenImage.ForeColor = Color.FromArgb(255, 168, 38);
             buttonAddStageToList.Enabled = true;
             changesMade = true;
 
@@ -118,7 +118,7 @@ namespace DamnedWorkshop
 
             damnedNewStage.lobbyImageButtonPath = buttonImage;
             labelLobbyButtonPicture.Text = Path.GetFileName(damnedNewStage.lobbyImageButtonPath);
-            labelLobbyButtonPicture.ForeColor = Color.Green;
+            labelLobbyButtonPicture.ForeColor = Color.FromArgb(255, 168, 38);
             changesMade = true;
             buttonSelectHighlightedLobbyButtons.Enabled = true;
             pictureDamnedButtonLobbyPicture.ImageLocation = buttonImage;
@@ -160,7 +160,7 @@ namespace DamnedWorkshop
                 damnedStagesTextBox.AppendText(String.Format("{0}\n", sortedStages[i]));
             }
 
-            MarkStages(newSortedStages, Color.Green);
+            MarkStages(newSortedStages, Color.FromArgb(255, 168, 38));
 
             if (!afterRemoving)
             {
@@ -228,7 +228,7 @@ namespace DamnedWorkshop
                 damnedRemoveStage.stagePath = stagePath;
                 string newLabelText = Path.GetFileNameWithoutExtension(stage).Replace("_", " ");
                 labelMapToRemove.Text = newLabelText;
-                labelMapToRemove.ForeColor = Color.Green;
+                labelMapToRemove.ForeColor = Color.FromArgb(255, 168, 38);
                 buttonSelectSceneToRemove.Enabled = true;
                 changesMade = true;
 
@@ -250,7 +250,7 @@ namespace DamnedWorkshop
                 damnedNewStage.newStagePath = stagePath;
                 string newLabelText = stage.Replace("_", " ").Remove(stage.IndexOf("."), 6);
                 labelMapToAdd.Text = newLabelText;
-                labelMapToAdd.ForeColor = Color.Green;
+                labelMapToAdd.ForeColor = Color.FromArgb(255, 168, 38);
                 buttonSelectSceneFile.Enabled = true;
                 changesMade = true;
 
@@ -324,7 +324,7 @@ namespace DamnedWorkshop
 
                 damnedNewStage.newScenePath = scenePath;
                 labelScene.Text = sceneName;
-                labelScene.ForeColor = Color.Green;
+                labelScene.ForeColor = Color.FromArgb(255, 168, 38);
                 changesMade = true;
                 buttonSelectLobbyButtonPicture.Enabled = true;
             }
@@ -462,7 +462,7 @@ namespace DamnedWorkshop
             damnedNewStage.lobbyImageButtonHighlightedPath = dialog.FileName;
             pictureLobbyButtonHighlightedExample.ImageLocation = dialog.FileName;
             labelSelectedHighlightedButton.Text = Path.GetFileName(dialog.FileName);
-            labelSelectedHighlightedButton.ForeColor = Color.Green;
+            labelSelectedHighlightedButton.ForeColor = Color.FromArgb(255, 168, 38);
             changesMade = true;
             buttonSelectMapLoadingScreen.Enabled = true;
         }
@@ -476,6 +476,47 @@ namespace DamnedWorkshop
         private void ButtonSelectSceneToRemove_Click(object sender, EventArgs e)
         {
             SelectScene(true);
+        }
+
+        private void SetButtons()
+        {
+            buttonSelectHighlightedLobbyButtons.MouseEnter += OnMouseEnterButton;
+            buttonSelectHighlightedLobbyButtons.MouseLeave += OnMouseLeaveButton;
+            buttonSelectLobbyButtonPicture.MouseEnter += OnMouseEnterButton;
+            buttonSelectLobbyButtonPicture.MouseLeave += OnMouseLeaveButton;
+            buttonSelectMapLoadingScreen.MouseEnter += OnMouseEnterButton;
+            buttonSelectMapLoadingScreen.MouseLeave += OnMouseLeaveButton;
+            buttonSelectSceneFile.MouseEnter += OnMouseEnterButton;
+            buttonSelectSceneFile.MouseLeave += OnMouseLeaveButton;
+            buttonSelectSceneToRemove.MouseEnter += OnMouseEnterButton;
+            buttonSelectSceneToRemove.MouseLeave += OnMouseLeaveButton;
+            buttonModifyStages.MouseEnter += OnMouseEnterButton;
+            buttonModifyStages.MouseLeave += OnMouseLeaveButton;
+            buttonAddMapIntoDamned.MouseEnter += OnMouseEnterButton;
+            buttonAddMapIntoDamned.MouseLeave += OnMouseLeaveButton;
+            buttonAddStageToList.MouseEnter += OnMouseEnterButton;
+            buttonAddStageToList.MouseLeave += OnMouseLeaveButton;
+            buttonRemoveMap.MouseEnter += OnMouseEnterButton;
+            buttonRemoveMap.MouseLeave += OnMouseLeaveButton;
+            buttonResetPendingChanges.MouseEnter += OnMouseEnterButton;
+            buttonResetPendingChanges.MouseLeave += OnMouseLeaveButton;
+        }
+
+        private void OnMouseEnterButton(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            button.ForeColor = Color.FromArgb(255, 168, 38);
+        }
+
+        private void OnMouseLeaveButton(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            button.ForeColor = Color.White;
+        }
+
+        private void DamnedMappingForm_Load(object sender, EventArgs e)
+        {
+            SetButtons();
         }
     }
 }

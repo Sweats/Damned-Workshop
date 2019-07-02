@@ -99,10 +99,41 @@ namespace DamnedWorkshop
 
                 if (damnedFiles.Check())
                 {
-                    labelDamnedDirectoryPath.ForeColor = Color.Green;
+                    labelDamnedDirectoryPath.ForeColor = Color.FromArgb(255, 168, 38);
                     EnableControls();
                 }
             }
+        }
+
+        private void SetButtons()
+        {
+            buttonCheckPath.MouseEnter += OnMouseEnterButton;
+            buttonCheckPath.MouseLeave += OnMouseLeaveButton;
+            buttonMappingForm.MouseEnter += OnMouseEnterButton;
+            buttonMappingForm.MouseLeave += OnMouseLeaveButton;
+            buttonPatcherForm.MouseEnter += OnMouseEnterButton;
+            buttonPatcherForm.MouseLeave += OnMouseLeaveButton;
+            buttonSelectDamnedDirectory.MouseEnter += OnMouseEnterButton;
+            buttonSelectDamnedDirectory.MouseLeave += OnMouseLeaveButton;
+            
+        }
+
+        private void OnMouseEnterButton(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            button.ForeColor = Color.FromArgb(255, 168, 38);
+        }
+
+        private void OnMouseLeaveButton(object sender, EventArgs e)
+        {
+            var button =  (Button)sender;
+            button.ForeColor = Color.White;
+        }
+
+        private void DamnedMainForm_Load(object sender, EventArgs e)
+        {
+            SetButtons();
+
         }
     }
 }

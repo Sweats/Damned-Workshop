@@ -22,7 +22,7 @@ namespace DamnedWorkshop
 
 
 
-        private static string DOWNLOAD_TEST_PATCH_STABLE_LINK =  "https://github.com/Sweats/Damned/archive/master.zip";
+        private static string DOWNLOAD_TEST_PATCH_STABLE_LINK = "https://github.com/Sweats/Damned/archive/master.zip";
         private static string DOWNLOAD_TEST_PATCH_TESTING_LINK = "https://github.com/Sweats/Damned/archive/testing.zip";
         private static string GITHUB_LINK = "https://github.com/Sweats/Damned-Workshop";
 
@@ -48,14 +48,15 @@ namespace DamnedWorkshop
         {
             InitializeComponent();
             this.damnedFiles = damnedFiles;
-            directory = damnedFiles.directory;
-            damnedDirectoryStringLabel.Text = damnedFiles.directory;
-           
         }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadSettings();
+            SetButtons();
+            directory = damnedFiles.directory;
+            damnedDirectoryStringLabel.Text = damnedFiles.directory;
             toolTipPublicTestPatchTesting.SetToolTip(publicTestPatchTestingButton, TOOLTIP_TEST_PATCH_TESTING_TEXT);
             toolTipPublicTestPatchStable.SetToolTip(publicTestPatchStableButton, TOOLTIP_TEST_PATCH_STABLE_TEXT);
             loggingTextBox.AppendText(String.Format("Welcome\n\nBefore using this tool, please check its github at {0}\n\nDamned directory has been set to \"{1}\". If you have installed Damned in a non traditonal location, you will have to change it. For more information on what the buttons do, hover your mouse over them.\n\n", GITHUB_LINK, directory));
@@ -180,7 +181,7 @@ namespace DamnedWorkshop
                     MessageBox.Show(String.Format("Failed to extract files and folders from {0}\n\n To:\n\n \"{1}\". Did you select the right local path for the stable branch?", publicTestPatchStableSavedDirectory, directory), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                
+
             }
 
             MessageBox.Show("Successfully installed the patch from the local directory!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -336,7 +337,7 @@ namespace DamnedWorkshop
             keepPublicTestPatchTestingCheckbox.Enabled = true;
             keepPublicTestPatchStableCheckbox.Enabled = true;
 
-          
+
 
         }
 
@@ -487,7 +488,7 @@ namespace DamnedWorkshop
             if (damnedFiles.Check())
             {
                 loggingTextBox.AppendText("Looks like you have a good backup folder!\n\n");
-                damnedBackupFolderStringLabel.ForeColor = Color.Green;
+                damnedBackupFolderStringLabel.ForeColor = Color.FromArgb(255, 138, 38);
                 validBackUpFolder = true;
                 buttonRestore.Enabled = true;
             }
@@ -531,7 +532,7 @@ namespace DamnedWorkshop
             if (damnedFiles.Check())
             {
                 loggingTextBox.AppendText("Looks like you have a good backup folder!\n\n");
-                damnedBackupFolderStringLabel.ForeColor = Color.Green;
+                damnedBackupFolderStringLabel.ForeColor = Color.FromArgb(255, 168, 38);
                 validBackUpFolder = true;
                 buttonRestore.Enabled = true;
             }
@@ -548,7 +549,7 @@ namespace DamnedWorkshop
         {
             string setting = String.Empty;
 
-            setting =  Properties.Settings.Default.damnedBackupFolderPath;
+            setting = Properties.Settings.Default.damnedBackupFolderPath;
 
             if (setting != String.Empty)
             {
@@ -559,12 +560,12 @@ namespace DamnedWorkshop
 
                 if (damnedFiles.Check())
                 {
-                    damnedBackupFolderStringLabel.ForeColor = Color.Green;
+                    damnedBackupFolderStringLabel.ForeColor = Color.FromArgb(255, 168, 38);
                     buttonRestore.Enabled = true;
                     validBackUpFolder = true;
                 }
 
-               
+
             }
 
             setting = Properties.Settings.Default.damnedPublicTestPatchStablePath;
@@ -587,6 +588,37 @@ namespace DamnedWorkshop
                 buttonSetPublicTestPatchTestingLocation.Enabled = true;
                 publicTestPatchTestingPathLabel.Text = setting;
             }
+        }
+        private void SetButtons()
+        {
+            buttonBackUp.MouseEnter += OnMouseEnterButton;
+            buttonBackUp.MouseLeave += OnMouseLeaveButton;
+            buttonSelectBackupFolder.MouseEnter += OnMouseEnterButton;
+            buttonSelectBackupFolder.MouseLeave += OnMouseLeaveButton;
+            buttonSetPublicTestPatchStableLocation.MouseEnter += OnMouseEnterButton;
+            buttonSetPublicTestPatchStableLocation.MouseLeave += OnMouseLeaveButton;
+            buttonSetPublicTestPatchTestingLocation.MouseEnter += OnMouseEnterButton;
+            buttonSetPublicTestPatchTestingLocation.MouseLeave += OnMouseLeaveButton;
+            publicTestPatchStableButton.MouseEnter += OnMouseEnterButton;
+            publicTestPatchStableButton.MouseLeave += OnMouseLeaveButton;
+            publicTestPatchTestingButton.MouseEnter += OnMouseEnterButton;
+            publicTestPatchTestingButton.MouseLeave += OnMouseLeaveButton;
+            buttonRestore.MouseEnter += OnMouseEnterButton;
+            buttonRestore.MouseLeave += OnMouseLeaveButton;
+            buttonOnlyCheck.MouseEnter += OnMouseEnterButton;
+            buttonOnlyCheck.MouseLeave += OnMouseLeaveButton;
+
+        }
+        private void OnMouseEnterButton(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            button.ForeColor = Color.FromArgb(255, 168, 38);
+        }
+
+        private void OnMouseLeaveButton(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            button.ForeColor = Color.White;
         }
     }
 }
