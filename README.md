@@ -1,12 +1,6 @@
 # Damned Workshop
 
 
-![Main Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedWorkshopMainMenu.png)
-
-![Mapping Tools Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedMappingTool.png)
-
-![Patcher Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedWorkshopPatcherMenu.png)
-
 This tool currently does the following:
 
 * Makes installing the public test patch very easy. No more dragging and dropping files by hand. 
@@ -22,4 +16,15 @@ Unless you are using the public test build and helping out with testing our chan
 # Issues
 
 If there are any bugs in the program, please let me know in the coding-changes text channel in the Damned Discord. I have tested this so it should work fine.
+
+
+
+# Screenshots
+
+
+![Main Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedWorkshopMainMenu.png)
+
+![Mapping Tools Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedMappingTool.png)
+
+![Patcher Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedWorkshopPatcherMenu.png)
 
