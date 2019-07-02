@@ -460,12 +460,13 @@ namespace DamnedWorkshop
                     publicTestPatchTestingSavedDirectory = "";
                     publicTestPatchTestingPathLabel.Text = "";
                 }
+
+                Properties.Settings.Default["damnedPublicTestTestingStablePath"] = publicTestPatchTestingSavedDirectory;
+                Properties.Settings.Default.Save();
             }
 
 
-            Properties.Settings.Default["damnedPublicTestTestingStablePath"] = publicTestPatchTestingSavedDirectory;
-            Properties.Settings.Default.Save();
-
+    
         }
 
         private void ButtonBackUp_Click(object sender, EventArgs e)
