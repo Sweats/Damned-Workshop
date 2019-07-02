@@ -164,11 +164,14 @@
             // 
             this.damnedStagesTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.damnedStagesTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.damnedStagesTextBox.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.damnedStagesTextBox.DetectUrls = false;
             this.damnedStagesTextBox.Font = new System.Drawing.Font("Romance Fatal Serif Std", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damnedStagesTextBox.ForeColor = System.Drawing.Color.White;
             this.damnedStagesTextBox.Location = new System.Drawing.Point(940, 53);
             this.damnedStagesTextBox.Name = "damnedStagesTextBox";
             this.damnedStagesTextBox.ReadOnly = true;
+            this.damnedStagesTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.damnedStagesTextBox.Size = new System.Drawing.Size(255, 586);
             this.damnedStagesTextBox.TabIndex = 6;
             this.damnedStagesTextBox.Text = "";

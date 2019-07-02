@@ -44,12 +44,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.damnedWelcomeTextbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.damnedWelcomeTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.damnedWelcomeTextbox.Enabled = false;
             this.damnedWelcomeTextbox.Font = new System.Drawing.Font("Romance Fatal Serif Std", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damnedWelcomeTextbox.Location = new System.Drawing.Point(448, 12);
             this.damnedWelcomeTextbox.Name = "damnedWelcomeTextbox";
             this.damnedWelcomeTextbox.Size = new System.Drawing.Size(340, 426);
             this.damnedWelcomeTextbox.TabIndex = 0;
             this.damnedWelcomeTextbox.Text = "";
+            this.damnedWelcomeTextbox.Visible = false;
             // 
             // buttonPatcherForm
             // 
