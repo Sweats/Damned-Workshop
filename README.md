@@ -1,6 +1,11 @@
 # Damned Workshop
 
-![Screenshot of the program as of the last commit](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedWorkshopPicture.png)
+
+![Main Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedWorkshopMainMenu.png)
+
+![Mapping Tools Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedMappingTool.png)
+
+![Patcher Menu](https://github.com/Sweats/Damned-Workshop/blob/master/DamnedWorkshopPatcherMenu.png)
 
 This tool currently does the following:
 

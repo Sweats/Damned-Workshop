@@ -76,7 +76,7 @@ namespace DamnedWorkshop
 
             if (damnedFiles.Check())
             {
-                labelDamnedDirectoryPath.ForeColor = Color.Green;
+                labelDamnedDirectoryPath.ForeColor = Color.FromArgb(255, 168, 38);
                 EnableControls();
             }
 
