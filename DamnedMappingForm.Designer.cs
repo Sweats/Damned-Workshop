@@ -423,7 +423,7 @@
             this.Controls.Add(this.buttonSelectMapLoadingScreen);
             this.Controls.Add(this.buttonAddMapIntoDamned);
             this.Name = "DamnedMappingForm";
-            this.Text = "Damned Workshop (Mapping Tools)";
+            this.Text = "j";
             this.Load += new System.EventHandler(this.DamnedMappingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureLobbyButtonHighlightedExample)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDamnedButtonLobbyPicture)).EndInit();

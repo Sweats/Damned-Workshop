@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DamnedPackage.cs" />
     <Compile Include="DamnedRemoveStage.cs" />
     <Compile Include="DamnedNewMap.cs" />
     <Compile Include="DamnedFiles.cs" />

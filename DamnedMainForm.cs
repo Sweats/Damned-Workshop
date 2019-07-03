@@ -125,11 +125,11 @@ namespace DamnedWorkshop
 
                 catch (IOException)
                 {
+                    ResetSettings();
                     string message = String.Format("The directory \"{0}\" seems to no longer exist. Your settings have been reset.", setting);
                     MessageBox.Show(message, "Directory No Longer Exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     labelDamnedDirectoryPath.Text = "Your Damned directory path will appear here.";
                     directory = String.Empty;
-                    ResetSettings();
                     return;
                 }
    
