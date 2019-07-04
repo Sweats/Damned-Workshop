@@ -20,9 +20,21 @@ public class DamnedObjects
 	{
         this.directory = rootDirectory;
         objectsDirectory = FindObjectDirectory();
-        SetObjects();
 
+        if (objectsDirectory == String.Empty)
+        {
+            CreateObjectsDirectory();
+        }
+
+        SetObjects();
 	}
+
+
+    private void CreateObjectsDirectory()
+    {
+        objectsDirectory = Path.Combine(directory, "DamnedData", "Resources", "Objects");
+        Directory.CreateDirectory(objectsDirectory);
+    }
 
     private void SetObjects()
     {
@@ -31,7 +43,7 @@ public class DamnedObjects
             return;
         }
 
-        FileInfo[] objectsList = new DirectoryInfo(objectsDirectory).GetFiles("*.obj", SearchOption.TopDirectoryOnly);
+        FileInfo[] objectsList = new DirectoryInfo(objectsDirectory).GetFiles("*.object", SearchOption.TopDirectoryOnly);
         objects = new string[objectsList.Length];
 
         for (int i = 0; i < objects.Length; i++)
@@ -43,7 +55,7 @@ public class DamnedObjects
 
     private string FindObjectDirectory()
     {
-        string returnDirectoryPath = "";
+        string returnDirectoryPath = String.Empty;
         DirectoryInfo[] info = new DirectoryInfo(directory).GetDirectories("*", SearchOption.AllDirectories);
 
         for (int i = 0; i < info.Length; i++)
@@ -62,4 +74,19 @@ public class DamnedObjects
 
     }
 
+    public void CopyObjects(string[] sourceObjectsPath, string dest)
+    {
+        for (int i = 0; i < sourceObjectsPath.Length; i++)
+        {
+            CopyObject(sourceObjectsPath[i], dest);
+        }
+
+    }
+
+    public void CopyObject(string sourcePath, string dest)
+    {
+        string objectName = Path.GetFileName(sourcePath);
+        string newPath = Path.Combine(dest, objectName);
+        File.Copy(sourcePath, newPath);
+    }
 }

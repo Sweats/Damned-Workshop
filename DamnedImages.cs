@@ -61,12 +61,13 @@ public class DamnedImages
 
     private DamnedMaps damnedStages;
 
+    private DamnedObjects damnedObjects;
 
-
-    public DamnedImages(string rootDirectory, DamnedMaps damnedStages)
+    public DamnedImages(string rootDirectory, DamnedMaps damnedStages, DamnedObjects damnedObjects)
     {
         directory = rootDirectory;
         this.damnedStages = damnedStages;
+        this.damnedObjects = damnedObjects;
         SetGUIDirectory();
         SetImages();
         SetDamnedStagesXmlFile();
@@ -273,8 +274,10 @@ public class DamnedImages
             string mapToRemove = stagesToRemove[i].stagePath;
             int oldImageIndex = oldStagesSorted.BinarySearch(mapToRemove);
             string imageNameToDelete = String.Format("stage_{0}.png", oldImageIndex);
+            string loadingImageToDelete = String.Format("loading_{0}.jpg", Path.GetFileNameWithoutExtension(stagesToRemove[i].stagePath));
 
             DeleteLobbyButtonImage(info, imageNameToDelete);
+            DeleteLoadingScreenImage(loadingImageToDelete);
             RenameImagesAfterRemovingStage(info, oldImageIndex, oldImageIndex + 1);
 
             oldStagesSorted.RemoveAt(oldImageIndex);
@@ -316,6 +319,11 @@ public class DamnedImages
                 newLobbyHighlightedButton = String.Format("DamnedStages_{0}.png", newLobbyHighlightedButton);
                 string newLobbyHighlightedButtonPath = Path.Combine(guiDirectory, newLobbyHighlightedButton);
                 File.Copy(newMaps[i].lobbyImageButtonHighlightedPath, newLobbyHighlightedButtonPath);
+
+                if (newMaps[i].hasObjects)
+                {
+                    damnedObjects.CopyObjects(newMaps[i].newObjectsPath.ToArray(), damnedObjects.objectsDirectory);
+                }
             }
 
         }
@@ -355,6 +363,23 @@ public class DamnedImages
                     File.Delete(info[i].FullName);
                     break;
                 }
+            }
+        }
+    }
+
+
+    private void DeleteLoadingScreenImage(string loadingimageName)
+    {
+        FileInfo[] info = new DirectoryInfo(terrorImagesDirectory).GetFiles("*.jpg", SearchOption.TopDirectoryOnly);
+
+        for (int i = 0; i < info.Length; i++)
+        {
+            string name = info[i].Name;
+
+            if (name == loadingimageName)
+            {
+                File.Delete(info[i].FullName);
+                break;
             }
         }
     }

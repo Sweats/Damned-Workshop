@@ -83,9 +83,9 @@ namespace DamnedWorkshop
 
             damnedNewStage.loadingImagePath = loadingImage;
             buttonModifyStages.Enabled = true;
+            checkBoxCustomObjects.Enabled = true;
             labelLoadingScreenImage.Text = Path.GetFileName(damnedNewStage.loadingImagePath);
             labelLoadingScreenImage.ForeColor = Color.FromArgb(255, 168, 38);
-            buttonAddStageToList.Enabled = true;
             changesMade = true;
 
         }
@@ -400,12 +400,18 @@ namespace DamnedWorkshop
             buttonModifyStages.Enabled = false;
             buttonSelectHighlightedLobbyButtons.Enabled = false;
             buttonSelectSceneFile.Enabled = false;
+            buttonPackageStage.Enabled = false;
+            checkBoxCustomObjects.Checked = false;
+            checkBoxCustomObjects.Enabled = false;
+            buttonSelectObjectsForStage.Enabled = false;
             pictureDamnedButtonLobbyPicture.Image = Properties.Resources.lobbyButtonImageExample;
             pictureLobbyButtonHighlightedExample.Image = Properties.Resources.example_lobbyButtonImage;
             labelScene.Text = "Choose a scene file that goes with your stage";
             labelScene.ForeColor = Color.White;
             labelSelectSceneFileToRemove.Text = "Choose a scene file to remove with the stage:";
             labelSelectSceneFileToRemove.ForeColor = Color.White;
+            labelObjectsCount.Text = "Number of new objects will be shown here.";
+            labelObjectsCount.ForeColor = Color.White;
             tempDirectory = String.Empty;
         }
 
@@ -438,6 +444,7 @@ namespace DamnedWorkshop
             buttonAddStageToList.Enabled = false;
             buttonSelectHighlightedLobbyButtons.Enabled = false;
             buttonModifyStages.Enabled = true;
+            buttonPackageStage.Enabled = true;
             pictureDamnedButtonLobbyPicture.Image = Properties.Resources.lobbyButtonImageExample;
             pictureLobbyButtonHighlightedExample.Image = Properties.Resources.example_lobbyButtonImage;
             labelMapToAdd.Text = "Choose another stages to add:";
@@ -450,6 +457,8 @@ namespace DamnedWorkshop
             labelSelectedHighlightedButton.ForeColor = Color.White;
             labelScene.Text = "Choose another scene file that goes with your stages:";
             labelScene.ForeColor = Color.White;
+            labelObjectsCount.Text = "Number of new objects will be shown here.";
+            labelObjectsCount.ForeColor = Color.White;
 
         }
 
@@ -513,6 +522,10 @@ namespace DamnedWorkshop
             buttonResetPendingChanges.MouseLeave += OnMouseLeaveButton;
             buttonSelectPackage.MouseEnter += OnMouseEnterButton;
             buttonSelectPackage.MouseLeave += OnMouseLeaveButton;
+            buttonPackageStage.MouseEnter += OnMouseEnterButton;
+            buttonPackageStage.MouseLeave += OnMouseLeaveButton;
+            buttonSelectObjectsForStage.MouseEnter += OnMouseEnterButton;
+            buttonSelectObjectsForStage.MouseLeave += OnMouseLeaveButton;
         }
 
         private void OnMouseEnterButton(object sender, EventArgs e)
@@ -570,6 +583,15 @@ namespace DamnedWorkshop
                 return;
             }
 
+
+            if (package.objectsCount > 0)
+            {
+                labelObjectsCount.Text = String.Format("{0} new objects will be added.", package.objectsCount);
+                labelObjectsCount.ForeColor = Color.FromArgb(255, 168, 38);
+                checkBoxCustomObjects.Checked = true;
+                checkBoxCustomObjects.Enabled = true;
+            }
+
             labelLoadingScreenImage.Text = Path.GetFileName(damnedNewStage.loadingImagePath);
             labelLoadingScreenImage.ForeColor = Color.FromArgb(255, 168, 38);
             labelLobbyButtonPicture.Text = Path.GetFileName(damnedNewStage.lobbyImageButtonPath);
@@ -589,6 +611,75 @@ namespace DamnedWorkshop
             buttonAddStageToList.Enabled = true;
             changesMade = true;
             tempDirectory = package.tempDirectory;
+        }
+
+        private void ButtonPackageStage_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog browser = new FolderBrowserDialog()
+            {
+                Description = "Select a folder where you want to save your new Damned package(s)."
+            };
+
+            if (browser.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string folderPath = browser.SelectedPath;
+            DamnedPackage package = new DamnedPackage();
+            package.Package(damnedNewStagesList.ToArray(), folderPath);
+
+        }
+
+        private void CheckBoxCustomObjects_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxCustomObjects.Checked)
+            {
+                buttonAddStageToList.Enabled = false;
+                buttonSelectObjectsForStage.Enabled = true;
+            }
+
+            else
+            {
+                buttonAddStageToList.Enabled = true;
+                damnedNewStage.newObjectsPath.Clear();
+                labelObjectsCount.Text = "Number of new objects will be shown here.";
+                labelObjectsCount.ForeColor = Color.White;
+                buttonSelectObjectsForStage.Enabled = false;
+            }
+        }
+
+        private void ButtonSelectObjectsForStage_Click(object sender, EventArgs e)
+        {
+            FileDialog dialog = new OpenFileDialog()
+            {
+                Filter = "Object Files(*.object)|*.object"
+            };
+
+            DialogResult result = dialog.ShowDialog();
+
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+            string[] selectedObjects = dialog.FileNames;
+
+            if (selectedObjects.Length <= 0)
+            {
+                return;
+            }
+
+            labelObjectsCount.Text = String.Format("{0} new objects will be added.", selectedObjects.Length);
+            labelObjectsCount.ForeColor = Color.FromArgb(255, 168, 38);
+
+            foreach(string i in selectedObjects)
+            {
+                damnedNewStage.newObjectsPath.Add(i);
+            }
+
+            damnedNewStage.hasObjects = true;
+            buttonAddStageToList.Enabled = true;
         }
     }
 }

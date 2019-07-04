@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public class DamnedNewStage
 {
@@ -7,6 +8,10 @@ public class DamnedNewStage
     public string lobbyImageButtonHighlightedPath { get; set; }
     public string newStagePath { get; set; }
     public string newScenePath { get; set; }
+
+    public List<string> newObjectsPath { get; set; }
+
+    public bool hasObjects { get; set; }
     public int count { get; set; }
 
     public DamnedNewStage()
@@ -16,6 +21,7 @@ public class DamnedNewStage
         this.newStagePath = String.Empty;
         this.lobbyImageButtonHighlightedPath = String.Empty;
         this.newScenePath = String.Empty;
+        this.newObjectsPath = new List<string>();
     }
 
     public DamnedNewStage(DamnedNewStage copy)
@@ -25,6 +31,8 @@ public class DamnedNewStage
         this.newStagePath = copy.newStagePath;
         this.lobbyImageButtonHighlightedPath = copy.lobbyImageButtonHighlightedPath;
         this.newScenePath = copy.newScenePath;
+        this.newObjectsPath = new List<string>(copy.newObjectsPath);
+        this.hasObjects = copy.hasObjects;
     }
 
     public void Clear()
@@ -34,6 +42,8 @@ public class DamnedNewStage
         newStagePath = String.Empty;
         lobbyImageButtonHighlightedPath = String.Empty;
         newScenePath = String.Empty;
+        newObjectsPath.Clear();
+        hasObjects = false;
         count = 0;
 
     }

@@ -62,6 +62,9 @@
             this.labelOr = new System.Windows.Forms.Label();
             this.buttonPackageStage = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonSelectObjectsForStage = new System.Windows.Forms.Button();
+            this.checkBoxCustomObjects = new System.Windows.Forms.CheckBox();
+            this.labelObjectsCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLobbyButtonHighlightedExample)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDamnedButtonLobbyPicture)).BeginInit();
             this.SuspendLayout();
@@ -91,9 +94,9 @@
             this.buttonSelectMapLoadingScreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSelectMapLoadingScreen.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSelectMapLoadingScreen.ForeColor = System.Drawing.Color.White;
-            this.buttonSelectMapLoadingScreen.Location = new System.Drawing.Point(12, 459);
+            this.buttonSelectMapLoadingScreen.Location = new System.Drawing.Point(12, 460);
             this.buttonSelectMapLoadingScreen.Name = "buttonSelectMapLoadingScreen";
-            this.buttonSelectMapLoadingScreen.Size = new System.Drawing.Size(160, 23);
+            this.buttonSelectMapLoadingScreen.Size = new System.Drawing.Size(146, 23);
             this.buttonSelectMapLoadingScreen.TabIndex = 1;
             this.buttonSelectMapLoadingScreen.Text = "Select Loading Screen...";
             this.toolTipSelectLoadingScreen.SetToolTip(this.buttonSelectMapLoadingScreen, "Opens up the file explorer for you to select a .png file\r\n\r\nThe dimensions of the" +
@@ -127,9 +130,9 @@
             this.buttonModifyStages.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModifyStages.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonModifyStages.ForeColor = System.Drawing.Color.White;
-            this.buttonModifyStages.Location = new System.Drawing.Point(12, 545);
+            this.buttonModifyStages.Location = new System.Drawing.Point(12, 628);
             this.buttonModifyStages.Name = "buttonModifyStages";
-            this.buttonModifyStages.Size = new System.Drawing.Size(160, 23);
+            this.buttonModifyStages.Size = new System.Drawing.Size(89, 23);
             this.buttonModifyStages.TabIndex = 3;
             this.buttonModifyStages.Text = "Modify Stages";
             this.toolTipAddMapFinalButton.SetToolTip(this.buttonModifyStages, "Opens up the file explorer for you to select a .stage file.");
@@ -199,7 +202,7 @@
             this.labelLoadingScreenImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelLoadingScreenImage.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLoadingScreenImage.ForeColor = System.Drawing.Color.White;
-            this.labelLoadingScreenImage.Location = new System.Drawing.Point(178, 464);
+            this.labelLoadingScreenImage.Location = new System.Drawing.Point(164, 464);
             this.labelLoadingScreenImage.Name = "labelLoadingScreenImage";
             this.labelLoadingScreenImage.Size = new System.Drawing.Size(179, 14);
             this.labelLoadingScreenImage.TabIndex = 9;
@@ -258,9 +261,9 @@
             this.buttonResetPendingChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonResetPendingChanges.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonResetPendingChanges.ForeColor = System.Drawing.Color.White;
-            this.buttonResetPendingChanges.Location = new System.Drawing.Point(12, 583);
+            this.buttonResetPendingChanges.Location = new System.Drawing.Point(12, 667);
             this.buttonResetPendingChanges.Name = "buttonResetPendingChanges";
-            this.buttonResetPendingChanges.Size = new System.Drawing.Size(160, 23);
+            this.buttonResetPendingChanges.Size = new System.Drawing.Size(146, 23);
             this.buttonResetPendingChanges.TabIndex = 14;
             this.buttonResetPendingChanges.Text = "Reset Pending Changes";
             this.buttonResetPendingChanges.UseVisualStyleBackColor = false;
@@ -274,9 +277,9 @@
             this.buttonAddStageToList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAddStageToList.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAddStageToList.ForeColor = System.Drawing.Color.White;
-            this.buttonAddStageToList.Location = new System.Drawing.Point(12, 499);
+            this.buttonAddStageToList.Location = new System.Drawing.Point(12, 582);
             this.buttonAddStageToList.Name = "buttonAddStageToList";
-            this.buttonAddStageToList.Size = new System.Drawing.Size(160, 23);
+            this.buttonAddStageToList.Size = new System.Drawing.Size(138, 23);
             this.buttonAddStageToList.TabIndex = 15;
             this.buttonAddStageToList.Text = "Add New Stage To List";
             this.buttonAddStageToList.UseVisualStyleBackColor = false;
@@ -431,30 +434,75 @@
             this.buttonPackageStage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPackageStage.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonPackageStage.ForeColor = System.Drawing.Color.White;
-            this.buttonPackageStage.Location = new System.Drawing.Point(202, 499);
+            this.buttonPackageStage.Location = new System.Drawing.Point(136, 628);
             this.buttonPackageStage.Name = "buttonPackageStage";
-            this.buttonPackageStage.Size = new System.Drawing.Size(132, 23);
+            this.buttonPackageStage.Size = new System.Drawing.Size(142, 23);
             this.buttonPackageStage.TabIndex = 26;
-            this.buttonPackageStage.Text = "Package New Stage...\r\n";
+            this.buttonPackageStage.Text = "Package New Stage(s)...\r\n";
             this.buttonPackageStage.UseVisualStyleBackColor = true;
+            this.buttonPackageStage.Click += new System.EventHandler(this.ButtonPackageStage_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(168)))), ((int)(((byte)(38)))));
-            this.label1.Location = new System.Drawing.Point(168, 504);
+            this.label1.Location = new System.Drawing.Point(107, 632);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(23, 14);
             this.label1.TabIndex = 27;
             this.label1.Text = "OR";
+            // 
+            // buttonSelectObjectsForStage
+            // 
+            this.buttonSelectObjectsForStage.Enabled = false;
+            this.buttonSelectObjectsForStage.FlatAppearance.BorderSize = 0;
+            this.buttonSelectObjectsForStage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectObjectsForStage.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectObjectsForStage.ForeColor = System.Drawing.Color.White;
+            this.buttonSelectObjectsForStage.Location = new System.Drawing.Point(12, 540);
+            this.buttonSelectObjectsForStage.Name = "buttonSelectObjectsForStage";
+            this.buttonSelectObjectsForStage.Size = new System.Drawing.Size(193, 23);
+            this.buttonSelectObjectsForStage.TabIndex = 28;
+            this.buttonSelectObjectsForStage.Text = "Select Custom Objects For Stage...\r\n";
+            this.buttonSelectObjectsForStage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSelectObjectsForStage.UseVisualStyleBackColor = true;
+            this.buttonSelectObjectsForStage.Click += new System.EventHandler(this.ButtonSelectObjectsForStage_Click);
+            // 
+            // checkBoxCustomObjects
+            // 
+            this.checkBoxCustomObjects.AutoSize = true;
+            this.checkBoxCustomObjects.Enabled = false;
+            this.checkBoxCustomObjects.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxCustomObjects.ForeColor = System.Drawing.Color.White;
+            this.checkBoxCustomObjects.Location = new System.Drawing.Point(23, 503);
+            this.checkBoxCustomObjects.Name = "checkBoxCustomObjects";
+            this.checkBoxCustomObjects.Size = new System.Drawing.Size(113, 18);
+            this.checkBoxCustomObjects.TabIndex = 29;
+            this.checkBoxCustomObjects.Text = "Custom Objects?";
+            this.checkBoxCustomObjects.UseVisualStyleBackColor = true;
+            this.checkBoxCustomObjects.CheckedChanged += new System.EventHandler(this.CheckBoxCustomObjects_CheckedChanged);
+            // 
+            // labelObjectsCount
+            // 
+            this.labelObjectsCount.AutoSize = true;
+            this.labelObjectsCount.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelObjectsCount.ForeColor = System.Drawing.Color.White;
+            this.labelObjectsCount.Location = new System.Drawing.Point(211, 544);
+            this.labelObjectsCount.Name = "labelObjectsCount";
+            this.labelObjectsCount.Size = new System.Drawing.Size(232, 14);
+            this.labelObjectsCount.TabIndex = 30;
+            this.labelObjectsCount.Text = "Number of new objects will be shown here.";
             // 
             // DamnedMappingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.ClientSize = new System.Drawing.Size(1196, 651);
+            this.ClientSize = new System.Drawing.Size(1196, 730);
+            this.Controls.Add(this.labelObjectsCount);
+            this.Controls.Add(this.checkBoxCustomObjects);
+            this.Controls.Add(this.buttonSelectObjectsForStage);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonPackageStage);
             this.Controls.Add(this.labelOr);
@@ -524,5 +572,8 @@
         private System.Windows.Forms.Label labelOr;
         private System.Windows.Forms.Button buttonPackageStage;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonSelectObjectsForStage;
+        private System.Windows.Forms.CheckBox checkBoxCustomObjects;
+        private System.Windows.Forms.Label labelObjectsCount;
     }
 }

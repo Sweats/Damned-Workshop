@@ -61,7 +61,7 @@ public class DamnedFiles
         damnedMaps = new DamnedMaps(rootDirectory);
         damnedObjects = new DamnedObjects(rootDirectory);
         damnedSounds = new DamnedSounds(rootDirectory);
-        damnedImages = new DamnedImages(rootDirectory, damnedMaps);
+        damnedImages = new DamnedImages(rootDirectory, damnedMaps, damnedObjects);
     }
 
      private void SetDirectories()
