@@ -32,6 +32,7 @@ namespace DamnedWorkshop
 
         private void ButtonMappingForm_Click(object sender, EventArgs e)
         {
+            damnedFiles.Refresh();
             DamnedMappingForm form = new DamnedMappingForm(damnedFiles.damnedMaps, damnedFiles.damnedImages);
             form.Show();
 

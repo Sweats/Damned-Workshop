@@ -115,6 +115,15 @@ public class DamnedFiles
         return success;
     }
 
+    public void Refresh()
+    {
+        SetDirectories();
+        damnedMaps = new DamnedMaps(directory);
+        damnedObjects = new DamnedObjects(directory);
+        damnedSounds = new DamnedSounds(directory);
+        damnedImages = new DamnedImages(directory, damnedMaps, damnedObjects);
+    }
+
     private bool CheckForDamnedExecutable()
     {
         FileInfo[] files = new DirectoryInfo(directory).GetFiles("*.exe", SearchOption.TopDirectoryOnly);
