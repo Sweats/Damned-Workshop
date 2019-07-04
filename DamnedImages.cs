@@ -128,7 +128,6 @@ public class DamnedImages
             }
             
         }
-        
     }
 
     private void SetImages()

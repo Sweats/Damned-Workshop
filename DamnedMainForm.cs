@@ -132,7 +132,7 @@ namespace DamnedWorkshop
                     directory = String.Empty;
                     return;
                 }
-   
+
                 if (damnedFiles.Check())
                 {
                     labelDamnedDirectoryPath.ForeColor = Color.FromArgb(255, 168, 38);
@@ -160,7 +160,7 @@ namespace DamnedWorkshop
             buttonPatcherForm.MouseLeave += OnMouseLeaveButton;
             buttonSelectDamnedDirectory.MouseEnter += OnMouseEnterButton;
             buttonSelectDamnedDirectory.MouseLeave += OnMouseLeaveButton;
-            
+
         }
 
         private void OnMouseEnterButton(object sender, EventArgs e)
@@ -171,7 +171,7 @@ namespace DamnedWorkshop
 
         private void OnMouseLeaveButton(object sender, EventArgs e)
         {
-            var button =  (Button)sender;
+            var button = (Button)sender;
             button.ForeColor = Color.White;
         }
 
@@ -181,4 +181,4 @@ namespace DamnedWorkshop
 
         }
     }
-}
+ }

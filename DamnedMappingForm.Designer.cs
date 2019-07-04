@@ -58,6 +58,10 @@
             this.toolTipExamplePicture = new System.Windows.Forms.ToolTip(this.components);
             this.buttonSelectSceneToRemove = new System.Windows.Forms.Button();
             this.labelSelectSceneFileToRemove = new System.Windows.Forms.Label();
+            this.buttonSelectPackage = new System.Windows.Forms.Button();
+            this.labelOr = new System.Windows.Forms.Label();
+            this.buttonPackageStage = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLobbyButtonHighlightedExample)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDamnedButtonLobbyPicture)).BeginInit();
             this.SuspendLayout();
@@ -138,7 +142,7 @@
             this.labelMapToAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelMapToAdd.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMapToAdd.ForeColor = System.Drawing.Color.White;
-            this.labelMapToAdd.Location = new System.Drawing.Point(168, 12);
+            this.labelMapToAdd.Location = new System.Drawing.Point(334, 16);
             this.labelMapToAdd.Name = "labelMapToAdd";
             this.labelMapToAdd.Size = new System.Drawing.Size(123, 14);
             this.labelMapToAdd.TabIndex = 5;
@@ -395,12 +399,66 @@
             this.labelSelectSceneFileToRemove.TabIndex = 23;
             this.labelSelectSceneFileToRemove.Text = "Choose a scene file to remove with the stage:\r\n";
             // 
+            // buttonSelectPackage
+            // 
+            this.buttonSelectPackage.FlatAppearance.BorderSize = 0;
+            this.buttonSelectPackage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectPackage.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectPackage.ForeColor = System.Drawing.Color.White;
+            this.buttonSelectPackage.Location = new System.Drawing.Point(202, 12);
+            this.buttonSelectPackage.Name = "buttonSelectPackage";
+            this.buttonSelectPackage.Size = new System.Drawing.Size(132, 23);
+            this.buttonSelectPackage.TabIndex = 24;
+            this.buttonSelectPackage.Text = "Load From Package...\r\n";
+            this.buttonSelectPackage.UseVisualStyleBackColor = true;
+            this.buttonSelectPackage.Click += new System.EventHandler(this.ButtonSelectPackage_Click);
+            // 
+            // labelOr
+            // 
+            this.labelOr.AutoSize = true;
+            this.labelOr.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(168)))), ((int)(((byte)(38)))));
+            this.labelOr.Location = new System.Drawing.Point(173, 16);
+            this.labelOr.Name = "labelOr";
+            this.labelOr.Size = new System.Drawing.Size(23, 14);
+            this.labelOr.TabIndex = 25;
+            this.labelOr.Text = "OR";
+            // 
+            // buttonPackageStage
+            // 
+            this.buttonPackageStage.Enabled = false;
+            this.buttonPackageStage.FlatAppearance.BorderSize = 0;
+            this.buttonPackageStage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPackageStage.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPackageStage.ForeColor = System.Drawing.Color.White;
+            this.buttonPackageStage.Location = new System.Drawing.Point(202, 499);
+            this.buttonPackageStage.Name = "buttonPackageStage";
+            this.buttonPackageStage.Size = new System.Drawing.Size(132, 23);
+            this.buttonPackageStage.TabIndex = 26;
+            this.buttonPackageStage.Text = "Package New Stage...\r\n";
+            this.buttonPackageStage.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(168)))), ((int)(((byte)(38)))));
+            this.label1.Location = new System.Drawing.Point(168, 504);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(23, 14);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "OR";
+            // 
             // DamnedMappingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.ClientSize = new System.Drawing.Size(1196, 651);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.buttonPackageStage);
+            this.Controls.Add(this.labelOr);
+            this.Controls.Add(this.buttonSelectPackage);
             this.Controls.Add(this.labelSelectSceneFileToRemove);
             this.Controls.Add(this.buttonSelectSceneToRemove);
             this.Controls.Add(this.labelScene);
@@ -423,7 +481,7 @@
             this.Controls.Add(this.buttonSelectMapLoadingScreen);
             this.Controls.Add(this.buttonAddMapIntoDamned);
             this.Name = "DamnedMappingForm";
-            this.Text = "j";
+            this.Text = "Damned Workshop (Mapping Tools)";
             this.Load += new System.EventHandler(this.DamnedMappingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureLobbyButtonHighlightedExample)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDamnedButtonLobbyPicture)).EndInit();
@@ -462,5 +520,9 @@
         private System.Windows.Forms.ToolTip toolTipLobbyPicture;
         private System.Windows.Forms.Button buttonSelectSceneToRemove;
         private System.Windows.Forms.Label labelSelectSceneFileToRemove;
+        private System.Windows.Forms.Button buttonSelectPackage;
+        private System.Windows.Forms.Label labelOr;
+        private System.Windows.Forms.Button buttonPackageStage;
+        private System.Windows.Forms.Label label1;
     }
 }

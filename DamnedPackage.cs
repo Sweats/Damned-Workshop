@@ -3,16 +3,12 @@ using System.IO;
 using System.IO.Compression;
 using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 public class DamnedPackage
 {
-    private string tempDirectory;
-    private string loadingImagePath;
-    private string buttonImageHighlightedPath;
-    private string buttonImagePath;
-    private string stagePath;
-    private string scenePath;
 
+    public string tempDirectory { get; private set; }
     private string zipArchivePath;
 
 
@@ -95,9 +91,10 @@ public class DamnedPackage
         DirectoryInfo[] info = new DirectoryInfo(tempDirectory).GetDirectories("*", SearchOption.AllDirectories);
 
         string[] directoriesToCheck = new string[] { "DamnedData", "GUI", "Resources", "TerrorImages", "Stages" };
-        bool success = false;
+        bool success = true;
+        string currentDirectoryToCheckFor;
 
-        for (int i = 0; i < info.Length; i++)
+        for (int i = 1; i < info.Length; i++)
         {
             bool found = false;
             string directory = info[i].Name;
@@ -107,6 +104,7 @@ public class DamnedPackage
                 if (directory == directoriesToCheck[j])
                 {
                     found = true;
+                    currentDirectoryToCheckFor = directoriesToCheck[j];
                     break;
                 }
             }
@@ -115,7 +113,7 @@ public class DamnedPackage
             {
                 success = false;
                 string directoryName = info[i].Name;
-                reasonForFailedCheck = String.Format("Check failed because the required directory \"{0}\" was not found in your zip archive", directoryName);
+                reasonForFailedCheck = String.Format("Check failed because the required directory \"{0}\" was not found in your zip archive", directoriesToCheck);
                 break;
             }
         }
@@ -127,17 +125,17 @@ public class DamnedPackage
     // TODO: Check the stage or scene file itself and see if the name inside the file matches the filename!
     private bool CheckStageOrScene(string stagePath)
     {
-        string directory = Path.GetDirectoryName(stagePath);
+        string directoryPath = Path.GetDirectoryName(stagePath);
+        string directoryName = Path.GetFileName(directoryPath);
 
-        if (directory != "Stages")
+        if (directoryName != "Stages")
         {
             string stageName = Path.GetFileName(stagePath);
             reasonForFailedCheck = String.Format("Check failed because \"{0}\" does not reside in the Stages directory", stageName);
             return false;
         }
 
-        string stageFolderPath = Directory.GetParent(stagePath).FullName;
-        FileInfo[] stages = new DirectoryInfo(stageFolderPath).GetFiles("*", SearchOption.TopDirectoryOnly);
+        FileInfo[] stages = new DirectoryInfo(directoryPath).GetFiles("*", SearchOption.TopDirectoryOnly);
 
         if (stages.Length > 2)
         {
@@ -210,9 +208,10 @@ public class DamnedPackage
 
     private bool CheckImage(string imagePath)
     {
-        string directory = Path.GetDirectoryName(imagePath);
+        string directoryPath = Path.GetDirectoryName(imagePath);
+        string directoryName = Path.GetFileName(directoryPath);
 
-        if (directory != "GUI" || directory != "TerrorImages")
+        if (directoryName != "GUI" && directoryName != "TerrorImages")
         {
             string imageName = Path.GetFileName(imagePath);
             reasonForFailedCheck = String.Format("Check failed because \"{0}\" does not reside in either the GUI directory or the TerrorImages directory.", imageName);
@@ -251,16 +250,51 @@ public class DamnedPackage
 
     // Loads the variables from a zip file  into the DamnedMappingForm assuming that it is packaged correctly.
     // Need to figure out how to pass in the winform controls in here.
-    public void Load()
+    public void Load(DamnedWorkshop.DamnedMappingForm form)
     {
-        string tempPath = CreateTempDirectory();
-        string pattern = "*.stage|*.scene|*.png|*.jpg";
-
-        FileInfo[] info = new DirectoryInfo(tempPath).GetFiles(pattern, SearchOption.AllDirectories);
+        FileInfo[] info = new DirectoryInfo(tempDirectory).GetFiles("*", SearchOption.AllDirectories);
 
         for (int i = 0; i < info.Length; i++ )
         {
             string fileNamePath = info[i].FullName;
+            string fileExtension = Path.GetExtension(fileNamePath);
+            
+            if (fileExtension == ".png")
+            {
+                Cords cords = GetDimensions(fileNamePath);
+
+                if (cords.x == 300 && cords.y == 100)
+                {
+                    form.damnedNewStage.lobbyImageButtonPath = fileNamePath;
+                }
+
+                else if (cords.x == 900 && cords.y == 100)
+                {
+
+                    form.damnedNewStage.lobbyImageButtonHighlightedPath = fileNamePath;
+                }
+            }
+
+            else if (fileExtension == ".jpg")
+            {
+                Cords cords = GetDimensions(fileNamePath);
+
+                if (cords.x == 1920 && cords.y == 1080)
+                {
+                    form.damnedNewStage.loadingImagePath = fileNamePath;
+                }
+            }
+
+
+            else if (fileExtension == ".scene")
+            {
+                form.damnedNewStage.newScenePath = fileNamePath;
+            }
+
+            else if (fileExtension == ".stage")
+            {
+                form.damnedNewStage.newStagePath = fileNamePath;
+            }
         }
     }
 
@@ -299,7 +333,7 @@ public class DamnedPackage
 
     }
 
-    private string CreateTempDirectory()
+    private void CreateTempDirectory()
     {
         string tempPath = Path.GetTempPath();
         int randomNumber = new Random().Next();
@@ -313,7 +347,7 @@ public class DamnedPackage
 
         Directory.CreateDirectory(tempPath);
         ZipFile.ExtractToDirectory(zipArchivePath, tempPath);
-        return tempPath;
+        tempDirectory = tempPath;
     }
 
     // Called when you package the stage after adding in new maps, scenes, and loading screens 
