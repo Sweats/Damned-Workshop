@@ -364,8 +364,6 @@ namespace DamnedWorkshop
                 Properties.Settings.Default.damnedBackupFolderPath = dialog.SelectedPath;
                 Properties.Settings.Default.Save();
             }
-
-
         }
 
         private void KeepPublicTestPatchStableCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -381,7 +379,6 @@ namespace DamnedWorkshop
                 buttonSetPublicTestPatchStableLocation.Enabled = false;
 
             }
-
         }
 
         private void KeepPublicTestPatchTestingCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -396,9 +393,8 @@ namespace DamnedWorkshop
             {
                 buttonSetPublicTestPatchTestingLocation.Enabled = false;
             }
-
-
         }
+
         private void ButtonSetPublicTestPatchStableLocation_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
@@ -432,14 +428,12 @@ namespace DamnedWorkshop
             Properties.Settings.Default.Save();
         }
 
-
         private void ButtonSetPublicTestPatchTestingLocation_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
 
             if (browser.ShowDialog() != DialogResult.OK)
             {
-
                 return;
             }
 
@@ -454,7 +448,6 @@ namespace DamnedWorkshop
                 return;
             }
 
-
             else if (publicTestPatchTestingSavedDirectory == directory)
             {
                 MessageBox.Show("This directory is used for the game folder. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -466,7 +459,6 @@ namespace DamnedWorkshop
             Properties.Settings.Default.damnedPublicTestPatchTestingPath = publicTestPatchStableSavedDirectory;
             Properties.Settings.Default.Save();
         }
-
 
         private void ButtonBackUp_Click(object sender, EventArgs e)
         {
@@ -566,8 +558,6 @@ namespace DamnedWorkshop
                     buttonRestore.Enabled = true;
                     validBackUpFolder = true;
                 }
-
-
             }
 
             setting = Properties.Settings.Default.damnedPublicTestPatchStablePath;
@@ -578,7 +568,6 @@ namespace DamnedWorkshop
                 keepPublicTestPatchStableCheckbox.Checked = true;
                 buttonSetPublicTestPatchStableLocation.Enabled = true;
                 publicTestPatchStablePathLabel.Text = setting;
-
             }
 
             setting = Properties.Settings.Default.damnedPublicTestPatchTestingPath;
@@ -591,6 +580,7 @@ namespace DamnedWorkshop
                 publicTestPatchTestingPathLabel.Text = setting;
             }
         }
+
         private void SetButtons()
         {
             buttonBackUp.MouseEnter += OnMouseEnterButton;

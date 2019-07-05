@@ -108,7 +108,7 @@ namespace DamnedWorkshop
             this.loggingTextBox.Name = "loggingTextBox";
             this.loggingTextBox.ReadOnly = true;
             this.loggingTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.loggingTextBox.Size = new System.Drawing.Size(529, 172);
+            this.loggingTextBox.Size = new System.Drawing.Size(529, 174);
             this.loggingTextBox.TabIndex = 3;
             this.loggingTextBox.Text = "";
             // 

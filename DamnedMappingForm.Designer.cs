@@ -496,11 +496,12 @@
             // 
             this.checkBoxCustomObjects.AutoSize = true;
             this.checkBoxCustomObjects.Enabled = false;
+            this.checkBoxCustomObjects.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxCustomObjects.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxCustomObjects.ForeColor = System.Drawing.Color.White;
             this.checkBoxCustomObjects.Location = new System.Drawing.Point(23, 503);
             this.checkBoxCustomObjects.Name = "checkBoxCustomObjects";
-            this.checkBoxCustomObjects.Size = new System.Drawing.Size(113, 18);
+            this.checkBoxCustomObjects.Size = new System.Drawing.Size(110, 18);
             this.checkBoxCustomObjects.TabIndex = 29;
             this.checkBoxCustomObjects.Text = "Custom Objects?";
             this.toolTipCustomObjectsCheckbox.SetToolTip(this.checkBoxCustomObjects, "Check this if you have custom objects that go with your stage.\r\n\r\nIf your stage h" +

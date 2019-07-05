@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 public class DamnedPackage
 {
@@ -89,6 +90,13 @@ public class DamnedPackage
                     break;
                 }
             }
+
+            else 
+            {
+                success = false;
+                reasonForFailedCheck = String.Format("Check failed because \"{0}\" is not a .jpg, .png, .stage, .scene, or .object format.", fileName);
+                break;
+            }
         }
 
         return success;
@@ -131,9 +139,6 @@ public class DamnedPackage
         return success;
     }
 
-
-
-    // TODO: Check the stage or scene file itself and see if the name inside the file matches the filename!
     private bool CheckStageOrScene(string stagePath)
     {
         string directoryPath = Path.GetDirectoryName(stagePath);
@@ -167,7 +172,132 @@ public class DamnedPackage
             }
         }
 
+        if (success)
+        {
+            string extension = Path.GetExtension(stagePath);
+
+            if (extension == ".stage")
+            {
+                success = CheckInnerStageFile(stagePath);
+            }
+
+            else if (extension == ".scene")
+            {
+                success = CheckInnerSceneFile(stagePath);
+            }
+        }
+
         return success;
+    }
+
+    private bool CheckInnerStageFile(string stagePath)
+    {
+        string nameToMatch = Path.GetFileNameWithoutExtension(stagePath);
+        string stageName = Path.GetFileName(stagePath);
+
+        using (StreamReader reader = new StreamReader(stagePath))
+        {
+            string contents = reader.ReadToEnd();
+            string stageLineToFind = String.Format("stage {0}", nameToMatch);
+            string sceneLineToFind = String.Format("scene {0}", nameToMatch);
+
+            Match match = Regex.Match(contents, stageLineToFind);
+
+            if (!match.Success)
+            {
+                reasonForFailedCheck = String.Format("Check failed because the stage section in \"{0}\" does not match the file name.", stageName);
+                return false;
+            }
+
+            match = Regex.Match(contents, sceneLineToFind);
+
+            if (!match.Success)
+            {
+                reasonForFailedCheck = String.Format("Check failed because the scene section in \"{0}\" does not match the scene name", stageName);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private bool CheckSceneForLights(string sceneFileContents, string scenePath)
+    {
+        MatchCollection collection = Regex.Matches(sceneFileContents, "light light.[0-9]+");
+
+        if (collection.Count < 1)
+        {
+            string name = Path.GetFileName(scenePath);
+            reasonForFailedCheck = String.Format("Check failed because \"{0}\" does not have any light points.", name);
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool CheckSceneForSpawnPoints(string sceneFileContents, string scenePath)
+    {
+        MatchCollection collection = Regex.Matches(sceneFileContents, "spawn_point [0-9]+");
+        string name = Path.GetFileName(scenePath);
+
+        if (collection.Count < 1)
+        {
+            reasonForFailedCheck = String.Format("Check failed because \"{0}\" does not have any spawn points", name);
+            return false;
+        }
+
+        int matchCount = collection.Count;
+
+        if (matchCount < 7)
+        {
+            reasonForFailedCheck = String.Format("Check failed because \"{0}\" does not have enough spawn points. Found spawn point count: {1}. Required count: 7.", name, matchCount);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private bool CheckSceneForProperSceneName(string sceneFileContents, string scenePath)
+    {
+        string sceneName = Path.GetFileNameWithoutExtension(scenePath);
+        string pattern = String.Format("scene {0}", sceneName);
+        Match match = Regex.Match(sceneFileContents, pattern);
+
+        if (!match.Success)
+        {
+            reasonForFailedCheck = String.Format("Check failed because the scene section in {0} does not match the actual file name.", sceneName);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private bool CheckInnerSceneFile(string scenePath)
+    {
+        using (StreamReader reader = new StreamReader(scenePath))
+        {
+            string contents = reader.ReadToEnd();
+
+            if (!CheckSceneForProperSceneName(contents, scenePath))
+            {
+                return false;
+            }
+
+            if (!CheckSceneForSpawnPoints(contents, scenePath))
+            {
+                return false;
+            }
+
+            if (!CheckSceneForLights(contents, scenePath))
+            {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 
 
