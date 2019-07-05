@@ -99,7 +99,6 @@ namespace DamnedWorkshop
                 }
             }
 
-            Application.UseWaitCursor = true;
 
             if (patch == PATCH_STABLE)
             {
@@ -130,9 +129,6 @@ namespace DamnedWorkshop
                 }
 
             }
-
-            Application.UseWaitCursor = false;
-
         }
 
         private void InstallPatchLocally(int patch)
@@ -209,6 +205,8 @@ namespace DamnedWorkshop
 
         private void InstallPatchFromGithub(int patch)
         {
+            Cursor.Current = Cursors.WaitCursor;
+
             loggingTextBox.AppendText("Begin installing public test patch\n\n--------------------------------------------------------------------------------------------\n\n");
             tempDirectory = Path.Combine(directory, "tmp");
             string damnedTempDirectory = tempDirectory;
@@ -217,6 +215,7 @@ namespace DamnedWorkshop
             {
                 loggingTextBox.AppendText("Deleted old temporary directory.\n\n");
                 Directory.Delete(tempDirectory, true);
+                Cursor.Current = Cursors.Default;
             }
 
             string extractedFolderName = "";
@@ -255,6 +254,7 @@ namespace DamnedWorkshop
                 Directory.Delete(tempDirectory, true);
                 MessageBox.Show("Failed to extract the zip file. Cleaned up what was created", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 loggingTextBox.AppendText(String.Format("Deleted \"{0}\"", tempDirectory));
+                Cursor.Current = Cursors.Default;
                 return;
 
             }
@@ -267,6 +267,7 @@ namespace DamnedWorkshop
                 MessageBox.Show(String.Format("Failed to extract files and folders from {0}\n\n To:\n\n \"{1}\"", damnedTempDirectory, directory), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Directory.Delete(tempDirectory, true);
                 loggingTextBox.AppendText(String.Format("Deleted \"{0}\"\n\n", tempDirectory));
+                Cursor.Current = Cursors.Default;
                 return;
 
             }
@@ -286,6 +287,7 @@ namespace DamnedWorkshop
             }
 
             Directory.Delete(tempDirectory, true);
+            Cursor.Current = Cursors.Default;
             MessageBox.Show("Successfully installed the patch from GitHub!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
@@ -297,7 +299,7 @@ namespace DamnedWorkshop
                 using (WebClient webClient = new WebClient())
                 {
                     string zipName = "DamnedPatch.zip";
-                    webClient.DownloadFile(link, zipName);
+                    webClient.DownloadFile(new Uri(link), zipName);
                 }
 
             }
@@ -336,8 +338,6 @@ namespace DamnedWorkshop
             publicTestPatchTestingButton.Enabled = true;
             keepPublicTestPatchTestingCheckbox.Enabled = true;
             keepPublicTestPatchStableCheckbox.Enabled = true;
-
-
 
         }
 
@@ -403,79 +403,85 @@ namespace DamnedWorkshop
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
 
-            if (browser.ShowDialog() == DialogResult.OK)
+            if (browser.ShowDialog() != DialogResult.OK)
             {
-                this.publicTestPatchStableSavedDirectory = browser.SelectedPath;
-                this.publicTestPatchStablePathLabel.Text = browser.SelectedPath;
-
-                if (publicTestPatchStableSavedDirectory == publicTestPatchTestingSavedDirectory)
-                {
-                    MessageBox.Show("This directory is already being for the testing branch. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    publicTestPatchStableSavedDirectory = "";
-                    publicTestPatchStablePathLabel.Text = "";
-                }
-
-                else if (publicTestPatchStableSavedDirectory == directory)
-                {
-                    MessageBox.Show("This directory is used for the game folder. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    publicTestPatchStableSavedDirectory = "";
-                    publicTestPatchStablePathLabel.Text = "";
-
-                }
-
-                Properties.Settings.Default.damnedPublicTestPatchStablePath = publicTestPatchStableSavedDirectory;
-                Properties.Settings.Default.Save();
+                return;
             }
 
+            this.publicTestPatchStableSavedDirectory = browser.SelectedPath;
+            this.publicTestPatchStablePathLabel.Text = browser.SelectedPath;
+
+            if (publicTestPatchStableSavedDirectory == publicTestPatchTestingSavedDirectory)
+            {
+                MessageBox.Show("This directory is already being for the testing branch. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                publicTestPatchStableSavedDirectory = String.Empty;
+                publicTestPatchStablePathLabel.Text = String.Empty;
+                return;
+
+            }
+
+            else if (publicTestPatchStableSavedDirectory == directory)
+            {
+                MessageBox.Show("This directory is used for the game folder. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                publicTestPatchStableSavedDirectory = String.Empty;
+                publicTestPatchStablePathLabel.Text = String.Empty;
+                return;
+            }
+
+            Properties.Settings.Default.damnedPublicTestPatchStablePath = publicTestPatchStableSavedDirectory;
+            Properties.Settings.Default.Save();
         }
+
 
         private void ButtonSetPublicTestPatchTestingLocation_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
 
-            if (browser.ShowDialog() == DialogResult.OK)
+            if (browser.ShowDialog() != DialogResult.OK)
             {
-                this.publicTestPatchTestingSavedDirectory = browser.SelectedPath;
-                this.publicTestPatchTestingPathLabel.Text = browser.SelectedPath;
 
-                if (publicTestPatchTestingSavedDirectory == publicTestPatchStableSavedDirectory)
-                {
+                return;
+            }
 
-                    MessageBox.Show("This directory is already being for the stable branch. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    publicTestPatchTestingSavedDirectory = "";
-                    publicTestPatchTestingPathLabel.Text = "";
-                }
+            this.publicTestPatchTestingSavedDirectory = browser.SelectedPath;
+            this.publicTestPatchTestingPathLabel.Text = browser.SelectedPath;
 
-
-                else if (publicTestPatchTestingSavedDirectory == directory)
-                {
-                    MessageBox.Show("This directory is used for the game folder. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    publicTestPatchTestingSavedDirectory = "";
-                    publicTestPatchTestingPathLabel.Text = "";
-                }
-
-                Properties.Settings.Default["damnedPublicTestTestingStablePath"] = publicTestPatchTestingSavedDirectory;
-                Properties.Settings.Default.Save();
+            if (publicTestPatchTestingSavedDirectory == publicTestPatchStableSavedDirectory)
+            {
+                MessageBox.Show("This directory is already being for the stable branch. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                publicTestPatchTestingSavedDirectory = String.Empty;
+                publicTestPatchTestingPathLabel.Text = String.Empty;
+                return;
             }
 
 
-    
+            else if (publicTestPatchTestingSavedDirectory == directory)
+            {
+                MessageBox.Show("This directory is used for the game folder. Please pick another.", "Already being used", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                publicTestPatchTestingSavedDirectory = String.Empty;
+                publicTestPatchTestingPathLabel.Text = String.Empty;
+                return;
+            }
+
+            Properties.Settings.Default.damnedPublicTestPatchTestingPath = publicTestPatchStableSavedDirectory;
+            Properties.Settings.Default.Save();
         }
+
 
         private void ButtonBackUp_Click(object sender, EventArgs e)
         {
-            Application.UseWaitCursor = true;
+            Cursor.Current = Cursors.WaitCursor;
+
             string text = String.Format("Backing up \"{0}\" to \"{1}\"\n\n", directory, backupDirectory);
             loggingTextBox.AppendText(text);
 
             if (!DamnedCopyFiles(directory, backupDirectory))
             {
                 MessageBox.Show("Failed to backup Damned Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Cursor.Current = Cursors.Default;
                 return;
 
             }
-
-            Application.UseWaitCursor = false;
 
             DamnedFiles damnedFiles = new DamnedFiles(backupDirectory); ;
 
@@ -494,28 +500,30 @@ namespace DamnedWorkshop
                 return;
             }
 
-
+            Cursor.Current = Cursors.Default;
         }
 
 
         private void ButtonRestore_Click(object sender, EventArgs e)
         {
-            Application.UseWaitCursor = true;
+            Cursor.Current = Cursors.WaitCursor;
 
             if (!validBackUpFolder)
             {
                 MessageBox.Show("You have one or more invalid directories. Please select another", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Cursor.Current = Cursors.Default;
                 return;
             }
 
             if (!DamnedCopyFiles(backupDirectory, directory))
             {
+                Cursor.Current = Cursors.Default;
                 MessageBox.Show("Failed to restore Damned to its original backup. Did the directories get changed by something else?\n\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             DamnedFiles backupFiles = new DamnedFiles(backupDirectory);
             DamnedFiles.CleanUpNewFiles(backupFiles, damnedFiles);
-            Application.UseWaitCursor = false;
+            Cursor.Current = Cursors.Default;
             MessageBox.Show("Restored the game back to its unpatched state!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

@@ -65,6 +65,15 @@
             this.buttonSelectObjectsForStage = new System.Windows.Forms.Button();
             this.checkBoxCustomObjects = new System.Windows.Forms.CheckBox();
             this.labelObjectsCount = new System.Windows.Forms.Label();
+            this.toolTipResetPendingChanges = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipModfyStages = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipPackageNewStage = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipAddNewStageToList = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSelectCustomObjectsForStage = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipCustomObjectsCheckbox = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSelectHighlightedButtons = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSelectSceneToRemove = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSelectSceneFileToAdd = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureLobbyButtonHighlightedExample)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDamnedButtonLobbyPicture)).BeginInit();
             this.SuspendLayout();
@@ -81,8 +90,8 @@
             this.buttonAddMapIntoDamned.Size = new System.Drawing.Size(159, 23);
             this.buttonAddMapIntoDamned.TabIndex = 0;
             this.buttonAddMapIntoDamned.Text = "Select Stage to Add..";
-            this.toolTipAddMapIntoDamnedButton.SetToolTip(this.buttonAddMapIntoDamned, "Opens up the file explorer for you to select a stage fille.\r\n\r\nThe stage file wil" +
-        "l be put onto the list on the right in green to be added into the game.");
+            this.toolTipAddMapIntoDamnedButton.SetToolTip(this.buttonAddMapIntoDamned, "Opens up the file explorer for you to select a stage fille that will be added int" +
+        "o the game when you modify stages later.");
             this.buttonAddMapIntoDamned.UseVisualStyleBackColor = false;
             this.buttonAddMapIntoDamned.Click += new System.EventHandler(this.ButtonAddMapIntoDamned_Click);
             // 
@@ -135,7 +144,9 @@
             this.buttonModifyStages.Size = new System.Drawing.Size(89, 23);
             this.buttonModifyStages.TabIndex = 3;
             this.buttonModifyStages.Text = "Modify Stages";
-            this.toolTipAddMapFinalButton.SetToolTip(this.buttonModifyStages, "Opens up the file explorer for you to select a .stage file.");
+            this.toolTipModfyStages.SetToolTip(this.buttonModifyStages, "Adds and/or removes stages from the game.\r\n\r\nStages that appear on the right in o" +
+        "range will be added into the game,\r\n\r\nStages that appear on the right in red wil" +
+        "l be removed from the game.");
             this.buttonModifyStages.UseVisualStyleBackColor = false;
             this.buttonModifyStages.Click += new System.EventHandler(this.ButtonModifyStages_Click);
             // 
@@ -233,8 +244,8 @@
             this.buttonRemoveMap.Size = new System.Drawing.Size(159, 23);
             this.buttonRemoveMap.TabIndex = 12;
             this.buttonRemoveMap.Text = "Select Stage to Remove...";
-            this.toolTipRemoveMapFromDamnedButton.SetToolTip(this.buttonRemoveMap, "Opens up the file explorer for you to select a stage file.\r\n\r\nThe stage file will" +
-        " be marked on the list at the right in red to be removed from the game.");
+            this.toolTipRemoveMapFromDamnedButton.SetToolTip(this.buttonRemoveMap, "Opens up the file explorer for you to select a stage file that will be removed fr" +
+        "om the game when you modify stages later.");
             this.buttonRemoveMap.UseVisualStyleBackColor = false;
             this.buttonRemoveMap.Click += new System.EventHandler(this.ButtonRemoveMap_Click);
             // 
@@ -266,6 +277,7 @@
             this.buttonResetPendingChanges.Size = new System.Drawing.Size(146, 23);
             this.buttonResetPendingChanges.TabIndex = 14;
             this.buttonResetPendingChanges.Text = "Reset Pending Changes";
+            this.toolTipResetPendingChanges.SetToolTip(this.buttonResetPendingChanges, "Resets all of your changes and starts the process over again.");
             this.buttonResetPendingChanges.UseVisualStyleBackColor = false;
             this.buttonResetPendingChanges.Click += new System.EventHandler(this.ButtonResetPendingChanges_Click);
             // 
@@ -282,6 +294,8 @@
             this.buttonAddStageToList.Size = new System.Drawing.Size(138, 23);
             this.buttonAddStageToList.TabIndex = 15;
             this.buttonAddStageToList.Text = "Add New Stage To List";
+            this.toolTipAddNewStageToList.SetToolTip(this.buttonAddStageToList, "Adds your current selected stage to the list on the right in orange.\r\n\r\nThe stage" +
+        " will actually be added into the game when you hit the \"Modify Stages\" button.");
             this.buttonAddStageToList.UseVisualStyleBackColor = false;
             this.buttonAddStageToList.Click += new System.EventHandler(this.ButtonAddStageToList_Click);
             // 
@@ -298,6 +312,9 @@
             this.buttonSelectHighlightedLobbyButtons.Size = new System.Drawing.Size(160, 23);
             this.buttonSelectHighlightedLobbyButtons.TabIndex = 17;
             this.buttonSelectHighlightedLobbyButtons.Text = "Select Highlighted Buttons";
+            this.toolTipSelectHighlightedButtons.SetToolTip(this.buttonSelectHighlightedLobbyButtons, "Opens up the file explorer for you to select an image that shows in the stage sel" +
+        "ection screen.\r\n\r\nThe image must be 900 X 100 for the game to render it properly" +
+        ".");
             this.buttonSelectHighlightedLobbyButtons.UseVisualStyleBackColor = false;
             this.buttonSelectHighlightedLobbyButtons.Click += new System.EventHandler(this.ButtonSelectHighlightedLobbyButtons_Click);
             // 
@@ -351,6 +368,7 @@
             this.buttonSelectSceneFile.Size = new System.Drawing.Size(159, 23);
             this.buttonSelectSceneFile.TabIndex = 20;
             this.buttonSelectSceneFile.Text = "Select Scene File";
+            this.toolTipSelectSceneFileToAdd.SetToolTip(this.buttonSelectSceneFile, resources.GetString("buttonSelectSceneFile.ToolTip"));
             this.buttonSelectSceneFile.UseVisualStyleBackColor = false;
             this.buttonSelectSceneFile.Click += new System.EventHandler(this.ButtonSelectSceneFile_Click);
             // 
@@ -387,6 +405,7 @@
             this.buttonSelectSceneToRemove.Size = new System.Drawing.Size(160, 23);
             this.buttonSelectSceneToRemove.TabIndex = 22;
             this.buttonSelectSceneToRemove.Text = "Select Scene To Remove";
+            this.toolTipSelectSceneToRemove.SetToolTip(this.buttonSelectSceneToRemove, resources.GetString("buttonSelectSceneToRemove.ToolTip"));
             this.buttonSelectSceneToRemove.UseVisualStyleBackColor = false;
             this.buttonSelectSceneToRemove.Click += new System.EventHandler(this.ButtonSelectSceneToRemove_Click);
             // 
@@ -439,6 +458,9 @@
             this.buttonPackageStage.Size = new System.Drawing.Size(142, 23);
             this.buttonPackageStage.TabIndex = 26;
             this.buttonPackageStage.Text = "Package New Stage(s)...\r\n";
+            this.toolTipPackageNewStage.SetToolTip(this.buttonPackageStage, "Opens up the folder explorer and asks you where you want to save your new Damned " +
+        "package.\r\n\r\nIf you ever want to share your stage with someone, you should do thi" +
+        "s.");
             this.buttonPackageStage.UseVisualStyleBackColor = true;
             this.buttonPackageStage.Click += new System.EventHandler(this.ButtonPackageStage_Click);
             // 
@@ -466,6 +488,7 @@
             this.buttonSelectObjectsForStage.TabIndex = 28;
             this.buttonSelectObjectsForStage.Text = "Select Custom Objects For Stage...\r\n";
             this.buttonSelectObjectsForStage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipSelectCustomObjectsForStage.SetToolTip(this.buttonSelectObjectsForStage, resources.GetString("buttonSelectObjectsForStage.ToolTip"));
             this.buttonSelectObjectsForStage.UseVisualStyleBackColor = true;
             this.buttonSelectObjectsForStage.Click += new System.EventHandler(this.ButtonSelectObjectsForStage_Click);
             // 
@@ -480,6 +503,9 @@
             this.checkBoxCustomObjects.Size = new System.Drawing.Size(113, 18);
             this.checkBoxCustomObjects.TabIndex = 29;
             this.checkBoxCustomObjects.Text = "Custom Objects?";
+            this.toolTipCustomObjectsCheckbox.SetToolTip(this.checkBoxCustomObjects, "Check this if you have custom objects that go with your stage.\r\n\r\nIf your stage h" +
+        "as custom objects, you MUST check this and add custom objects to go with the sta" +
+        "ge.");
             this.checkBoxCustomObjects.UseVisualStyleBackColor = true;
             this.checkBoxCustomObjects.CheckedChanged += new System.EventHandler(this.CheckBoxCustomObjects_CheckedChanged);
             // 
@@ -575,5 +601,14 @@
         private System.Windows.Forms.Button buttonSelectObjectsForStage;
         private System.Windows.Forms.CheckBox checkBoxCustomObjects;
         private System.Windows.Forms.Label labelObjectsCount;
+        private System.Windows.Forms.ToolTip toolTipModfyStages;
+        private System.Windows.Forms.ToolTip toolTipResetPendingChanges;
+        private System.Windows.Forms.ToolTip toolTipAddNewStageToList;
+        private System.Windows.Forms.ToolTip toolTipSelectHighlightedButtons;
+        private System.Windows.Forms.ToolTip toolTipSelectSceneFileToAdd;
+        private System.Windows.Forms.ToolTip toolTipSelectSceneToRemove;
+        private System.Windows.Forms.ToolTip toolTipPackageNewStage;
+        private System.Windows.Forms.ToolTip toolTipSelectCustomObjectsForStage;
+        private System.Windows.Forms.ToolTip toolTipCustomObjectsCheckbox;
     }
 }

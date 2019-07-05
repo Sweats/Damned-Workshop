@@ -118,37 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="toolTipAddMapIntoDamnedButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>178, 17</value>
   </metadata>
   <metadata name="toolTipSelectLoadingScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>259, 17</value>
+    <value>420, 17</value>
   </metadata>
   <metadata name="toolTipSelectLobbyButtonPicture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>462, 17</value>
+    <value>623, 17</value>
   </metadata>
-  <metadata name="toolTipAddMapFinalButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>692, 17</value>
-  </metadata>
-  <metadata name="toolTipAddMapIntoDamnedButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="toolTipModfyStages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTipSelectLoadingScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>259, 17</value>
-  </metadata>
-  <metadata name="toolTipSelectLobbyButtonPicture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>462, 17</value>
-  </metadata>
   <metadata name="toolTipAddMapFinalButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>692, 17</value>
+    <value>853, 17</value>
   </metadata>
   <metadata name="toolTipRemoveMapFromDamnedButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>891, 17</value>
+    <value>1052, 17</value>
   </metadata>
-  <metadata name="toolTipRemoveMapFromDamnedButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>891, 17</value>
+  <metadata name="toolTipResetPendingChanges.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>190, 56</value>
+  </metadata>
+  <metadata name="toolTipAddNewStageToList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>800, 56</value>
+  </metadata>
+  <metadata name="toolTipSelectHighlightedButtons.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 95</value>
   </metadata>
   <metadata name="toolTipExamplePicture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1322, 17</value>
+    <value>17, 56</value>
   </metadata>
   <data name="pictureLobbyButtonHighlightedExample.ToolTip" xml:space="preserve">
     <value>Your selected lobby buttons will appear here.
@@ -166,9 +163,46 @@ The image consists of three parts:
 3. The right side of the image is what will be shown when the stage is disabled in the game.</value>
   </data>
   <metadata name="toolTipLobbyPicture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1161, 17</value>
+    <value>1322, 17</value>
   </metadata>
-  <metadata name="toolTipLobbyPicture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1161, 17</value>
+  <metadata name="toolTipSelectSceneFileToAdd.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>401, 56</value>
+  </metadata>
+  <data name="buttonSelectSceneFile.ToolTip" xml:space="preserve">
+    <value>Opens up the file explorer for you to select a .scene file
+
+The .scene file must go with its corresponding .stage file.
+
+Example: If you selected Bodom_Hotel.stage, then you must select Bodom_Hotel.scene.
+
+If successful, then the selected scene file will appear to the right.</value>
+  </data>
+  <metadata name="toolTipSelectSceneToRemove.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>245, 95</value>
+  </metadata>
+  <data name="buttonSelectSceneToRemove.ToolTip" xml:space="preserve">
+    <value>Opens up the file explorer in your Damned stages directory for you to select a .scene file.
+
+The .scene file must go with its corresponding .stage file.
+
+Example: 
+
+If you have selected Rose_Crimson_Hotel.stage, then you must select Rose_Crimson_Hotel.scene
+
+If successful, then the stage will be highlighted in red in the list at the right.</value>
+  </data>
+  <metadata name="toolTipPackageNewStage.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>610, 56</value>
+  </metadata>
+  <metadata name="toolTipSelectCustomObjectsForStage.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1000, 56</value>
+  </metadata>
+  <data name="buttonSelectObjectsForStage.ToolTip" xml:space="preserve">
+    <value>Opens up the file explorer for you to select one or more objects to be added into the game along with your map.
+
+If your stage uses custom objects, you MUST do this or else people will crash when trying to load your stage.</value>
+  </data>
+  <metadata name="toolTipCustomObjectsCheckbox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1254, 56</value>
   </metadata>
 </root>

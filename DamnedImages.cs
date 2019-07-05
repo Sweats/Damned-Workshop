@@ -3,7 +3,13 @@ using System.IO;
 using System.Xml;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
+public struct Dimensions
+{
+    public int x;
+    public int y;
+}
 
 public class DamnedImages
 {
@@ -127,7 +133,7 @@ public class DamnedImages
                 break;
 
             }
-            
+
         }
     }
 
@@ -195,7 +201,7 @@ public class DamnedImages
         return imageString;
     }
 
-    public void UpdateXmlFiles(string layoutFile, DamnedRemoveStage[] stagesToRemove,  DamnedNewStage[] newMaps)
+    public void UpdateXmlFiles(string layoutFile, DamnedRemoveStage[] stagesToRemove, DamnedNewStage[] newMaps)
     {
         SortImages(stagesToRemove, newMaps);
         UpdateDamnedStagesXmlFile(newMaps);
@@ -217,7 +223,6 @@ public class DamnedImages
                 string newImageName = String.Format("stage_{0}.png", oldStageIndex);
                 string newImageNamePath = Path.Combine(terrorImagesDirectory, newImageName);
                 Microsoft.VisualBasic.FileSystem.Rename(oldImageFullPath, newImageNamePath);
-                //File.Move(oldImageFullPath, newImageNamePath);
                 RenameImagesAfterRemovingStage(info, oldStageIndex += 1, newStageIndex += 1);
                 break;
 
@@ -243,7 +248,6 @@ public class DamnedImages
                 string newImageName = String.Format("stage_{0}.png", indexToRenameFrom + 1);
                 string newImageNamePath = Path.Combine(terrorImagesDirectory, newImageName);
                 Microsoft.VisualBasic.FileSystem.Rename(oldImageNamePath, newImageNamePath);
-                //File.Move(oldImageNamePath, newImageNamePath);
 
                 if (indexToRenameTo == indexToRenameFrom)
                 {
@@ -418,8 +422,7 @@ public class DamnedImages
 
         for (int i = 0; i < mapsSorted.Count; i++)
         {
-            string map = Path.GetFileName(mapsSorted[i]).ToLower().Replace("_", String.Empty);
-            map = map.Remove(map.IndexOf("."), 6);
+            string map = Path.GetFileNameWithoutExtension(mapsSorted[i]).ToLower().Replace("_", String.Empty);
 
             if (pageCount % 6 == 0)
             {
@@ -600,5 +603,18 @@ public class DamnedImages
         }
 
         doc.Save(damnedStagesXmlFile);
+    }
+
+    public static Dimensions GetDimensions(string imagePath)
+    {
+        Dimensions dimensions = new Dimensions();
+
+        using (var image = Image.FromFile(imagePath))
+        {
+            dimensions.x = image.Width;
+            dimensions.y = image.Height;
+        }
+
+        return dimensions;
     }
 }

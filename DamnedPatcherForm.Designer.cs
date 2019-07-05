@@ -277,7 +277,7 @@ namespace DamnedWorkshop
             this.publicTestPatchTestingPathLabel.AutoSize = true;
             this.publicTestPatchTestingPathLabel.Font = new System.Drawing.Font("Romance Fatal Serif Std", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.publicTestPatchTestingPathLabel.ForeColor = System.Drawing.Color.White;
-            this.publicTestPatchTestingPathLabel.Location = new System.Drawing.Point(373, 139);
+            this.publicTestPatchTestingPathLabel.Location = new System.Drawing.Point(313, 151);
             this.publicTestPatchTestingPathLabel.Name = "publicTestPatchTestingPathLabel";
             this.publicTestPatchTestingPathLabel.Size = new System.Drawing.Size(0, 14);
             this.publicTestPatchTestingPathLabel.TabIndex = 19;

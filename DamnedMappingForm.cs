@@ -76,6 +76,16 @@ namespace DamnedWorkshop
                 return;
             }
 
+
+            Dimensions dimensions = DamnedImages.GetDimensions(loadingImage);
+
+            if (dimensions.x != 1920 || dimensions.y != 1080)
+            {
+                string imageName = Path.GetFileName(loadingImage);
+                MessageBox.Show(String.Format("The image \"{0}\" does not have the correct dimensions. It must be 1920 x 1080. Please select a different one.", imageName), "Incorrect image dimension", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (damnedNewStage.loadingImagePath == String.Empty)
             {
                 damnedNewStage.count++;
@@ -112,6 +122,15 @@ namespace DamnedWorkshop
             if (Path.GetExtension(buttonImage) != ".png")
             {
                 MessageBox.Show("You did not pick a png file. Please select one that is a .png file", "Please select a different file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Dimensions dimensions = DamnedImages.GetDimensions(buttonImage);
+
+            if (dimensions.x != 300 || dimensions.y != 100)
+            {
+                string imageName = Path.GetFileName(buttonImage);
+                MessageBox.Show(String.Format("The image \"{0}\" does not have the correct dimensions. It must be 300 x 100. Please select a different one", imageName), "Incorrect image dimensions", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -336,6 +355,7 @@ namespace DamnedWorkshop
 
         private void ModifyStages()
         {
+            Cursor.Current = Cursors.WaitCursor;
             string terrorImagesZipFile = damnedImages.terrorZipFile;
             string tempDirectory = Path.GetTempPath();
             tempDirectory = Path.Combine(tempDirectory, "Terror");
@@ -352,6 +372,7 @@ namespace DamnedWorkshop
             if (!File.Exists(layoutFilePath))
             {
                 MessageBox.Show("Failed to extract the zip file into the users temporary directory.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Cursor.Current = Cursors.Default;
                 return;
 
             }
@@ -363,6 +384,7 @@ namespace DamnedWorkshop
             ZipFile.CreateFromDirectory(tempDirectory, destination);
             Directory.Delete(tempDirectory, true);
             Reset();
+            Cursor.Current = Cursors.Default;
             MessageBox.Show("Successfully modified the stages in the game.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
@@ -471,6 +493,16 @@ namespace DamnedWorkshop
 
             if (result != DialogResult.OK)
             {
+                return;
+            }
+
+
+            Dimensions dimensions = DamnedImages.GetDimensions(dialog.FileName);
+
+            if (dimensions.x != 900 || dimensions.y != 100)
+            {
+                string imageName = Path.GetFileName(dialog.FileName);
+                MessageBox.Show(String.Format("The image \"{0}\" does not have the correct dimensions. Please select another image.", imageName), "Incorrect image dimensions", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -602,6 +634,8 @@ namespace DamnedWorkshop
             labelScene.ForeColor = Color.FromArgb(255, 168, 38);
             labelMapToAdd.Text = Path.GetFileNameWithoutExtension(damnedNewStage.newStagePath).Replace("_", " ");
             labelMapToAdd.ForeColor = Color.FromArgb(255, 168, 38);
+            pictureDamnedButtonLobbyPicture.ImageLocation = damnedNewStage.lobbyImageButtonPath;
+            pictureLobbyButtonHighlightedExample.ImageLocation = damnedNewStage.lobbyImageButtonHighlightedPath;
 
             damnedNewStage.count = 5;
             buttonSelectHighlightedLobbyButtons.Enabled = true;

@@ -16,18 +16,12 @@ public class DamnedPackage
     public int objectsCount { get; private set; }
 
     private bool hasObjects;
+    private bool packaging;
 
     public DamnedPackage()
     {
-
+        packaging = false;
     }
-
-    private struct Cords
-    {
-        public int x;
-        public int y;
-    }
-
 
     public bool Check(string zipArchivePath)
     {
@@ -239,9 +233,9 @@ public class DamnedPackage
 
         if (fileExtension == ".png")
         {
-            Cords cords = GetDimensions(imagePath);
+            Dimensions dimensions = DamnedImages.GetDimensions(imagePath);
 
-            if (cords.x != 300 && cords.y != 100 || cords.x != 900 && cords.y != 100)
+            if (dimensions.x != 300 && dimensions.y != 100 || dimensions.x != 900 && dimensions.y != 100)
             {
                 string imageName = Path.GetFileName(imagePath);
                 reasonForFailedCheck = String.Format("Check failed because the dimensions for the image \"{0}\" is not 300 X 100 or 900 X 100", imageName);
@@ -251,9 +245,9 @@ public class DamnedPackage
 
         else if (fileExtension == ".jpg")
         {
-            Cords cords = GetDimensions(imagePath);
+            Dimensions dimensions = DamnedImages.GetDimensions(imagePath);
 
-            if (cords.x != 1920 && cords.y != 1080)
+            if (dimensions.x != 1920 && dimensions.y != 1080)
             {
                 string imageName = Path.GetFileName(imagePath);
                 reasonForFailedCheck = String.Format("Check failed because the dimensions for the image \"{0}\" is not 1920 X 1080", imageName);
@@ -294,14 +288,14 @@ public class DamnedPackage
             
             if (fileExtension == ".png")
             {
-                Cords cords = GetDimensions(fileNamePath);
+                Dimensions dimensions = DamnedImages.GetDimensions(fileNamePath);
 
-                if (cords.x == 300 && cords.y == 100)
+                if (dimensions.x == 300 && dimensions.y == 100)
                 {
                     form.damnedNewStage.lobbyImageButtonPath = fileNamePath;
                 }
 
-                else if (cords.x == 900 && cords.y == 100)
+                else if (dimensions.x == 900 && dimensions.y == 100)
                 {
 
                     form.damnedNewStage.lobbyImageButtonHighlightedPath = fileNamePath;
@@ -310,9 +304,9 @@ public class DamnedPackage
 
             else if (fileExtension == ".jpg")
             {
-                Cords cords = GetDimensions(fileNamePath);
+                Dimensions dimensions = DamnedImages.GetDimensions(fileNamePath);
 
-                if (cords.x == 1920 && cords.y == 1080)
+                if (dimensions.x == 1920 && dimensions.y == 1080)
                 {
                     form.damnedNewStage.loadingImagePath = fileNamePath;
                 }
@@ -339,19 +333,6 @@ public class DamnedPackage
         }
     }
 
-    private Cords GetDimensions(string fileName)
-    {
-        Cords cords = new Cords();
-
-        using (var image = Image.FromFile(fileName))
-        {
-            cords.x = image.Width;
-            cords.y = image.Height;
-        }
-
-        return cords;
-    }
-
     private void CreateTempDirectory()
     {
         string tempPath = Path.GetTempPath();
@@ -365,12 +346,19 @@ public class DamnedPackage
         }
 
         Directory.CreateDirectory(tempPath);
-        ZipFile.ExtractToDirectory(zipArchivePath, tempPath);
+
+        if (!packaging)
+        {
+            ZipFile.ExtractToDirectory(zipArchivePath, tempPath);
+        }
+
         tempDirectory = tempPath;
     }
 
     public void Package(DamnedNewStage[] newStages, string destination)
     {
+        this.packaging = true;
+
         for (int i = 0; i < newStages.Length; i++)
         {
             Package(newStages[i], destination);
@@ -380,19 +368,7 @@ public class DamnedPackage
     // Too much work to write this. Probably a better way to do this.
     private void Package(DamnedNewStage newStage, string destination)
     {
-        int randomNumber = new Random().Next();
-        string tempDirectory = Path.GetTempPath();
-        string directoryName = String.Format("DamnedWorkshop_{0}", randomNumber);
-        tempDirectory = Path.Combine(tempDirectory, directoryName);
-        this.tempDirectory = tempDirectory;
-
-        if (Directory.Exists(tempDirectory))
-        {
-            Directory.Delete(tempDirectory, true);
-        }
-
-
- 
+        CreateTempDirectory();
         CreateDirectories();
         DirectoryInfo[] info = new DirectoryInfo(tempDirectory).GetDirectories("*", SearchOption.AllDirectories);
 
@@ -410,9 +386,6 @@ public class DamnedPackage
         string stageAndScenePath = GetPath(info, "Stages");
         string guiPath = GetPath(info, "GUI");
         string terrorImagesPath = GetPath(info, "TerrorImages");
-
-        
-
 
         string newZipArchiveName = Path.GetFileNameWithoutExtension(newStageName).Replace("_", " ");
         newZipArchiveName = String.Format("{0}.zip", newZipArchiveName);
@@ -432,7 +405,6 @@ public class DamnedPackage
         if (newStage.hasObjects)
         {
             CreateObjectsDirectory();
-            string objectsPath = GetPath(info, "Objects");
             DamnedObjects damnedObjects = new DamnedObjects(tempDirectory);
             damnedObjects.CopyObjects(newStage.newObjectsPath.ToArray(), damnedObjects.objectsDirectory);
         }
