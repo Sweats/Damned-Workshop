@@ -316,17 +316,35 @@ public class DamnedImages
                 string newImagePath = Path.Combine(terrorImagesDirectory, imageNameToReplace);
                 int highestNumber = FindHighestNumber(info);
                 RenameImagesForAddingStage(info, highestNumber, newImageIndex);
+
+                if (File.Exists(newImagePath))
+                {
+                    File.Delete(newImagePath);
+                }
+
                 File.Copy(newMaps[i].lobbyImageButtonPath, newImagePath);
 
                 string newLoadingImageName = newStageName.Remove(newStageName.IndexOf(".", 6));
                 newLoadingImageName = String.Format("loading_{0}.jpg", newLoadingImageName);
                 string newLoadingImageNamePath = Path.Combine(terrorImagesDirectory, newLoadingImageName);
+
+                if (File.Exists(newLoadingImageNamePath))
+                {
+                    File.Delete(newLoadingImageNamePath);
+                }
+
                 File.Copy(newMaps[i].loadingImagePath, newLoadingImageNamePath);
 
                 string newLobbyHighlightedButton = newStageName.ToLower().Replace("_", String.Empty);
                 newLobbyHighlightedButton = newLobbyHighlightedButton.Remove(newLobbyHighlightedButton.IndexOf("."), 6);
                 newLobbyHighlightedButton = String.Format("DamnedStages_{0}.png", newLobbyHighlightedButton);
                 string newLobbyHighlightedButtonPath = Path.Combine(guiDirectory, newLobbyHighlightedButton);
+
+                if (File.Exists(newLobbyHighlightedButtonPath))
+                {
+                    File.Delete(newLobbyHighlightedButtonPath);
+                }
+
                 File.Copy(newMaps[i].lobbyImageButtonHighlightedPath, newLobbyHighlightedButtonPath);
 
                 if (newMaps[i].hasObjects)
