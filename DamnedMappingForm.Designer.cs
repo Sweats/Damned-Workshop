@@ -557,6 +557,7 @@
             this.Controls.Add(this.buttonAddMapIntoDamned);
             this.Name = "DamnedMappingForm";
             this.Text = "Damned Workshop (Mapping Tools)";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DamnedMappingForm_FormClosed);
             this.Load += new System.EventHandler(this.DamnedMappingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureLobbyButtonHighlightedExample)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDamnedButtonLobbyPicture)).EndInit();

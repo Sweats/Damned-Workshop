@@ -23,7 +23,7 @@ namespace DamnedWorkshop
         private bool changesMade;
 
         private string tempDirectory;
-
+        private List<string> packagesTempDirectoryList;
         private DamnedMaps damnedMaps;
         private DamnedImages damnedImages;
 
@@ -33,6 +33,7 @@ namespace DamnedWorkshop
             this.damnedMaps = damnedMaps;
             this.damnedImages = damnedImages;
             this.tempDirectory = String.Empty;
+            packagesTempDirectoryList = new List<string>();
             damnedRemoveStage = new DamnedRemoveStage();
             damnedNewStage = new DamnedNewStage();
             damnedNewStagesList = new List<DamnedNewStage>();
@@ -457,6 +458,12 @@ namespace DamnedWorkshop
             labelObjectsCount.Text = "Number of new objects will be shown here.";
             labelObjectsCount.ForeColor = Color.White;
             tempDirectory = String.Empty;
+
+            if (packagesTempDirectoryList.Count > 0)
+            {
+                DeleteTempFolders();
+            }
+
             changesMade = false;
         }
 
@@ -472,11 +479,7 @@ namespace DamnedWorkshop
             }
 
             ModifyStages();
-
-            if (Directory.Exists(tempDirectory))
-            {
-                Directory.Delete(tempDirectory, true);
-            }
+            DeleteTempFolders();
         }
 
         private void ButtonAddStageToList_Click(object sender, EventArgs e)
@@ -634,8 +637,7 @@ namespace DamnedWorkshop
             if (damnedMaps.StageExists(Path.GetFileName(damnedNewStage.newStagePath)))
             {
                 string stageName = Path.GetFileNameWithoutExtension(damnedNewStage.newStagePath).Replace("_", " ");
-                tempDirectory = package.tempDirectory;
-                Directory.Delete(tempDirectory, true);
+                Directory.Delete(package.tempDirectory, true);
                 Reset();
                 MessageBox.Show(String.Format("This stage \"{0}\" is already installed in the game. Please select another stage", stageName), "Stage already installed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -671,7 +673,7 @@ namespace DamnedWorkshop
             buttonSelectMapLoadingScreen.Enabled = true;
             buttonSelectSceneFile.Enabled = true;
             buttonAddStageToList.Enabled = true;
-            tempDirectory = package.tempDirectory;
+            packagesTempDirectoryList.Add(package.tempDirectory);
         }
 
         private void ButtonPackageStage_Click(object sender, EventArgs e)
@@ -741,6 +743,36 @@ namespace DamnedWorkshop
 
             damnedNewStage.hasObjects = true;
             buttonAddStageToList.Enabled = true;
+        }
+
+        private void DamnedMappingForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (changesMade)
+            {
+                DialogResult result = MessageBox.Show("You have unsaved changes. Do you wish to close this window?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                if (packagesTempDirectoryList.Count > 0)
+                {
+                    DeleteTempFolders();
+                }
+            }
+        }
+
+        private void DeleteTempFolders()
+        {
+            for (int i = 0; i < packagesTempDirectoryList.Count; i++)
+            {
+                if (Directory.Exists(packagesTempDirectoryList[i]))
+                {
+                    Directory.Delete(packagesTempDirectoryList[i], true);
+                }
+            }
+
         }
     }
 }
