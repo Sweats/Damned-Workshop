@@ -83,9 +83,9 @@ You can do one of three things to fix this:
 
 - Download ONLY the files that start with "DamnedStages_" from here:
 	
-https://github.com/Sweats/Damned/tree/master/DamnedData/GUI
+	https://github.com/Sweats/Damned/tree/master/DamnedData/GUI
 
-- Manually copy the downloaded images from where you saved them to to the games actual GUI directory. If you get a prompt that asks you to override a png file, hit yes.
+- Manually copy the downloaded images from where you saved them to to the GUI directory where you backed up your game. If you get a prompt that asks you to override one or more png files, hit yes.
 
 - Relaunch the game. You should see all the stages now.
 
@@ -95,7 +95,6 @@ This is the best method because if you decide to try out the public test patch, 
 play with other people who are not on the public test patch.
 
 3. Wait for the next community update. These images will be included for sure.
-
 
 Q. Can I install new stages then join random public lobbies?
 
