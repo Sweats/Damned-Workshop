@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System;
 
 public class DamnedMaps
 {
@@ -161,5 +163,115 @@ public class DamnedMaps
             }
 
         }
+    }
+
+    public static bool CheckInnerStageFile(string stagePath, ref string failedReason)
+    {
+        string nameToMatch = Path.GetFileNameWithoutExtension(stagePath);
+        string stageName = Path.GetFileName(stagePath);
+
+        using (StreamReader reader = new StreamReader(stagePath))
+        {
+            string contents = reader.ReadToEnd();
+            string stageLineToFind = String.Format("stage {0}", nameToMatch);
+            string sceneLineToFind = String.Format("scene {0}", nameToMatch);
+
+            Match match = Regex.Match(contents, stageLineToFind);
+
+            if (!match.Success)
+            {
+                failedReason = String.Format("Check failed because the stage section in \"{0}\" does not match the file name.", stageName);
+                return false;
+            }
+
+            match = Regex.Match(contents, sceneLineToFind);
+
+            if (!match.Success)
+            {
+                failedReason = String.Format("Check failed because the scene section in \"{0}\" does not match the scene name", stageName);
+                return false;
+            }
+        }
+
+        return true;
+
+
+    }
+    private static bool CheckSceneForLights(string sceneFileContents, string scenePath, ref string failedReason)
+    {
+        MatchCollection collection = Regex.Matches(sceneFileContents, "light light.[0-9]+");
+
+        if (collection.Count < 1)
+        {
+            string name = Path.GetFileName(scenePath);
+            failedReason = String.Format("Check failed because \"{0}\" does not have any light points.", name);
+            return false;
+        }
+
+        return true;
+    }
+
+    private static bool CheckSceneForSpawnPoints(string sceneFileContents, string scenePath, ref string failedReason)
+    {
+        MatchCollection collection = Regex.Matches(sceneFileContents, "spawn_point [0-9]+");
+        string name = Path.GetFileName(scenePath);
+
+        if (collection.Count < 1)
+        {
+            failedReason = String.Format("Check failed because \"{0}\" does not have any spawn points", name);
+            return false;
+        }
+
+        int matchCount = collection.Count;
+
+        if (matchCount < 7)
+        {
+            failedReason = String.Format("Check failed because \"{0}\" does not have enough spawn points. Found spawn point count: {1}. Required count: 7.", name, matchCount);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private static bool CheckSceneForProperSceneName(string sceneFileContents, string scenePath, ref string failedReason)
+    {
+        string sceneName = Path.GetFileNameWithoutExtension(scenePath);
+        string pattern = String.Format("scene {0}", sceneName);
+        Match match = Regex.Match(sceneFileContents, pattern);
+
+        if (!match.Success)
+        {
+            failedReason = String.Format("Check failed because the scene section in {0} does not match the actual file name.", sceneName);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool CheckInnerSceneFile(string scenePath, ref string failedReason)
+    {
+        using (StreamReader reader = new StreamReader(scenePath))
+        {
+            string contents = reader.ReadToEnd();
+
+            if (!CheckSceneForProperSceneName(contents, scenePath, ref failedReason))
+            {
+                return false;
+            }
+
+            if (!CheckSceneForSpawnPoints(contents, scenePath, ref failedReason))
+            {
+                return false;
+            }
+
+            if (!CheckSceneForLights(contents, scenePath, ref failedReason))
+            {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 }
