@@ -59,9 +59,10 @@ public class DamnedMaps
         this.stages = stages.ToArray();
     }
 
-    public void RefreshStages()
+    public void Refresh()
     {
         SetStages();
+        SetScenes();
     }
 
     private void SetScenes()

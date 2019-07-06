@@ -87,6 +87,12 @@ public class DamnedObjects
     {
         string objectName = Path.GetFileName(sourcePath);
         string newPath = Path.Combine(dest, objectName);
+
+        if (File.Exists(newPath))
+        {
+            File.Delete(newPath);
+        }
+
         File.Copy(sourcePath, newPath);
     }
 }

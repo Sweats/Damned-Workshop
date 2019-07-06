@@ -51,20 +51,7 @@ public class DamnedImages
         get;
         private set;
     }
-
-    public string xmlFile
-    {
-        get;
-        private set;
-    }
-
-
-    public string lobbyImages
-    {
-        get;
-        private set;
-    }
-
+   
     private DamnedMaps damnedStages;
 
     private DamnedObjects damnedObjects;
@@ -121,7 +108,7 @@ public class DamnedImages
     private void SetTerrorImagesDirectory()
     {
         string directoryToFind = "TerrorImages";
-        DirectoryInfo[] info = new DirectoryInfo(directory).GetDirectories(directoryToFind, SearchOption.AllDirectories);
+        DirectoryInfo[] info = new DirectoryInfo(guiDirectory).GetDirectories(directoryToFind, SearchOption.AllDirectories);
 
         for (int i = 0; i < info.Length; i++)
         {
@@ -139,7 +126,7 @@ public class DamnedImages
 
     private void SetImages()
     {
-        FileInfo[] files = new DirectoryInfo(directory).GetFiles("*.png", SearchOption.AllDirectories);
+        FileInfo[] files = new DirectoryInfo(guiDirectory).GetFiles("*", SearchOption.AllDirectories);
         images = new string[files.Length];
         imagesFullPath = new string[files.Length];
 
@@ -153,7 +140,7 @@ public class DamnedImages
 
     private void SetDamnedStagesXmlFile()
     {
-        FileInfo[] info = new DirectoryInfo(directory).GetFiles("*.xml", SearchOption.AllDirectories);
+        FileInfo[] info = new DirectoryInfo(guiDirectory).GetFiles("*.xml", SearchOption.AllDirectories);
 
         for (int i = 0; i < info.Length; i++)
         {
@@ -169,7 +156,7 @@ public class DamnedImages
 
     private void SetDamnedTerrorZipFile()
     {
-        FileInfo[] info = new DirectoryInfo(directory).GetFiles("*.zip", SearchOption.AllDirectories);
+        FileInfo[] info = new DirectoryInfo(guiDirectory).GetFiles("*.zip", SearchOption.AllDirectories);
 
         for (int i = 0; i < info.Length; i++)
         {
@@ -199,6 +186,20 @@ public class DamnedImages
         }
 
         return imageString;
+    }
+
+    public void Delete(string imageNameToDelete)
+    {
+        for (int i = 0; i < images.Length; i++)
+        {
+            string foundImage = images[i];
+
+            if (imageNameToDelete == foundImage)
+            {
+                File.Delete(imagesFullPath[i]);
+                break;
+            }
+        }
     }
 
     public void UpdateXmlFiles(string layoutFile, DamnedRemoveStage[] stagesToRemove, DamnedNewStage[] newMaps)
@@ -273,20 +274,25 @@ public class DamnedImages
         {
             damnedStages.RemoveStage(stagesToRemove[i].stagePath);
             damnedStages.RemoveScene(stagesToRemove[i].scenePath);
-            damnedStages.RefreshStages();
 
             string mapToRemove = stagesToRemove[i].stagePath;
             int oldImageIndex = oldStagesSorted.BinarySearch(mapToRemove);
             string imageNameToDelete = String.Format("stage_{0}.png", oldImageIndex);
-            string loadingImageToDelete = String.Format("loading_{0}.jpg", Path.GetFileNameWithoutExtension(stagesToRemove[i].stagePath));
+            string stageNameWithoutExtension = Path.GetFileNameWithoutExtension(stagesToRemove[i].stagePath);
+            string loadingImageToDelete = String.Format("loading_{0}.jpg", stageNameWithoutExtension);
+            string imageHighlightedButtonDelete = String.Format("DamnedStages_{0}.png", stageNameWithoutExtension.ToLower().Replace("_", String.Empty));
 
-            DeleteLobbyButtonImage(info, imageNameToDelete);
-            DeleteLoadingScreenImage(loadingImageToDelete);
+            Delete(imageNameToDelete);
+            Delete(loadingImageToDelete);
+            Delete(imageHighlightedButtonDelete);
+
             RenameImagesAfterRemovingStage(info, oldImageIndex, oldImageIndex + 1);
 
             oldStagesSorted.RemoveAt(oldImageIndex);
         }
 
+        damnedStages.Refresh();
+        SetImages();
 
         info = new DirectoryInfo(terrorImagesDirectory).GetFiles("stage_*.png", SearchOption.TopDirectoryOnly);
         oldStagesSorted.Sort();
@@ -300,7 +306,6 @@ public class DamnedImages
             oldStagesSorted.Add(newStageNamePath);
             File.Copy(newMaps[i].newStagePath, newStageNamePath);
             File.Copy(newMaps[i].newScenePath, newSceneNamePath);
-            damnedStages.RefreshStages();
             oldStagesSorted.Sort();
 
             int newImageIndex = oldStagesSorted.BinarySearch(newStageNamePath);
@@ -332,7 +337,8 @@ public class DamnedImages
 
         }
 
-        damnedStages.RefreshStages();
+        damnedStages.Refresh();
+        SetImages();
 
     }
 
@@ -353,39 +359,6 @@ public class DamnedImages
         }
 
         return highestNumber;
-    }
-
-
-    private void DeleteLobbyButtonImage(FileInfo[] info, string imageName)
-    {
-        for (int i = 0; i < info.Length; i++)
-        {
-            if (imageName == info[i].Name)
-            {
-                if (File.Exists(info[i].FullName))
-                {
-                    File.Delete(info[i].FullName);
-                    break;
-                }
-            }
-        }
-    }
-
-
-    private void DeleteLoadingScreenImage(string loadingimageName)
-    {
-        FileInfo[] info = new DirectoryInfo(terrorImagesDirectory).GetFiles("*.jpg", SearchOption.TopDirectoryOnly);
-
-        for (int i = 0; i < info.Length; i++)
-        {
-            string name = info[i].Name;
-
-            if (name == loadingimageName)
-            {
-                File.Delete(info[i].FullName);
-                break;
-            }
-        }
     }
 
     private void UpdateStagesLayoutFile(string layoutFile)
