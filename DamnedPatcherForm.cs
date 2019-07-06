@@ -20,8 +20,6 @@ namespace DamnedWorkshop
         [DllImport("user32.dll")]
         static extern bool FlashWindow(IntPtr hwnd, bool bInvert);
 
-
-
         private static string DOWNLOAD_TEST_PATCH_STABLE_LINK = "https://github.com/Sweats/Damned/archive/master.zip";
         private static string DOWNLOAD_TEST_PATCH_TESTING_LINK = "https://github.com/Sweats/Damned/archive/testing.zip";
         private static string GITHUB_LINK = "https://github.com/Sweats/Damned-Workshop";
@@ -43,10 +41,12 @@ namespace DamnedWorkshop
         private bool validBackUpFolder = false;
 
         private DamnedFiles damnedFiles;
+        private DamnedMainForm mainForm;
 
-        public DamnedPatcherForm(DamnedFiles damnedFiles)
+        public DamnedPatcherForm(DamnedFiles damnedFiles, DamnedMainForm mainForm)
         {
             InitializeComponent();
+            this.mainForm = mainForm;
             this.damnedFiles = damnedFiles;
         }
 
@@ -611,6 +611,12 @@ namespace DamnedWorkshop
         {
             var button = (Button)sender;
             button.ForeColor = Color.White;
+        }
+
+        private void DamnedPatcherForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainForm.Enabled = true;
+            mainForm.Show();
         }
     }
 }

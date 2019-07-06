@@ -193,22 +193,4 @@ If successful, then the text will turn green which means you are ready to instal
 If not successful, then the text will turn red which means you are not ready to install the public test patch and you need to select a different folder.
 </value>
   </data>
-  <metadata name="toolTipOnlyCheckButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>985, 17</value>
-  </metadata>
-  <metadata name="toolTipBackupAndCheck.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1170, 17</value>
-  </metadata>
-  <metadata name="toolTipPublicTestPatchTestingCheckbox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>307, 41</value>
-  </metadata>
-  <metadata name="toolTipRestoreButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>575, 41</value>
-  </metadata>
-  <metadata name="toolTipSetPublicTestPatchStableLocationButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>743, 41</value>
-  </metadata>
-  <metadata name="toolTipSetPublicTestPatchTestingLocationButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1052, 41</value>
-  </metadata>
 </root>

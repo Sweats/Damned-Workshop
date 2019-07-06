@@ -26,10 +26,13 @@ namespace DamnedWorkshop
         private List<string> packagesTempDirectoryList;
         private DamnedMaps damnedMaps;
         private DamnedImages damnedImages;
+        private DamnedMainForm mainForm;
 
-        public DamnedMappingForm(DamnedMaps damnedMaps, DamnedImages damnedImages)
+        public DamnedMappingForm(DamnedMaps damnedMaps, DamnedImages damnedImages, DamnedMainForm mainForm)
         {
             InitializeComponent();
+            this.mainForm = mainForm;
+            this.mainForm.Hide();
             this.damnedMaps = damnedMaps;
             this.damnedImages = damnedImages;
             this.tempDirectory = String.Empty;
@@ -382,7 +385,9 @@ namespace DamnedWorkshop
             Cursor.Current = Cursors.WaitCursor;
             string terrorImagesZipFile = damnedImages.terrorZipFile;
             string tempDirectory = Path.GetTempPath();
-            tempDirectory = Path.Combine(tempDirectory, "Terror");
+            int randomNumber = new Random().Next();
+            string tempDirectoryName = String.Format("DamnedWorkshop_{0}", randomNumber);
+            tempDirectory = Path.Combine(tempDirectory, tempDirectoryName);
 
             if (Directory.Exists(tempDirectory))
             {
@@ -761,6 +766,9 @@ namespace DamnedWorkshop
                     DeleteTempFolders();
                 }
             }
+
+            mainForm.Enabled = true;
+            mainForm.Show();
         }
 
         private void DeleteTempFolders()

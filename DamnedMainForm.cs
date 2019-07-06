@@ -26,14 +26,18 @@ namespace DamnedWorkshop
 
         private void ButtonPatcherForm_Click(object sender, EventArgs e)
         {
-            DamnedPatcherForm form = new DamnedPatcherForm(damnedFiles);
+            DamnedPatcherForm form = new DamnedPatcherForm(damnedFiles, this);
+            this.Enabled = false;
+            this.Hide();
             form.Show();
         }
 
         private void ButtonMappingForm_Click(object sender, EventArgs e)
         {
             damnedFiles.Refresh();
-            DamnedMappingForm form = new DamnedMappingForm(damnedFiles.damnedMaps, damnedFiles.damnedImages);
+            DamnedMappingForm form = new DamnedMappingForm(damnedFiles.damnedMaps, damnedFiles.damnedImages, this);
+            this.Enabled = false;
+            this.Hide();
             form.Show();
 
         }
