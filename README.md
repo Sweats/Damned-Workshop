@@ -102,6 +102,12 @@ A. No. This is because your stage indexes will be different from everyone else a
 
 This is very easy to do if everyone has the Damned Workshop.
 
+# Download
+
+https://github.com/Sweats/Damned-Workshop/blob/master/bin/Debug/DamnedWorkshop.exe
+
+It should run.
+
 # Issues
 
 If there are any bugs in the program, please let me know in the coding-changes text channel in the Damned Discord. I have tested this so it should work fine.
