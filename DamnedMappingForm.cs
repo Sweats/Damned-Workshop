@@ -721,8 +721,11 @@ namespace DamnedWorkshop
         {
             FileDialog dialog = new OpenFileDialog()
             {
-                Filter = "Object Files(*.object)|*.object"
+                Filter = "Object Files(*.object)|*.object",
+                Multiselect = true
+
             };
+
 
             DialogResult result = dialog.ShowDialog();
 
