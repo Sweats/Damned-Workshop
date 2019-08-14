@@ -117,9 +117,14 @@ If you are not on Windows 10, you will need the latest .net framework. You can f
 
 https://dotnet.microsoft.com/download/dotnet-framework/net472
 
+# Install
+
+Go to your damned GUI directory and look for a file called "RomFatal.tts". Double click on that and install the font.
+
+
 # Issues
 
-If there are any bugs in the program, please let me know in the coding-changes text channel in the Damned Discord. I have tested this so it should work fine.
+If there are any bugs in the program, please let me know in the damned-workshop text channel in the Damned Discord. I have tested this so it should work fine.
 
 
 

@@ -59,11 +59,17 @@ public class DamnedFiles
 
         this.directory = rootDirectory;
         SetDirectories();
-        damnedMaps = new DamnedMaps(rootDirectory);
-        damnedObjects = new DamnedObjects(rootDirectory);
-        damnedSounds = new DamnedSounds(rootDirectory);
-        damnedImages = new DamnedImages(rootDirectory, damnedMaps, damnedObjects);
     }
+
+
+    public void Load()
+    {
+        damnedMaps = new DamnedMaps(directory);
+        damnedObjects = new DamnedObjects(directory);
+        damnedSounds = new DamnedSounds(directory);
+        damnedImages = new DamnedImages(directory, damnedMaps, damnedObjects);
+    }
+
 
      private void SetDirectories()
     {

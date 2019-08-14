@@ -108,7 +108,7 @@ namespace DamnedWorkshop
             this.loggingTextBox.Name = "loggingTextBox";
             this.loggingTextBox.ReadOnly = true;
             this.loggingTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.loggingTextBox.Size = new System.Drawing.Size(529, 174);
+            this.loggingTextBox.Size = new System.Drawing.Size(529, 63);
             this.loggingTextBox.TabIndex = 3;
             this.loggingTextBox.Text = "";
             // 
@@ -339,7 +339,7 @@ namespace DamnedWorkshop
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.ClientSize = new System.Drawing.Size(533, 404);
+            this.ClientSize = new System.Drawing.Size(533, 304);
             this.Controls.Add(this.buttonOnlyCheck);
             this.Controls.Add(this.buttonRestore);
             this.Controls.Add(this.buttonBackUp);

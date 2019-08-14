@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -44,6 +45,9 @@
             this.Installed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonModifyStages = new System.Windows.Forms.Button();
             this.labelNote = new System.Windows.Forms.Label();
+            this.toolTipRefreshAll = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipModifyStages = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipBackButton = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.damnedDataView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,6 +63,8 @@
             this.buttonRefresh.TabIndex = 0;
             this.buttonRefresh.Text = "Refresh All";
             this.buttonRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipRefreshAll.SetToolTip(this.buttonRefresh, "Downloads a json file from https://raw.githubusercontent.com/Sweats/Damned-Commun" +
+        "ity-Stages/master/CommunityStages.json, parses it, then deletes it. ");
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.ButtonRefresh_Click);
             // 
@@ -74,6 +80,7 @@
             this.buttonBack.TabIndex = 3;
             this.buttonBack.Text = "Back";
             this.buttonBack.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipBackButton.SetToolTip(this.buttonBack, "Returns you to the main window");
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.ButtonBack_Click);
             // 
@@ -191,6 +198,7 @@
             this.buttonModifyStages.TabIndex = 6;
             this.buttonModifyStages.Text = "Modify Stages";
             this.buttonModifyStages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipModifyStages.SetToolTip(this.buttonModifyStages, "Modifies the stages that you have selected on the left.");
             this.buttonModifyStages.UseVisualStyleBackColor = true;
             this.buttonModifyStages.Click += new System.EventHandler(this.ButtonModifyStages_Click);
             // 
@@ -238,5 +246,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Installed;
         private System.Windows.Forms.Button buttonModifyStages;
         private System.Windows.Forms.Label labelNote;
+        private System.Windows.Forms.ToolTip toolTipRefreshAll;
+        private System.Windows.Forms.ToolTip toolTipBackButton;
+        private System.Windows.Forms.ToolTip toolTipModifyStages;
     }
 }

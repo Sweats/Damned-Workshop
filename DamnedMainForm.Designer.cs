@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DamnedMainForm));
             this.damnedWelcomeTextbox = new System.Windows.Forms.RichTextBox();
             this.buttonPatcherForm = new System.Windows.Forms.Button();
             this.buttonMappingForm = new System.Windows.Forms.Button();
@@ -36,6 +38,11 @@
             this.labelDamnedDirectoryPath = new System.Windows.Forms.Label();
             this.buttonCheckPath = new System.Windows.Forms.Button();
             this.browseStagesButton = new System.Windows.Forms.Button();
+            this.toolTipSelectDamnedDirectory = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipSelectPatchingTools = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipMappingTools = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipBrowseCommunityStages = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipCheck = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // damnedWelcomeTextbox
@@ -45,14 +52,17 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.damnedWelcomeTextbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.damnedWelcomeTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.damnedWelcomeTextbox.Enabled = false;
+            this.damnedWelcomeTextbox.Cursor = System.Windows.Forms.Cursors.Default;
             this.damnedWelcomeTextbox.Font = new System.Drawing.Font("Romance Fatal Serif Std", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damnedWelcomeTextbox.Location = new System.Drawing.Point(448, 12);
+            this.damnedWelcomeTextbox.ForeColor = System.Drawing.Color.White;
+            this.damnedWelcomeTextbox.Location = new System.Drawing.Point(16, 289);
             this.damnedWelcomeTextbox.Name = "damnedWelcomeTextbox";
-            this.damnedWelcomeTextbox.Size = new System.Drawing.Size(340, 426);
+            this.damnedWelcomeTextbox.ReadOnly = true;
+            this.damnedWelcomeTextbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.damnedWelcomeTextbox.Size = new System.Drawing.Size(785, 149);
             this.damnedWelcomeTextbox.TabIndex = 0;
-            this.damnedWelcomeTextbox.Text = "";
-            this.damnedWelcomeTextbox.Visible = false;
+            this.damnedWelcomeTextbox.Text = resources.GetString("damnedWelcomeTextbox.Text");
+            this.damnedWelcomeTextbox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.DamnedWelcomeTextbox_LinkClicked);
             // 
             // buttonPatcherForm
             // 
@@ -68,6 +78,7 @@
             this.buttonPatcherForm.TabIndex = 1;
             this.buttonPatcherForm.Text = "Patching Tools";
             this.buttonPatcherForm.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipSelectPatchingTools.SetToolTip(this.buttonPatcherForm, resources.GetString("buttonPatcherForm.ToolTip"));
             this.buttonPatcherForm.UseVisualStyleBackColor = false;
             this.buttonPatcherForm.Click += new System.EventHandler(this.ButtonPatcherForm_Click);
             // 
@@ -85,6 +96,7 @@
             this.buttonMappingForm.TabIndex = 2;
             this.buttonMappingForm.Text = "Mapping Tools";
             this.buttonMappingForm.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipMappingTools.SetToolTip(this.buttonMappingForm, resources.GetString("buttonMappingForm.ToolTip"));
             this.buttonMappingForm.UseVisualStyleBackColor = false;
             this.buttonMappingForm.Click += new System.EventHandler(this.ButtonMappingForm_Click);
             // 
@@ -101,6 +113,9 @@
             this.buttonSelectDamnedDirectory.TabIndex = 3;
             this.buttonSelectDamnedDirectory.Text = "Select Damned Directory";
             this.buttonSelectDamnedDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipSelectDamnedDirectory.SetToolTip(this.buttonSelectDamnedDirectory, "Opens up the folder explorer window for you to select a directory where Damned is" +
+        " installed.\r\n\r\nWhen you think that you have selected the right directory, hit th" +
+        "e check button to the right. ");
             this.buttonSelectDamnedDirectory.UseVisualStyleBackColor = false;
             this.buttonSelectDamnedDirectory.Click += new System.EventHandler(this.ButtonSelectDamnedDirectory_Click);
             // 
@@ -142,6 +157,7 @@
             this.buttonCheckPath.Size = new System.Drawing.Size(84, 31);
             this.buttonCheckPath.TabIndex = 6;
             this.buttonCheckPath.Text = "Check...";
+            this.toolTipCheck.SetToolTip(this.buttonCheckPath, resources.GetString("buttonCheckPath.ToolTip"));
             this.buttonCheckPath.UseVisualStyleBackColor = false;
             this.buttonCheckPath.Click += new System.EventHandler(this.ButtonCheckPath_Click);
             // 
@@ -158,6 +174,8 @@
             this.browseStagesButton.TabIndex = 7;
             this.browseStagesButton.Text = "Browse Community Stages...";
             this.browseStagesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTipBrowseCommunityStages.SetToolTip(this.browseStagesButton, "Opens up a new window where you can install new stages into Damned from the commu" +
+        "nity repository.");
             this.browseStagesButton.UseVisualStyleBackColor = true;
             this.browseStagesButton.Click += new System.EventHandler(this.BrowseStagesButton_Click);
             // 
@@ -195,5 +213,10 @@
         private System.Windows.Forms.Label labelDamnedDirectoryPath;
         private System.Windows.Forms.Button buttonCheckPath;
         private System.Windows.Forms.Button browseStagesButton;
+        private System.Windows.Forms.ToolTip toolTipSelectDamnedDirectory;
+        private System.Windows.Forms.ToolTip toolTipSelectPatchingTools;
+        private System.Windows.Forms.ToolTip toolTipMappingTools;
+        private System.Windows.Forms.ToolTip toolTipBrowseCommunityStages;
+        private System.Windows.Forms.ToolTip toolTipCheck;
     }
 }

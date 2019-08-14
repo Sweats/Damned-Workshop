@@ -22,7 +22,6 @@ namespace DamnedWorkshop
 
         private static string DOWNLOAD_TEST_PATCH_STABLE_LINK = "https://github.com/Sweats/Damned/archive/master.zip";
         private static string DOWNLOAD_TEST_PATCH_TESTING_LINK = "https://github.com/Sweats/Damned/archive/testing.zip";
-        private static string GITHUB_LINK = "https://github.com/Sweats/Damned-Workshop";
 
         private static int PATCH_TESTING = 0;
         private static int PATCH_STABLE = 1;
@@ -59,7 +58,6 @@ namespace DamnedWorkshop
             damnedDirectoryStringLabel.Text = damnedFiles.directory;
             toolTipPublicTestPatchTesting.SetToolTip(publicTestPatchTestingButton, TOOLTIP_TEST_PATCH_TESTING_TEXT);
             toolTipPublicTestPatchStable.SetToolTip(publicTestPatchStableButton, TOOLTIP_TEST_PATCH_STABLE_TEXT);
-            loggingTextBox.AppendText(String.Format("Welcome\n\nBefore using this tool, please check its github at {0}\n\nDamned directory has been set to \"{1}\". If you have installed Damned in a non traditonal location, you will have to change it. For more information on what the buttons do, hover your mouse over them.\n\n", GITHUB_LINK, directory));
         }
 
 

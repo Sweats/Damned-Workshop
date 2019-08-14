@@ -117,4 +117,51 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="damnedWelcomeTextbox.Text" xml:space="preserve">
+    <value>Welcome to the Damned Workshop!
+
+Before using this tool, check its Github at https://github.com/Sweats/Damned-Workshop.
+
+If you have installed Damned in a non traditonal location, you will have to change it.
+
+If at any point you need help, try hovering your mouse over the buttons. You will see more information.</value>
+  </data>
+  <metadata name="toolTipSelectPatchingTools.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>14, 27</value>
+  </metadata>
+  <data name="buttonPatcherForm.ToolTip" xml:space="preserve">
+    <value>Opens up a new window where you can "opt-in" into the latest public test patch for Damned.
+
+You can also make a backup here which is highly recommended.
+
+If you do not care about testing new changes, then just go here and make a backup first before doing anything else.</value>
+  </data>
+  <metadata name="toolTipMappingTools.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>222, 29</value>
+  </metadata>
+  <data name="buttonMappingForm.ToolTip" xml:space="preserve">
+    <value>Opens up a new window where you can do the following:
+
+- Install one or more stages into the game.
+
+- Remove one or more stages from the game.
+
+- Package a new stage to be shared to the Damned Community</value>
+  </data>
+  <metadata name="toolTipSelectDamnedDirectory.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>797, 37</value>
+  </metadata>
+  <metadata name="toolTipCheck.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>671, 38</value>
+  </metadata>
+  <data name="buttonCheckPath.ToolTip" xml:space="preserve">
+    <value>Checks the selected path to make sure that it is a valid Damned directory.
+
+If the check is successful, then the path will turn orange and the buttons will be enabled.
+
+If the check fails, then the path will turn red and you wil have to select a different directory.</value>
+  </data>
+  <metadata name="toolTipBrowseCommunityStages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>436, 35</value>
+  </metadata>
 </root>

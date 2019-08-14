@@ -105,11 +105,14 @@ namespace DamnedWorkshop
                 EnableControls();
                 Properties.Settings.Default.damnedGamePath = directory;
                 Properties.Settings.Default.Save();
+                damnedFiles.Load();
+                damnedWelcomeTextbox.AppendText($"\n\nCheck successful! The directory {directory} is a valid Damned directory!");
             }
 
             else
             {
                 labelDamnedDirectoryPath.ForeColor = Color.Red;
+                damnedWelcomeTextbox.AppendText($"\n\nCheck failed! The directory {directory} is not a valid Damned directory!");
                 DisableControls();
             }
         }
@@ -143,6 +146,7 @@ namespace DamnedWorkshop
                 if (damnedFiles.Check())
                 {
                     labelDamnedDirectoryPath.ForeColor = Color.FromArgb(255, 168, 38);
+                    damnedWelcomeTextbox.AppendText($"\n\nChecked the saved directory {directory} successfully!");
                     EnableControls();
                 }
             }
@@ -197,6 +201,12 @@ namespace DamnedWorkshop
             damnedFiles.Refresh();
             DamnedCommunityStagesForm form = new DamnedCommunityStagesForm(this, damnedFiles);
             form.Show();
+
+        }
+
+        private void DamnedWelcomeTextbox_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
 
         }
     }
