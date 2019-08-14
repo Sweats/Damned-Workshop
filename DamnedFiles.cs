@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
+using System.Net;
 
 // A wrapper class that makes dealing with the Damned filesystem easy. This will become very useful.
 // Not everything is used as of now but when we need them, we have them! :)
@@ -221,6 +222,67 @@ public class DamnedFiles
             File.Delete(filesToDelete[i]);
 
         }
+    }
+
+
+    // Creates a temp directory in the temp folder and returns a path to that temp folder
+    public static string CreateTempWorkshopDirectory()
+    {
+        int randomNumber = new Random().Next();
+        string tempFolderName = $"DamnedWorkshop_{randomNumber}";
+        string tempPath = Path.GetTempPath();
+        string workshopTempPath = Path.Combine(tempPath, tempFolderName);
+
+        if (Directory.Exists(workshopTempPath))
+        {
+            Directory.Delete(workshopTempPath, true);
+        }
+
+        Directory.CreateDirectory(workshopTempPath);
+
+        return workshopTempPath;
+    }
+
+
+    public static void DeleteWorkshopTempDirectories()
+    {
+        string tempPath = Path.GetTempPath();
+        DirectoryInfo[] info = new DirectoryInfo(tempPath).GetDirectories("DamnedWorkshop_*");
+
+        for (int i = 0; i < info.Length; i++)
+        {
+            Directory.Delete(info[i].FullName, true);
+        }
+    }
+
+
+    public static string CreateTempFileInTempDirectory(string sourceFilePath)
+    {
+        string filePath = DamnedFiles.CreateTempWorkshopDirectory();
+        string fileName = Path.GetFileName(sourceFilePath);
+        string destFilePath = Path.Combine(filePath, fileName);
+        File.Copy(sourceFilePath, destFilePath);
+        return destFilePath;
+    }
+
+
+    public static bool DownloadFile(string link, string fileName)
+    {
+        try
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(link, fileName);
+            }
+
+        }
+
+        catch (WebException)
+        {
+            return false;
+        }
+
+        return true;
     }
     
 }

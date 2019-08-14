@@ -23,7 +23,6 @@ namespace DamnedWorkshop
         private bool changesMade;
 
         private string tempDirectory;
-        private List<string> packagesTempDirectoryList;
         private DamnedMaps damnedMaps;
         private DamnedImages damnedImages;
         private DamnedMainForm mainForm;
@@ -36,7 +35,6 @@ namespace DamnedWorkshop
             this.damnedMaps = damnedMaps;
             this.damnedImages = damnedImages;
             this.tempDirectory = String.Empty;
-            packagesTempDirectoryList = new List<string>();
             damnedRemoveStage = new DamnedRemoveStage();
             damnedNewStage = new DamnedNewStage();
             damnedNewStagesList = new List<DamnedNewStage>();
@@ -344,6 +342,18 @@ namespace DamnedWorkshop
                     return;
                 }
 
+                for (int i = 0; i < damnedRemoveStagesList.Count; i++)
+                {
+                    string stageNameInList = Path.GetFileNameWithoutExtension(damnedRemoveStagesList[i].scenePath).Replace("_", " ");
+                    string currentStage = Path.GetFileNameWithoutExtension(scenePath).Replace("_", " ");
+
+                    if (String.Compare(currentStage, stageNameInList, true) == 0)
+                    {
+                        MessageBox.Show($"The selected stage \"{currentStage}\" has already been selected to be removed from the game. Please select a different stage", "Stage already selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+
                 damnedRemoveStage.scenePath = scenePath;
                 damnedRemoveStagesList.Add(new DamnedRemoveStage(damnedRemoveStage));
                 buttonSelectSceneToRemove.Enabled = false;
@@ -384,30 +394,10 @@ namespace DamnedWorkshop
         {
             Cursor.Current = Cursors.WaitCursor;
             string terrorImagesZipFile = damnedImages.terrorZipFile;
-            string tempDirectory = Path.GetTempPath();
-            int randomNumber = new Random().Next();
-            string tempDirectoryName = String.Format("DamnedWorkshop_{0}", randomNumber);
-            tempDirectory = Path.Combine(tempDirectory, tempDirectoryName);
-
-            if (Directory.Exists(tempDirectory))
-            {
-                Directory.Delete(tempDirectory, true);
-            }
-
-            Directory.CreateDirectory(tempDirectory);
+            tempDirectory = DamnedFiles.CreateTempWorkshopDirectory();
             ZipFile.ExtractToDirectory(terrorImagesZipFile, tempDirectory);
             string layoutFilePath = damnedImages.GetLayoutFileFromZip(tempDirectory);
-
-            if (!File.Exists(layoutFilePath))
-            {
-                MessageBox.Show("Failed to extract the zip file into the users temporary directory.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Cursor.Current = Cursors.Default;
-                return;
-
-            }
-
             damnedImages.UpdateXmlFiles(layoutFilePath, damnedRemoveStagesList.ToArray(), damnedNewStagesList.ToArray());
-
             string destination = Path.Combine(damnedImages.guiDirectory, "Terror.zip");
             File.Delete(destination);
             ZipFile.CreateFromDirectory(tempDirectory, destination);
@@ -451,7 +441,6 @@ namespace DamnedWorkshop
             buttonSelectHighlightedLobbyButtons.Enabled = false;
             buttonSelectSceneFile.Enabled = false;
             buttonPackageStage.Enabled = false;
-            //checkBoxCustomObjects.Checked = false;
             checkBoxCustomObjects.Enabled = false;
             buttonSelectObjectsForStage.Enabled = false;
             pictureDamnedButtonLobbyPicture.Image = Properties.Resources.lobbyButtonImageExample;
@@ -463,12 +452,6 @@ namespace DamnedWorkshop
             labelObjectsCount.Text = "Number of new objects will be shown here.";
             labelObjectsCount.ForeColor = Color.White;
             tempDirectory = String.Empty;
-
-            if (packagesTempDirectoryList.Count > 0)
-            {
-                DeleteTempFolders();
-            }
-
             changesMade = false;
         }
 
@@ -484,7 +467,7 @@ namespace DamnedWorkshop
             }
 
             ModifyStages();
-            DeleteTempFolders();
+            DamnedFiles.DeleteWorkshopTempDirectories();
         }
 
         private void ButtonAddStageToList_Click(object sender, EventArgs e)
@@ -624,20 +607,36 @@ namespace DamnedWorkshop
                 return;
             }
 
-            Reset();
-
             string zipArchivePath = dialog.FileName;
 
             DamnedPackage package = new DamnedPackage();
 
-            if (!package.Check(zipArchivePath))
+            string tempDirectoryPath = DamnedFiles.CreateTempWorkshopDirectory();
+            string zipName = Path.GetFileName(zipArchivePath);
+            string tempArchiveLocation = Path.Combine(tempDirectoryPath, zipName);
+
+            File.Copy(zipArchivePath, tempArchiveLocation);
+
+            if (!package.Check(tempArchiveLocation))
             {
                 Directory.Delete(package.tempDirectory, true);
                 MessageBox.Show(package.reasonForFailedCheck, "Failed Check", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            package.Load(this);
+            package.Load();
+
+            damnedNewStage = new DamnedNewStage()
+            {
+                loadingImagePath = package.loadingImagePath,
+                lobbyImageButtonHighlightedPath = package.lobbyButtonImageHighlightedPath,
+                hasObjects = package.hasObjects,
+                newObjectsPath = package.objectsPath,
+                newStagePath = package.stagePath,
+                newScenePath = package.scenePath,
+                lobbyImageButtonPath = package.lobbyButtonImagePath
+            };
+
 
             if (damnedMaps.StageExists(Path.GetFileName(damnedNewStage.newStagePath)))
             {
@@ -648,6 +647,20 @@ namespace DamnedWorkshop
                 return;
             }
 
+            
+            for (int i = 0; i < damnedNewStagesList.Count; i++)
+            {
+                string stageNameInList = Path.GetFileName(damnedNewStagesList[i].newStagePath);
+                string currentStageName = Path.GetFileName(damnedNewStage.newStagePath);
+
+                if (String.Compare(stageNameInList, currentStageName, true) == 0)
+                {
+                    string stageNameFormatted = Path.GetFileNameWithoutExtension(damnedNewStage.newStagePath).Replace("_", " ");
+                    MessageBox.Show($"The selected package for the stage \"{stageNameFormatted}\" is already selected to be added into the game. Please select another", "Stage already selected to be added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    damnedNewStage.Clear();
+                    return;
+                }
+            }
 
             if (package.objectsCount > 0)
             {
@@ -678,7 +691,6 @@ namespace DamnedWorkshop
             buttonSelectMapLoadingScreen.Enabled = true;
             buttonSelectSceneFile.Enabled = true;
             buttonAddStageToList.Enabled = true;
-            packagesTempDirectoryList.Add(package.tempDirectory);
         }
 
         private void ButtonPackageStage_Click(object sender, EventArgs e)
@@ -764,26 +776,11 @@ namespace DamnedWorkshop
                     return;
                 }
 
-                if (packagesTempDirectoryList.Count > 0)
-                {
-                    DeleteTempFolders();
-                }
             }
 
             mainForm.Enabled = true;
             mainForm.Show();
-        }
-
-        private void DeleteTempFolders()
-        {
-            for (int i = 0; i < packagesTempDirectoryList.Count; i++)
-            {
-                if (Directory.Exists(packagesTempDirectoryList[i]))
-                {
-                    Directory.Delete(packagesTempDirectoryList[i], true);
-                }
-            }
-
+            DamnedFiles.DeleteWorkshopTempDirectories();
         }
     }
 }

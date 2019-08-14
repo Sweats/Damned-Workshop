@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 public class DamnedPackage
 {
@@ -16,12 +17,21 @@ public class DamnedPackage
     public string reasonForFailedCheck { get; private set; }
     public int objectsCount { get; private set; }
 
-    private bool hasObjects;
+    public bool hasObjects { get; set; }
     private bool packaging;
+
+    public string scenePath { get; set; }
+    public string stagePath { get; set; }
+    public string loadingImagePath { get; set; }
+    public string lobbyButtonImagePath { get; set; }
+    public string lobbyButtonImageHighlightedPath { get; set; }
+
+    public List<string> objectsPath;
 
     public DamnedPackage()
     {
         packaging = false;
+        objectsPath = new List<string>();
     }
 
     public bool Check(string zipArchivePath)
@@ -301,7 +311,7 @@ public class DamnedPackage
 
 
     // Loads the variables from a zip file  into the DamnedMappingForm assuming that it is packaged correctly.
-    public void Load(DamnedWorkshop.DamnedMappingForm form)
+    public void Load()
     {
         FileInfo[] info = new DirectoryInfo(tempDirectory).GetFiles("*", SearchOption.AllDirectories);
         objectsCount = 0;
@@ -317,13 +327,13 @@ public class DamnedPackage
 
                 if (dimensions.x == 300 && dimensions.y == 100)
                 {
-                    form.damnedNewStage.lobbyImageButtonPath = fileNamePath;
+                    lobbyButtonImagePath = fileNamePath;
                 }
 
                 else if (dimensions.x == 900 && dimensions.y == 100)
                 {
 
-                    form.damnedNewStage.lobbyImageButtonHighlightedPath = fileNamePath;
+                    lobbyButtonImageHighlightedPath = fileNamePath;
                 }
             }
 
@@ -333,26 +343,25 @@ public class DamnedPackage
 
                 if (dimensions.x == 1920 && dimensions.y == 1080)
                 {
-                    form.damnedNewStage.loadingImagePath = fileNamePath;
+                    loadingImagePath = fileNamePath;
                 }
             }
 
 
             else if (fileExtension == ".scene")
             {
-                form.damnedNewStage.newScenePath = fileNamePath;
+                scenePath = fileNamePath;
             }
 
             else if (fileExtension == ".stage")
             {
-                form.damnedNewStage.newStagePath = fileNamePath;
+                stagePath = fileNamePath;
             }
 
 
             else if (fileExtension == ".object")
             {
-                form.damnedNewStage.hasObjects = true;
-                form.damnedNewStage.newObjectsPath.Add(fileNamePath);
+                objectsPath.Add(fileNamePath);
                 objectsCount++;
             }
         }
@@ -360,24 +369,15 @@ public class DamnedPackage
 
     private void CreateTempDirectory()
     {
-        string tempPath = Path.GetTempPath();
-        int randomNumber = new Random().Next();
-        string tempStringNumber = String.Format("DamnedWorkshop_{0}", randomNumber);
-        tempPath = Path.Combine(tempPath, tempStringNumber);
-
-        if (Directory.Exists(tempPath))
-        {
-            Directory.Delete(tempPath, true);
-        }
-
-        Directory.CreateDirectory(tempPath);
+        string directoryPath = Path.GetDirectoryName(zipArchivePath);
 
         if (!packaging)
         {
-            ZipFile.ExtractToDirectory(zipArchivePath, tempPath);
+            ZipFile.ExtractToDirectory(zipArchivePath, directoryPath);
         }
 
-        tempDirectory = tempPath;
+        tempDirectory = directoryPath;
+        File.Delete(zipArchivePath);
     }
 
     public void Package(DamnedNewStage[] newStages, string destination)
@@ -482,11 +482,6 @@ public class DamnedPackage
             Directory.CreateDirectory(directoryToMake);
         }
 
-        if (!Directory.Exists(directoryToMake))
-        {
-            Directory.CreateDirectory(directoryToMake);
-        }
-
         directoryToMake = Path.Combine(tempDirectory, "DamnedData", "GUI");
 
         if (!Directory.Exists(directoryToMake))
@@ -500,14 +495,8 @@ public class DamnedPackage
         {
             Directory.CreateDirectory(directoryToMake);
         }
-
-        directoryToMake = Path.Combine(tempDirectory, "DamnedData", "Resources", "Objects");
-
-        if (!Directory.Exists(directoryToMake))
-        {
-            Directory.CreateDirectory(directoryToMake);
-        }
     }
+
 
     private void CreateObjectsDirectory()
     {

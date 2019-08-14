@@ -22,6 +22,7 @@ public class DamnedNewStage
         this.lobbyImageButtonHighlightedPath = String.Empty;
         this.newScenePath = String.Empty;
         this.newObjectsPath = new List<string>();
+        this.hasObjects = false;
     }
 
     public DamnedNewStage(DamnedNewStage copy)

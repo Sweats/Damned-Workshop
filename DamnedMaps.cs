@@ -88,6 +88,28 @@ public class DamnedMaps
         this.scenes = scenes.ToArray();
     }
 
+    // This can be written with an enum instead
+    public string GetPath(string stageName, bool stageFile = true )
+    {
+        string nameWithoutExtension = Path.GetFileNameWithoutExtension(stageName);
+        string returnString = String.Empty;
+
+        for (int i = 0; i < stages.Length; i++)
+        {
+            string foundStage = Path.GetFileNameWithoutExtension(stages[i]);
+
+            int result = String.Compare(nameWithoutExtension, foundStage, true);
+
+            if (result > 0)
+            {
+                returnString = stages[i];
+                break;
+            }
+        }
+
+        return returnString;
+    }
+
     public void RemoveStage(string stageName)
     {
         string stageToFind = Path.GetFileName(stageName);
@@ -138,15 +160,6 @@ public class DamnedMaps
         }
 
         return found;
-    }
-
-
-    public void AddStages(string[] stages)
-    {
-        for (int i = 0; i < stages.Length; i++)
-        {
-            File.Copy(stages[i], Path.Combine(stagesAndScenesDirectory, Path.GetFileName(stages[i])));
-        }
     }
 
     private void SetStagesAndScenesDirectory()
@@ -274,5 +287,12 @@ public class DamnedMaps
         }
 
         return true;
+    }
+
+
+    // Code that I have wrote twice should go in here.
+    public static void ModifyStages()
+    {
+
     }
 }

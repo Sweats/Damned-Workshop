@@ -10,3 +10,7 @@ D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.pdb
 D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.DamnedPatcherForm.resources
 D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.DamnedMainForm.resources
 D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.DamnedMappingForm.resources
+D:\visual_studio_projects\DamnedWorkshop\bin\Debug\Newtonsoft.Json.dll
+D:\visual_studio_projects\DamnedWorkshop\bin\Debug\Newtonsoft.Json.xml
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.csproj.CopyComplete
+D:\visual_studio_projects\DamnedWorkshop\obj\Debug\DamnedWorkshop.DamnedCommunityStagesForm.resources

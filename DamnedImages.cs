@@ -265,13 +265,12 @@ public class DamnedImages
 
     private void SortImages(DamnedRemoveStage[] stagesToRemove, DamnedNewStage[] newMaps)
     {
-
-        FileInfo[] info = new DirectoryInfo(terrorImagesDirectory).GetFiles("stage_*.png", SearchOption.TopDirectoryOnly);
         List<string> oldStagesSorted = new List<string>(damnedStages.stages);
         oldStagesSorted.Sort();
 
         for (int i = 0; i < stagesToRemove.Length; i++)
         {
+            FileInfo[] info = new DirectoryInfo(terrorImagesDirectory).GetFiles("stage_*.png", SearchOption.TopDirectoryOnly);
             damnedStages.RemoveStage(stagesToRemove[i].stagePath);
             damnedStages.RemoveScene(stagesToRemove[i].scenePath);
 
@@ -289,16 +288,15 @@ public class DamnedImages
             RenameImagesAfterRemovingStage(info, oldImageIndex, oldImageIndex + 1);
 
             oldStagesSorted.RemoveAt(oldImageIndex);
+            damnedStages.Refresh();
         }
 
-        damnedStages.Refresh();
-        SetImages();
 
-        info = new DirectoryInfo(terrorImagesDirectory).GetFiles("stage_*.png", SearchOption.TopDirectoryOnly);
         oldStagesSorted.Sort();
 
         for (int i = 0; i < newMaps.Length; i++)
         {
+            FileInfo[] info = new DirectoryInfo(terrorImagesDirectory).GetFiles("stage_*.png", SearchOption.TopDirectoryOnly);
             string newStageName = Path.GetFileName(newMaps[i].newStagePath);
             string newStageNamePath = Path.Combine(damnedStages.stagesAndScenesDirectory, newStageName);
             string newSceneName = Path.GetFileName(newMaps[i].newScenePath);
@@ -351,13 +349,13 @@ public class DamnedImages
                 {
                     damnedObjects.CopyObjects(newMaps[i].newObjectsPath.ToArray(), damnedObjects.objectsDirectory);
                 }
-            }
 
+                damnedStages.Refresh();
+            }
         }
 
-        damnedStages.Refresh();
         SetImages();
-
+        SetTerrorImagesDirectory();
     }
 
     private int FindHighestNumber(FileInfo[] info)
@@ -607,5 +605,12 @@ public class DamnedImages
         }
 
         return dimensions;
+    }
+
+
+    public string CopyTerrorZipFileIntoTempDirectory()
+    {
+        string filePath = Path.Combine(DamnedFiles.CreateTempWorkshopDirectory(), terrorZipFile);
+        return filePath;
     }
 }

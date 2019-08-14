@@ -67,12 +67,14 @@ namespace DamnedWorkshop
         {
             buttonMappingForm.Enabled = true;
             buttonPatcherForm.Enabled = true;
+            browseStagesButton.Enabled = true;
         }
 
         private void DisableControls()
         {
             buttonMappingForm.Enabled = false;
             buttonPatcherForm.Enabled = false;
+            browseStagesButton.Enabled = false;
         }
 
         private void ButtonCheckPath_Click(object sender, EventArgs e)
@@ -165,6 +167,8 @@ namespace DamnedWorkshop
             buttonPatcherForm.MouseLeave += OnMouseLeaveButton;
             buttonSelectDamnedDirectory.MouseEnter += OnMouseEnterButton;
             buttonSelectDamnedDirectory.MouseLeave += OnMouseLeaveButton;
+            browseStagesButton.MouseEnter += OnMouseEnterButton;
+            browseStagesButton.MouseLeave += OnMouseLeaveButton;
 
         }
 
@@ -183,6 +187,16 @@ namespace DamnedWorkshop
         private void DamnedMainForm_Load(object sender, EventArgs e)
         {
             SetButtons();
+
+        }
+
+        private void BrowseStagesButton_Click(object sender, EventArgs e)
+        {
+            this.Enabled = false;
+            this.Hide();
+            damnedFiles.Refresh();
+            DamnedCommunityStagesForm form = new DamnedCommunityStagesForm(this, damnedFiles);
+            form.Show();
 
         }
     }

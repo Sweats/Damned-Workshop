@@ -35,6 +35,7 @@
             this.labelDamnedDirectory = new System.Windows.Forms.Label();
             this.labelDamnedDirectoryPath = new System.Windows.Forms.Label();
             this.buttonCheckPath = new System.Windows.Forms.Button();
+            this.browseStagesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // damnedWelcomeTextbox
@@ -144,12 +145,28 @@
             this.buttonCheckPath.UseVisualStyleBackColor = false;
             this.buttonCheckPath.Click += new System.EventHandler(this.ButtonCheckPath_Click);
             // 
+            // browseStagesButton
+            // 
+            this.browseStagesButton.FlatAppearance.BorderSize = 0;
+            this.browseStagesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.browseStagesButton.Font = new System.Drawing.Font("Romance Fatal Serif Std", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.browseStagesButton.ForeColor = System.Drawing.Color.White;
+            this.browseStagesButton.Location = new System.Drawing.Point(12, 214);
+            this.browseStagesButton.Name = "browseStagesButton";
+            this.browseStagesButton.Size = new System.Drawing.Size(235, 52);
+            this.browseStagesButton.TabIndex = 7;
+            this.browseStagesButton.Text = "Browse Community Stages...";
+            this.browseStagesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.browseStagesButton.UseVisualStyleBackColor = true;
+            this.browseStagesButton.Click += new System.EventHandler(this.BrowseStagesButton_Click);
+            // 
             // DamnedMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.browseStagesButton);
             this.Controls.Add(this.buttonCheckPath);
             this.Controls.Add(this.labelDamnedDirectoryPath);
             this.Controls.Add(this.labelDamnedDirectory);
@@ -176,5 +193,6 @@
         private System.Windows.Forms.Label labelDamnedDirectory;
         private System.Windows.Forms.Label labelDamnedDirectoryPath;
         private System.Windows.Forms.Button buttonCheckPath;
+        private System.Windows.Forms.Button browseStagesButton;
     }
 }
