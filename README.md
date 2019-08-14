@@ -66,7 +66,6 @@ Simply use it and give suggestions. If you see an unhandled exception anywhere, 
 
 If you are interested in contributing code, let me know in the Discord. I would love to hear what you have in mind.
 
-
 # FAQ
 
 Q. I installed a new stage into the game but I don't see any images in the stage selection screen except the new one. Why?
@@ -87,6 +86,8 @@ You can do one of three things to fix this:
 
 - Manually copy the downloaded images from where you saved them to to the GUI directory where you backed up your game. If you get a prompt that asks you to override one or more png files, hit yes.
 
+- Do the same step as above for your actual Damned directory under the Steam directory.
+
 - Relaunch the game. You should see all the stages now.
 
 This is the best method because if you decide to try out the public test patch, the Damned Workshop will not delete these DamnedStages_.png files when you decide to downgrade back to the retail game.
@@ -104,9 +105,17 @@ This is very easy to do if everyone has the Damned Workshop.
 
 # Download
 
-https://github.com/Sweats/Damned-Workshop/blob/master/bin/Debug/DamnedWorkshop.exe
+Download the following two files:
 
-It should run.
+1. https://github.com/Sweats/Damned-Workshop/blob/master/bin/Debug/DamnedWorkshop.exe
+
+2. https://github.com/Sweats/Damned-Workshop/raw/master/bin/Debug/Newtonsoft.Json.dll
+
+Copy those to any directory of your choice. They must both reside in the same directory.
+
+If you are not on Windows 10, you will need the latest .net framework. You can find it below:
+
+https://dotnet.microsoft.com/download/dotnet-framework/net472
 
 # Issues
 
