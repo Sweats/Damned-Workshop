@@ -46,7 +46,7 @@ public class DamnedPackage
             return false;
         }
 
-        CreateTempDirectory();
+        ExtractToTempDirectory();
 
         if (!CheckDirectories())
         {
@@ -367,17 +367,18 @@ public class DamnedPackage
         }
     }
 
-    private void CreateTempDirectory()
+    private void ExtractToTempDirectory()
     {
         string directoryPath = Path.GetDirectoryName(zipArchivePath);
 
         if (!packaging)
         {
             ZipFile.ExtractToDirectory(zipArchivePath, directoryPath);
+            tempDirectory = directoryPath;
+            File.Delete(zipArchivePath);
         }
+        
 
-        tempDirectory = directoryPath;
-        File.Delete(zipArchivePath);
     }
 
     public void Package(DamnedNewStage[] newStages, string destination)
@@ -393,7 +394,7 @@ public class DamnedPackage
     // Too much work to write this. Probably a better way to do this.
     private void Package(DamnedNewStage newStage, string destination)
     {
-        CreateTempDirectory();
+        tempDirectory = DamnedFiles.CreateTempWorkshopDirectory();
         CreateDirectories();
         DirectoryInfo[] info = new DirectoryInfo(tempDirectory).GetDirectories("*", SearchOption.AllDirectories);
 
